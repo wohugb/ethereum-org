@@ -1,7 +1,7 @@
 extends layout
 
 block vars
-  - var title='Create a crowdsale contract in Ethereum'
+  - var title='在以太坊创造一个众包合约'
   - var url='crowdsale'
   - var image='crowdsale'
 
@@ -10,9 +10,9 @@ block content
 
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
     a(href="/").index Ethereum
-    strong »  Create a crowdsale
-    a(href="/token").previous Previous
-    a(href="/dao").next Next
+    strong »  创建一个众包
+    a(href="/token").previous 上一个
+    a(href="/dao").next 下一个
 
   div#tutorial-start.main-tutorial.crowdsale-tutorial.inner-header.inner-page.even
     .container
@@ -23,7 +23,7 @@ block content
         .col-md-6.tutorial.scrollme
           .header-title
             h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") Crowdsale
-            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") Raising funds from friends without a third party
+            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") 从没有第三方的朋友筹集资金
 
   .main-tutorial.inner-tutorial
     .container
@@ -31,13 +31,13 @@ block content
         +toc
         .col-md-12
           include:markdown-it(plugins=['markdown-it-include']) content/crowdsale.md
-          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/crowdsale.md') Improve this page
+          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/crowdsale.md') 改进此页面
 
   .main-tutorial.even
     .container
       .row
         .col-md-12.tutorial
-          +daoRecipe("What's next?")
+          +daoRecipe("下一步是什么？")
 
 
   script

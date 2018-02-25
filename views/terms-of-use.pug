@@ -1,20 +1,19 @@
 extends layout
 
 block vars
-  - var title='Terms of Use'
+  - var title='使用条款'
   - var url='privacy-policy'
 
 
 block content
   include mixins/recipes.pug
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
-    a(href="/").index Ethereum 
-    strong »  Terms of Use
+    a(href="/").index Ethereum
+    strong »  使用条款
 
   .main-tutorial.even
     .container
       .row
         .col-md-12
-          h2 Terms of Use
+          h2 使用条款
           include:markdown-it content/terms.md
-          

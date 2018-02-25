@@ -8,9 +8,9 @@ block vars
 block content
   include mixins/recipes.pug
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
-    a(href="/").index Ethereum 
-    strong »  Start a democratic organization
-    a(href="/crowdsale").previous Previous
+    a(href="/").index Ethereum
+    strong »  创建一个民主组织
+    a(href="/crowdsale").previous 上一个
 
   div#tutorial-start.main-tutorial.dao-tutorial.inner-header.inner-page.even
     .container
@@ -20,9 +20,9 @@ block content
 
         .col-md-6.tutorial.scrollme
           .header-title
-            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") How to build a 
-            h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") Democracy
-            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") on the blockchain
+            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") 如何建立一个
+            h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") 民主
+            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear") 在区块链上
 
 
   .main-tutorial.inner-tutorial
@@ -31,14 +31,14 @@ block content
         +toc
         .col-md-12
           include:markdown-it(plugins=['markdown-it-include']) content/dao.md
-          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/dao.md') Improve this page
+          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/dao.md') 改进此页面
 
 
   .main-tutorial.ethereum-projects.even
     .container
       .row
         .col-md-12
-          +futureRecipe("What's next?")
+          +futureRecipe("下一步是什么？")
 
   script
     |  ((window.gitter = {}).chat = {}).options = {

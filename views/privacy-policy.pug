@@ -8,13 +8,12 @@ block vars
 block content
   include mixins/recipes.pug
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
-    a(href="/").index Ethereum 
-    strong »  Privacy Policy
+    a(href="/").index Ethereum
+    strong »  隐私政策
 
   .main-tutorial.even
     .container
       .row
         .col-md-12
-          h2 Privacy Policy
+          h2 隐私政策
           include:markdown-it content/privacy.md
-  

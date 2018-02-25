@@ -1,82 +1,95 @@
+## 使用命令行构建智能合约
 
-## Building a smart contract using the command line
+此页面将帮助您在ethereum命令行上创建*Hello，World*合同。
+如果您不知道如何使用命令行，我们建议您跳过本教程，而是使用图形用户界面[1]构建[自定义令牌]。
 
-This page will help you build a *Hello, World* contract on the ethereum command line. If you don't know how to use the command line we recommend you skip this tutorial and instead build a [Custom token using the graphical user interface](./token).
+智能合约是以太坊区块链上的账户持有对象。
+它们包含代码功能，可以与其他合同进行交互，制定决策，存储数据并将以太网发送给
+合同是由他们的创造者定义的，但是他们的执行，以及他们提供的服务，都是由以太网本身提供的。
+只要整个网络存在，它们就会存在并且可执行，并且只有在程序被自毁时才会消失。
 
-Smart contracts are account holding objects on the ethereum blockchain. They contain code functions and can interact with other contracts, make decisions, store data, and send ether to others. Contracts are defined by their creators, but their execution, and by extension the services they offer, is provided by the ethereum network itself. They will exist and be executable as long as the whole network exists, and will only disappear if they were programmed to self destruct.
+你可以用合同做什么？
+那么，你几乎可以做任何事情，但是对于我们的入门指南，我们来做一些简单的事情：开始你将创建一个经典的"Hello World"合约，然后你可以建立你自己的加密标记发送给任何哟
+一旦你掌握了这一点，那么你将通过众筹筹集资金，如果成功的话，将提供一个完全透明和民主的组织，只会服从自己的公民，永远不会离开
+而所有这些都在不到300行的代码中。
 
-What can you do with contracts? Well, you can do almost anything really, but for our getting started guide let's do some simple things: To start you will create a classic "Hello World" contract, then you can build your own crypto token to send to whomever you like. Once you've mastered that then you will raise funds through a crowdfunding that, if successful, will supply a radically transparent and democratic organization that will only obey its own citizens, will never swerve away from its constitution and cannot be censored or shut down. And all that in less than 300 lines of code.
+在你开始之前：
 
-Before you begin:
+* [安装以太坊CLI][2]
+* [详细了解合同][3]
 
-* [Install the Ethereum CLI](https://ethereum.org/cli)
-* [Learn more about contracts](https://github.com/ethereum/go-ethereum/wiki/Contracts-and-Transactions)
+请在进入`geth`控制台之前确认GUI已关闭。
+运行`geth`开始同步过程(第一次运行可能需要一段时间)。
 
-Please confirm that the GUI is closed before entering the `geth` console.
-Run `geth` to begin the sync process (this may take a while on the first run).
+那我们现在就开始吧。
 
-So let's start now.
+### 你的第一个公民：欢迎你
 
-### Your first citizen: the greeter
+现在你已经掌握了以太坊的基础知识，让我们进入你的第一个严肃的合同。
+前沿是一个很大的开放领土，有时候你可能会感到孤独，所以我们的第一步就是创造一个自动的伴侣，在你感到孤独时迎接你。
+我们会称他为"温和"。
 
-Now that you’ve mastered the basics of Ethereum, let’s move into your first serious contract. The Frontier is a big open territory and sometimes you might feel lonely, so our first order of business will be to create a little automatic companion to greet you whenever you feel lonely. We’ll call him the “Greeter”.
+Greeter是一个智能数字化实体，它存在于区块链中，并能够根据其输入与任何与之交互的人进行对话。
+它可能不是一个讲话者，但它是一个很好的倾听者。
+这是它的代码：
 
-The Greeter is an intelligent digital entity that lives on the blockchain and is able to have conversations with anyone who interacts with it, based on its input. It might not be a talker, but it’s a great listener. Here is its code:
-
-
+```js
     contract Mortal {
-        /* Define variable owner of the type address */
+        /* 定义类型地址的变量所有者 */
         address owner;
 
-        /* This function is executed at initialization and sets the owner of the contract */
+        /* 此功能在初始化时执行并设置合同的所有者 */
         function Mortal() { owner = msg.sender; }
 
-        /* Function to recover the funds on the contract */
+        /* 收回合同资金的功能 */
         function kill() { if (msg.sender == owner) selfdestruct(owner); }
     }
 
     contract Greeter is Mortal {
-        /* Define variable greeting of the type string */
+        /* 定义类型字符串的变量问候语 */
         string greeting;
-        
-        /* This runs when the contract is executed */
+
+        /* 这在合同执行时运行 */
         function Greeter(string _greeting) public {
             greeting = _greeting;
         }
 
-        /* Main function */
+        /* 主功能 */
         function greet() constant returns (string) {
             return greeting;
         }
     }
+```
 
+您会注意到此代码中有两个不同的合约：_"凡人"_和_"greeter"_。
+这是因为Solidity(我们使用的高级合同语言)具有*继承*，这意味着一个合约可以继承另一个合约的特征。
+这对简化编码非常有用，因为合约的通用特征不需要每次重写，并且所有合约都可以用更小，更易读的块编写。
+所以，只要声明_greeter是mortal_，你就继承了来自"凡人"合同的所有特征，并且使欢迎代码简单易读。
 
-You'll notice that there are two different contracts in this code: _"mortal"_ and _"greeter"_.  This is because Solidity (the high level contract language we are using) has *inheritance*, meaning that one contract can inherit characteristics of another. This is very useful to simplify coding as common traits of contracts don't need to be rewritten every time, and all contracts can be written in smaller, more readable chunks. So by just declaring that _greeter is mortal_ you inherited all characteristics from the "mortal" contract and kept the greeter code simple and easy to read.
+继承特征_"凡人"_仅仅意味着迎宾合同可以被其所有者杀死，以清理区块链并在不再需要合同时收回锁定在其中的资金。
+以太坊中的契约默认为不死的，并且没有所有者，这意味着一旦被部署，作者就没有
+部署前请考虑这一点。
 
-The inherited characteristic _"mortal"_ simply means that the greeter contract can be killed by its owner, to clean up the blockchain and recover funds locked into it when the contract is no longer needed. Contracts in ethereum are, by default, immortal and have no owner, meaning that once deployed the author has no special privileges anymore. Consider this before deploying.
+### 使用Solc编译器编译您的合同
 
-### Compiling your contract using the Solc Compiler
+在您能够部署您的合同之前，您需要两件事情：
 
-Before you are able to deploy your contract, you'll need two things: 
+1. 编译后的代码
+2. 应用程序二进制接口，它是一个定义如何与合约进行交互的JavaScript对象
 
-1. The compiled code
-2. The Application Binary Interface, which is a JavaScript Object that defines how to interact with the contract
+你可以通过使用Solidity编译器来获得这两个。
+如果你还没有安装编译器，你可以：
 
-You can get both of these by using a Solidity compiler. If you have not installed a compiler, you can either: 
+1. 按照[关于安装Solidity编译器的说明][4]在您的机器上安装编译器
+2. 使用基于网络的Solidity IDE [Remix][5]
 
-1. Install a compiler on your machine by following the [instructions for installing the Solidity Compiler](http://solidity.readthedocs.io/en/develop/installing-solidity.html)
-2. Use [Remix](https://remix.ethereum.org), a web-based Solidity IDE
+#### Solc在您的机器上
 
-
-#### Solc on your machine
-=======
-
-
-If you installed the compiler on your machine, you need to compile the contract to acquire the compiled code and Application Binary Interface.
+如果您在机器上安装了编译器，则需要编译合约以获取编译的代码和应用程​​序二进制接口。
 
     solc -o target --bin --abi Greeter.sol
 
-This will create two files, one file containing the compiled code and one file creating the Application Binary Interface in a directory called target.
+这将创建两个文件，一个文件包含已编译的代码，另一个文件在名为target的目录中创建应用程序二进制接口。
 
     $tree
     .
@@ -87,119 +100,141 @@ This will create two files, one file containing the compiled code and one file c
        ├── Mortal.abi
        └── Mortal.bin
 
-You will see that there are files created for both contracts; but because Greeter includes Mortal you do not need to deploy Mortal to deploy Greeter.
+你会看到有为两个合同创建的文件;,但是由于Greeter包括Mortal，你不需要部署Mortal来部署Greeter。
 
-You can use these two files to create and deploy the contract.
+您可以使用这两个文件来创建和部署合同。
 
     var greeterFactory = eth.contract(<contents of the file Greeter.abi>)
 
     var greeterCompiled = "0x" + "<contents of the file Greeter.bin>"
 
-You have now compiled your code and made it available to Geth.  Now you need to get it ready for deployment, this includes setting some variables up, like what greeting you want to use. Edit the first line below to something more interesting than "Hello World!" and execute these commands:
-    
-	
-	var _greeting = "Hello World!"
+你现在编译了你的代码，并将它提供给Geth。
+现在您需要准备好进行部署，这包括设置一些变量，例如您希望使用的问候语。
+将下面的第一行编辑为比"Hello World！"更有趣的内容,并执行这些命令：
 
-    var greeter = greeterFactory.new(_greeting,{from:eth.accounts[0],data:greeterCompiled,gas:47000000}, function(e, contract){
-        if(e) {
-          console.error(e); // If something goes wrong, at least we'll know.
-          return;
-        }
+```js
+var _greeting = "Hello World!"
 
-        if(!contract.address) {
-          console.log("Contract transaction send: TransactionHash: " + contract.transactionHash + " waiting to be mined...");
+var greeter = greeterFactory.new(_greeting,{from:eth.accounts[0],data:greeterCompiled,gas:47000000}, function(e, contract){
+    if(e) {
+        console.error(e); // If something goes wrong, at least we'll know.
+        return;
+    }
 
-        } else {
-          console.log("Contract mined! Address: " + contract.address);
-          console.log(contract);
-        }
-    })
+    if(!contract.address) {
+        console.log("Contract transaction send: TransactionHash: " + contract.transactionHash + " waiting to be mined...");
 
+    } else {
+        console.log("Contract mined! Address: " + contract.address);
+        console.log(contract);
+    }
+})
+```
 
-#### Using Remix
+#### 运用Remix
 
-If you don't have Solc installed, you can simply use the online IDE. Copy the source code (at the top of this page) to [Remix](https://remix.ethereum.org) and it should automatically compile your code. You can safely ignore any yellow warning boxes on the right plane.
+如果你没有安装Solc，你可以简单地使用在线IDE。
+将源代码(在本页顶部)复制到[Remix][5]，它会自动编译你的代码。
+您可以放心地忽略右侧任何黄色警告框。
 
-To access the compiled code, ensure that the dropdown menu on the right pane has `greeter` selected. Then click on the **Details** button directly to the right of the dropdown. In the popup, scroll down and copy all the code in the **WEB3DEPLOY** textbox.
+要访问已编译的代码，请确保右窗格中的下拉菜单选择了"greeter"。
+然后点击直接在下拉菜单右侧的**Details**按钮。
+在弹出窗口中，向下滚动并复制**WEB3DEPLOY**文本框中的所有代码。
 
-Create a temporary text file on your computer and paste that code. Make sure to change the first line to look like the following:
+在您的计算机上创建一个临时文本文件并粘贴该代码。
+确保将第一行更改为如下所示：
 
     var _greeting = "Hello World!"
- 
-Now you can paste the resulting text on your geth window, or import the file with `loadScript("yourFilename.js")`. Wait up to thirty seconds and you'll see a message like this:
 
-    Contract mined! address: 0xdaa24d02bad7e9d6a80106db164bad9399a0423e 
+现在您可以将结果文本粘贴到geth窗口中，或者使用`loadScript("yourFilename.js")`导入文件。
+等待30秒钟，你会看到这样的消息：
 
-You may have to "unlock" the account that is sending the transaction using the password you picked in the beginning, because you need to pay for the gas costs to deploying your contract: e.g. `personal.unlockAccount(web3.eth.accounts[0], "yourPassword")`. 
+    Contract mined! address: 0xdaa24d02bad7e9d6a80106db164bad9399a0423e
 
-This contract is estimated to need ~180 thousand gas to deploy (according to the [online solidity compiler](https://ethereum.github.io/browser-solidity/)), at the time of writing, gas on the test net is priced at 20 gwei ([equal to( 20000000000 wei, or  0.00000002 ether](http://ether.fund/tool/converter#v=20&u=Gwei)) per unit of gas. There are many useful stats, including the latest gas prices [at the network stats page](https://stats.ethdev.com). 
+您可能必须使用您在开始时选择的密码来"解锁"发送交易的帐户，因为您需要支付部署合同的燃料费用：例如， ,`personal.unlockAccount(web3.eth.accounts [0]，"yourPassword")`。
 
-**Notice that the cost is not paid to the [ethereum developers](../foundation), instead it goes to the _Miners_, those peers whose computers are working to find new blocks and keep the network secure. Gas price is set by the market of the current supply and demand of computation. If the gas prices are too high, you can become a miner and lower your asking price.**
+该合同估计需要约18万个燃料部署(根据[在线固体编译器][6])，在撰写本文时，测试网上的燃料售价为20 gwei([相当于(20000000000 wei，,或0.00000002以太][7])每单位燃料。
+有很多有用的数据，包括最新的燃料价格[在网络统计页面][8]。
 
+**请注意，这些费用不会支付给[以太坊开发者][9]，而是转到_Miner_，那些计算机正在努力寻找新块并保证网络安全的同伴。燃料价格由当前计算供需市场决定。如果燃料价格太高，你可以成为矿工并降低你的要价。**
 
-Within less than a minute, you should have a log with the contract address, this means you've successfully deployed your contract. You can verify the deployed code (which will be compiled) by using this command:
+在不到一分钟的时间内，你应该有一个合同地址的日志，这意味着你已经成功地部署了你的合同。
+您可以使用以下命令来验证已部署的代码(将被编译)：
 
     eth.getCode(greeter.address)
 
-If it returns anything other than "0x" then congratulations! Your little Greeter is live! If the contract is created again (by performing another eth.sendTransaction), it will be published to a new address. 
+如果它返回`0x`以外的任何内容，那么恭喜！
+你的小家伙活着！
+如果再次创建合同(通过执行另一个eth.sendTransaction)，它将发布到新地址。
 
+### 运行Greeter
 
-### Run the Greeter
-
-In order to call your bot, just type the following command in your terminal:
+为了打电话给你的机器人，只需在终端上输入以下命令：
 
     greeter.greet();
 
-Since this call changes nothing on the blockchain, it returns instantly and without any gas cost. You should see it return your greeting:
+由于此通知在区块链上没有任何变化，因此它会立即返回并且无需任何燃气费用。
+你应该看到它返回你的问候语：
 
     'Hello World!'
 
+#### 让其他人与您的代码进行交互
 
-#### Getting other people to interact with your code
+为了让其他人来执行你的合同，他们需要两件事情：
 
-In order for other people to run your contract they need two things:
+1. 合同所在的`address`
+2. ABI(应用程序二进制接口)，这是一种用户手册，描述合约功能的名称以及如何将它们调用到您的JavaScript控制台
 
-1. The `Address` where the contract is located 
-2. The `ABI` (Application Binary Interface), which is a sort of user manual describing the name of the contract's functions and how to call them to your JavaScript console
-
-To get the `Address`, run this command:
+要获得"地址"，请运行以下命令：
 
     greeter.address;
 
-To get the `ABI`, run this command:
+要获得`ABI`，运行这个命令：
 
     greeterCompiled.greeter.info.abiDefinition;
 
-**Tip:** If you compiled the code using [Remix](https://remix.ethereum.org), the last line of code above won't work for you! Instead, you need to copy the `ABI` directly from Remix, similar to how you copied the **WEB3DEPLOY** compiled code. On the right pane, click on the **Details** button and scroll down to the **ABI** textbox. Click on the copy button to copy the entire ABI, then paste it in a temporary text document.
+**Tip:**如果你使用[Remix][5]编译代码，上面的代码最后一行不适合你！,相反，您需要直接从Remix中复制`ABI`，类似于您复制** WEB3DEPLOY**编译代码的方式。
+在右侧窗格中，单击**Details**按钮并向下滚动到**ABI**文本框。
+点击复制按钮复制整个ABI，然后将其粘贴到临时文本文档中。
 
-Then you can instantiate a JavaScript object which can be used to call the contract on any machine connected to the network. In the following line, replace `ABI` (an array) and `Address` (a string) to create a contract object in JavaScript:
+然后，您可以实例化一个可用于在连接到网络的任何计算机上调用合同的JavaScript对象。
+在下面一行中，替换`ABI`(一个数组)和`Address`(一个字符串)来在JavaScript中创建一个契约对象：
 
     var greeter = eth.contract(ABI).at(Address);
 
-This particular example can be instantiated by anyone by simply calling:
+这个特殊的例子可以通过简单地调用来实例化：
 
     var greeter2 = eth.contract([{constant:false,inputs:[],name:'kill',outputs:[],type:'function'},{constant:true,inputs:[],name:'greet',outputs:[{name:'',type:'string'}],type:'function'},{inputs:[{name:'_greeting',type:'string'}],type:'constructor'}]).at('greeterAddress');
 
-Of course, `greeterAddress` must be replaced with your contract's _unique_ address.
+当然，`greeterAddress`必须替换为您合同的_unique_地址。
 
+#### 自己清理
 
-#### Cleaning up after yourself: 
+你必须非常高兴才能签下第一份合同，但当业主继续写下更多的合同时，这种激动有时会消失，导致在区块链上看到放弃合同的不愉快景象。
+未来，区块链租金可能会实施以增加区块链的可扩展性，但现在，成为一个好公民并且人道地放弃您的废弃机器人。
 
-You must be very excited to have your first contract live, but this excitement wears off sometimes, when the owners go on to write further contracts, leading to the unpleasant sight of abandoned contracts on the blockchain. In the future, blockchain rent might be implemented in order to increase the scalability of the blockchain but for now, be a good citizen and humanely put down your abandoned bots. 
-
-A transaction will need to be sent to the network and a fee to be paid for the changes made to the blockchain after the code below is run. The self-destruct is subsidized by the network so it will cost much less than a usual transaction.
+交易将需要发送到网络，并在下面的代码运行后支付区块链所做更改的费用。
+自毁是由网络补贴的，所以它的成本比平常的交易要低得多。
 
     greeter.kill.sendTransaction({from:eth.accounts[0]})
 
-This can only be triggered by a transaction sent from the contracts owner. You can verify that the deed is done simply seeing if this returns 0:
+这只能由合同所有者发送的交易触发。
+您可以验证该行为是否完成，只需查看是否返回0即可：
 
     eth.getCode(greeter.address)
 
-Notice that every contract has to implement its own kill clause. In this particular case only the account that created the contract can kill it. 
+请注意，每个合同都必须执行自己的kill子句。
+在这种特殊情况下，只有创建合同的账户才能杀死它。
 
-If you don't add any kill clause it could potentially live forever independently of you and any earthly borders, so before you put it live check what your local laws say about it, including any possible limitation on technology export, restrictions on speech and maybe any legislation on the civil rights of sentient digital beings. Treat your bots humanely.
+如果你不添加任何杀人条款，它可能永远独立于你和任何地球上的边界而永远活着，所以在你开始生活之前，请检查你的当地法律对此的看法，包括对技术出口的任何可能限制，言论限制以及,任何关于公民权利的立法
+人道地对待你的机器人。
 
-
-
-
-
+[1]: ./token
+[2]: https://ethereum.org/cli
+[3]: https://github.com/ethereum/go-ethereum/wiki/Contracts-and-Transactions
+[4]: http://solidity.readthedocs.io/en/develop/installing-solidity.html
+[5]: https://remix.ethereum.org
+[6]: https://ethereum.github.io/browser-solidity/
+[7]: http://ether.fund/tool/converter#v=20&u=Gwei
+[8]: https://stats.ethdev.com
+[9]: ../foundation

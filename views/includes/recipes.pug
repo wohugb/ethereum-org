@@ -1,31 +1,31 @@
 include ../mixins/recipes.pug
 
 .main-tutorial.inner-header.token-tutorial
-  .container  
+  .container
     .row
       .col-md-12
         .row
           .col-md-12.scrollme
-            h2.animateme(data-when="span", data-from="0.5", data-to="0", data-opacity="0", data-translatey="200") Learn 
+            h2.animateme(data-when="span", data-from="0.5", data-to="0", data-opacity="0", data-translatey="200") 学习
               strong Solidity
-              | , a new language for smart contracts
-              
+              | , 一种智能合约的新语言
+
         +tokenRecipe
 
 .main-tutorial.even.inner-header.crowdsale-tutorial#crowdsale
-  .container   
+  .container
     .row
       .col-md-12
         +crowdsaleRecipe
 
 .main-tutorial.dao-tutorial.inner-header
-  .container   
+  .container
     .row
       .col-md-12
         +daoRecipe
 
-.main-tutorial.inner-header.even.ethereum-projects 
-  .container   
+.main-tutorial.inner-header.even.ethereum-projects
+  .container
     .row
       .col-md-12
         +futureRecipe

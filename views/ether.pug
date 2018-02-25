@@ -1,7 +1,7 @@
 extends layout
 
 block vars
-  - var title='What is Ether'
+  - var title='什么是以太'
   - var url='ether'
   - var image='ether'
 
@@ -9,8 +9,8 @@ block content
   include mixins/recipes.pug
 
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
-    a(href="/").index Ethereum 
-    strong » Ether
+    a(href="/").index 以太坊
+    strong » 以太
 
   div#tutorial-start.main-tutorial.ether-tutorial.inner-header.inner-page.even
     .container
@@ -21,31 +21,31 @@ block content
         .col-md-6.tutorial.scrollme
           .header-title
             h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") Ether
-            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear")  The crypto-fuel for the Ethereum network
+            h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear")  以太坊网络的加密燃料
 
   .main-tutorial.inner-tutorial.ether-tutorial
     .container
       .row
         .col-md-12
-          h2 What is Ether?
+          h2 以太是什么？
 
-          p Ether is a necessary element — a fuel — for operating the distributed application platform Ethereum. It is a form of payment made by the clients of the platform to the machines executing the requested operations. To put it another way, ether is the incentive ensuring that developers write quality applications (wasteful code costs more), and that the network remains healthy (people are compensated for their contributed resources).
+          p 以太是操作分布式应用平台Ethereum的必要元素 - 燃料。 这是平台客户对执行所请求操作的机器进行的一种付款方式。 换句话说，以太是确保开发人员编写高质量应用程序（浪费代码成本更高）的动机，并且网络保持健康（人们对其贡献资源的补偿）。
 
           p
-            strong If you just want to test the technology, you probably don't need real ether. 
-              a(href='https://github.com/ethereum/mist/releases/latest') Download the latest Wallet app 
-              | and switch to the Test Network
+            strong 如果你只是想测试技术，你可能不需要真正的以太网。
+              a(href='https://github.com/ethereum/mist/releases/latest') 下载最新的电子钱包应用
+              | 并切换到测试网络
 
 
   .main-tutorial.ether-checker.even#balance
     .container
       .row
         .col-md-12
-          h2 Did you buy ether during the presale?
-          h3 Check your ether presale balance safely here:
+          h2 预售期间你买了以太吗？
+          h3 在这里安全地检查你的以太预售余额：
           form#ether-checker
             input(type="text" name="address" placeholder="Ether address")
-            input(class="button btn btn-blue" type="submit" value="Check your balance")
+            input(class="button btn btn-blue" type="submit" value="检查你的余额")
 
 
   .main-tutorial.inner-tutorial.ether-tutorial
@@ -53,10 +53,10 @@ block content
       .row
         .col-md-12
           include:markdown-it content/ether.md
-          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/ether.md') Improve this page
+          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/ether.md') 改进此页面
 
   .main-tutorial.even
     .container
       .row
         .col-md-12.tutorial
-            +gethRecipe("What's next?")
+            +gethRecipe("下一步是什么？")

@@ -1,10 +1,9 @@
+# 关于独角兽
 
-#### About Unicorns
++ 任何超过2.014醚的捐赠将触发创建一个全新的独角兽，并将自动发送到捐款地址。
 
-+ Any donation over 2.014 ethers will trigger the creation of a brand new unicorn that will be automatically sent to the donation address.
++ 如果您通过交换或付款服务发送捐赠，独角兽将被发送到**their**地址，只有他们可以为您找回（他们可能不会为您做）。  所以如果你想要独角兽，请确保你从直接和完全控制的地址发送它。
 
-+ If you send donations through exchanges or payment services, the Unicorn will be sent to **their** address and only they can retrieve it for you (they probably won’t do it for you).  So if you want the Unicorn, make sure you send it from an address that you directly and fully control.
++ 所以如果你想要独角兽，请确保你从直接和完全控制的地址发送它。
 
-+ Since Unicorns are part of an ethereum contract, they are only generated for donations of ether on the ethereum blockchain.  
-
-+ Unicorns are fun tokens with de minimis value (no cash equivalent or redeemable value), and you can watch your Unicorns through your Ethereum Wallet ([here's how](#watch)).
++ 独角兽是有价值的代币（无现金等值或可兑换价值），您可以通过您的Ethereum Wallet观看您的独角兽 ([就是这样](#watch)).

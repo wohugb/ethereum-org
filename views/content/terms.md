@@ -1,149 +1,191 @@
-**PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITE.** 
+## 条款
 
-Acceptance of the Terms of Use These terms of use are entered into by and between You and the Ethereum Foundation ("Company", "we" or "us"). The following terms and conditions, together with any documents they expressly incorporate by reference (collectively, these "Terms of Use"), govern your access to and use of ethereum.org, including any content, functionality and services offered on or through ethereum.org, ethereumfoundation.org and blog.ethereum.org (together, the "Website"). 
+### 请在使用本网站之前阅读这些使用条款
 
-Please read the Terms of Use carefully before you start to use the Website. By using the Website or by clicking to accept or agree to the Terms of Use when this option is made available to you, you accept and agree to be bound and abide by these Terms of Use in addition to
+接受使用条款这些使用条款由您和以太坊基金会签订(“公司”，“我们”或“我们”).
+以下条款和条件， 以及他们通过引用明确收录的任何文件(统称这些“使用条款”), 管理您访问和使用ethereum.org, 包括通过或通过ethereum.org，ethereumfoundation.org和blog.ethereum.org提供的任何内容，功能和服务(在一起，“网站”).
 
-*   our Privacy Policy, found at [https://ethereumfoundation.org/devcon3/privacy-policy/](https://ethereumfoundation.org/devcon3/privacy-policy), incorporated herein by reference; and
-*   our Cookie Policy, found at [https://ethereumfoundation.org/devcon3/cookie-policy/](https://ethereumfoundation.org/devcon3/cookie-policy), incorporated herein by reference.
+在开始使用本网站之前，请仔细阅读使用条款。 通过使用本网站或点击接受或同意使用条款，当这个选项提供给你, 您接受并同意接受并遵守这些使用条款
 
-If you do not to agree to these Terms of Use or the Privacy Policy, you must not access or use the Website. 
+* 我们的隐私政策，发现于[https://ethereumfoundation.org/devcon3/privacy-policy/](https://ethereumfoundation.org/devcon3/privacy-policy), 在此引入作为参考;,和
+* 我们的Cookie政策，发现于 [https://ethereumfoundation.org/devcon3/cookie-policy/](https://ethereumfoundation.org/devcon3/cookie-policy), 在此引入作为参考。
 
-**Who May Use the Website** 
+如果您不同意这些使用条款或隐私政策，您不得访问或使用本网站。
 
-This Website is offered and available to users who are 13 years of age or older for personal use only and not for commercial use. The Website is not intended for children under 13 years of age. By using this Website, you represent and warrant that you (i) are 13 years of age or older, (ii) are not barred to use the Website under any applicable law, and (iii) are using the Website only for your own personal use. If you do not meet these requirements, you must not access or use the Website. 
+### 谁可以使用该网站
 
-**Changes to the Terms of Use** 
+本网站提供给13岁以上的用户，仅供个人使用，不能用于商业用途。 本网站不适用于13岁以下的儿童。 通过使用本网站，您声明并保证您（i）年满13岁或以上，（ii）不得根据任何适用法律禁止使用本网站，以及（iii）仅将网站用于您自己的个人,使用。,如果您不符合这些要求，则不得访问或使用本网站。
 
-We may revise and update these Terms of Use from time to time in our sole discretion. All changes are effective immediately when we post them. 
+### 使用条款的变更
 
-Your continued use of the Website following the posting of revised Terms of Use means that you accept and agree to the changes. You are expected to check this page frequently so you are aware of any changes, as they are binding on you. 
+我们可能会不定期修改和更新这些使用条款。
+所有更改都会在我们发布后立即生效。
 
-**Accessing the Website and Account Security** 
+您在发布修订后的使用条款后继续使用本网站即表示您接受并同意
+您需要经常检查此页面，以便您了解任何更改，因为它们对您有约束力。
 
-We reserve the right to withdraw or amend this Website, and any service or material we provide on the Website, in our sole discretion without notice. We do not guarantee that our site or any content on it, will always be available or be interrupted. We will not be liable if for any reason all or any part of the Website is unavailable at any time or for any period. From time to time, we may restrict access to some parts of the Website, or the entire Website, to users. 
+### 访问网站和帐户安全
 
-You are responsible for:
+修改本网站以及我们在网站上提供的任何服务或材料，我们全权酌情决定，恕不另行通知。
+我们不保证我们的网站或其上的任何内容将始终可用或被打断。
+如果由于任何原因，在任何时间或任何时间，本网站的全部或任何部分不可用，我们概不负责。
+有时，我们可能会限制用户访问网站的某些部分或整个网站。
 
-*   Making all arrangements necessary for you to have access to the Website.
-*   Ensuring that all persons who access the Website through your internet connection are aware of these Terms of Use and comply with them.
+您有责任：
 
-To access the Website or some of the resources it offers, you may be asked to provide certain registration details or other information. It is a condition of your use of the Website that all the information you provide on the Website is correct, current and complete. You agree that all information you provide to register using this Website or otherwise, including, but not limited to, using any interactive features on the Website, is governed by our <a>Privacy Policy</a>, and you consent to all actions we take with respect to your information consistent with our Privacy Policy. 
+* 为您进行必要的一切安排以访问网站。
+* 确保所有通过互联网访问本网站的人都知道这些使用条款并遵守这些条款。
 
-You should use particular caution when inputting personal information on to the Website on a public or shared computer so that others are not able to view or record your personal information. 
+要访问网站或其提供的一些资源，可能会要求您提供某些注册详细信息
+您使用本网站的条件是您在本网站上提供的所有信息都是正确的，最新的和完整的。
+您同意您提供的所有使用本网站或其他方式注册的信息，包括但不限于使用本网站上的任何互动功能，均受我们[隐私政策]（隐私）的约束，并且您同意我们采取的所有措施,关于您的信息与我们的隐私政策一致。
 
-**Intellectual Property Rights** 
+在公共或共享计算机上输入个人信息时，应特别小心，以防其他人无法查看或记录您的个人信息。
 
-The Website and its entire contents, features and functionality (including but not limited to all information, software, text, displays, images, video and audio, and the design, selection and arrangement thereof), are owned by the Company, its licensors or other providers of such material and are protected by copyright, trademark, patent, trade secret and other intellectual property or proprietary rights laws. 
+### 知识产权
 
-These Terms of Use permit you to use the Website for your personal, non-commercial use only. You must not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store or transmit any of the material on our Website, except as follows:
+本网站及其全部内容，特性和功能（包括但不限于所有信息，软件，文本，显示，图像，视频和音频以及其设计，选择和安排）均由本公司，其许可方或,此类材料的其他提供者并受版权，商标，专利，商业机密和其他知识产权或所有权法律的保护。
 
-*   Your computer may temporarily store copies of such materials in RAM incidental to your accessing and viewing those materials.
-*   You may store files that are automatically cached by your Web browser for display enhancement purposes.
-*   You may print or download one copy of a reasonable number of pages of the Website for your own personal, non-commercial use and not for further reproduction, publication or distribution.
-*   If we provide desktop, mobile or other applications for download, you may download a single copy to your computer or mobile device solely for your own personal, non-commercial use, provided you agree to be bound by our end user license agreement for such applications.
+这些使用条款允许您仅将本网站用于个人，非商业用途。
+您不得在我们的网站上复制，分发，修改，制作衍生作品，公开展示，公开展示，公开展示，下载，存储或传输任何材料，但以下情况除外：
 
-**You must not:**
+* 您的计算机可能暂时将这些资料的副本临时存储在RAM中，以供您访问和查看这些资料。
+* 您可以存储由您的Web浏览器自动缓存的文件，以用于显示增强目的。
+* 您可以为自己的个人打印或下载合理页数的网页副本，不需要
+* 如果我们提供桌面，手机或其他应用程序下载，只要您同意接受我们的最终用户的约束，您可以下载一份副本到您的计算机或移动设备上，仅用于您个人的非商业用途
 
-*   Modify copies of any materials from this site.
-*   Delete or alter any copyright, trademark or other proprietary rights notices from copies of materials from this site.
+### 你不能
 
-You must not access or use for any commercial purposes any part of the Website or any services or materials available through the Website. 
+* 修改本网站任何资料的副本。
+* 从此材料副本中删除或更改任何版权，商标或其他所有权声明
 
-If you wish to make any use of materials on the Website other than that set out in this section, please address your request to: notices@ethereum.org. 
+您不得以任何商业目的访问或使用本网站或任何服务或材料的任何部分
 
-If you print, copy, modify, download or otherwise use or provide any other person with access to any part of the Website in breach of the Terms of Use, your right to use the Website will cease immediately and you must, at our option, return or destroy any copies of the materials you have made. No right, title or interest in or to the Website or any content on the Website is transferred to you, and all rights not expressly granted are reserved by the Company. Any use of the Website not expressly permitted by these Terms of Use is a breach of these Terms of Use and may violate copyright, trademark and other laws. 
+如果您希望使用本网站以外的材料，请将您的请求发至：notices@ethereum.org。
 
-**Trademarks** 
+如果您违反使用条款打印，复制，修改，下载或以其他方式使用或提供任何其他人访问本网站任何部分的权利，您的网站使用权将立即停止，您必须在
+对本网站或本网站上的任何内容的任何权利，所有权或利益均不会转让给您和全部
+本使用条款未明确许可使用本网站即违反了本使用条款，可能会违反本使用条款
 
-The Company name, the terms Ethereum Switzerland, Ethereum Asia, the Company logo and all related names, logos, product and service names, designs and slogans are trademarks of the Company or its affiliates or licensors. You must not use such marks without the prior written permission of the Company. All other names, logos, product and service names, designs and slogans on this Website are the trademarks of their respective owners. 
+### 商标
 
-**Prohibited Uses** 
+公司名称，以太坊瑞士，以太坊亚洲，公司标识以及所有相关名称，标识，产品和服务名称，设计和口号均为本公司或其附属公司或许可方的商标。
+未经本公司事先书面许可，您不得使用此类标志。
+本网站上的所有其他名称，徽标，产品和服务名称，设计和口号均为其商标
 
-You may use the Website only for lawful purposes and in accordance with these Terms of Use. You agree not to use the Website:
+### 禁止使用
 
-*   In any way that violates any applicable federal, state, local or international law or regulation (including, without limitation, any laws regarding the export of data or software to and from the US or other countries).
-*   For the purpose of exploiting, harming or attempting to exploit or harm minors in any way by exposing them to inappropriate content, asking for personally identifiable information or otherwise.
-*   To send, knowingly receive, upload, download, use or re-use any material which does not comply with these Terms of Use.
-*   To transmit, or procure the sending of, any advertising or promotional material without our prior written consent, including any "junk mail", "chain letter" or "spam" or any other similar solicitation.
-*   To impersonate or attempt to impersonate the Company, a Company employee, another user or any other person or entity (including, without limitation, by using e-mail addresses or screen names associated with any of the foregoing).
-*   To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Website, or which, as determined by us, may harm the Company or users of the Website or expose them to liability.
+您仅可将本网站用于合法目的并符合这些使用条款。
+您同意不使用本网站：
 
-Additionally, you agree not to:
+* 以任何方式违反任何适用的联邦，州，地方或国际法律或法规（包括但不限于有关向美国或其他国家出口数据或软件的任何法律）。
+* 以任何方式利用，伤害或试图利用或试图利用或伤害未成年人，将其暴露给不适当的内容，要求提供个人身份信息或其他方式。
+* 发送，明知而接收，上传，下载，使用或重新使用任何不符合这些使用条款的材料。
+* 在未经我们事先书面同意的情况下传送或促使发送任何广告或宣传材料，包括任何“垃圾邮件”，“连锁信”或“垃圾邮件”或任何其他类似的招揽。
+* 假冒或企图冒充公司，公司员工，其他用户或任何其他人员或实体（包括但不限于使用与上述任何相关的电子邮件地址或屏幕名称）。
+* 从事任何其他限制或禁止任何人使用或享受本网站的行为，或由我们确定可能损害本公司或本网站用户或使其承担责任的行为。
 
-*   Use the Website in any manner that could disable, overburden, damage, or impair the site or interfere with any other party's use of the Website, including their ability to engage in real time activities through the Website.
-*   Use any robot, spider or other automatic device, process or means to access the Website for any purpose, including monitoring or copying any of the material on the Website.
-*   Use any manual process to monitor or copy any of the material on the Website or for any other unauthorized purpose without our prior written consent.
-*   Use any device, software or routine that interferes with the proper working of the Website.
-*   Introduce any viruses, trojan horses, worms, logic bombs or other material which is malicious or technologically harmful.
-*   Attempt to gain unauthorized access to, interfere with, damage or disrupt any parts of the Website, the server on which the Website is stored, or any server, computer or database connected to the Website.
-*   Attack the Website via a denial-of-service attack or a distributed denial-of-service attack.
-*   Otherwise attempt to interfere with the proper working of the Website.
+此外，您同意不会：
 
-**Reliance on Information Posted** 
+* 以任何可能使网站失效，过载，损坏或损害网站或干扰任何其他方使用本网站的方式使用本网站，包括其通过本网站从事实时活动的能力。
+* 使用任何机器人，蜘蛛或其他自动设备，流程或手段以任何目的访问本网站，包括监控或复制网站上的任何资料。
+* 未经我们事先书面同意，使用任何手动流程来监控或复制网站上的任何资料或用于任何其他未经授权的目的。
+* 使用任何干扰网站正常运行的设备，软件或例程。
+* 引入任何病毒，特洛伊木马，蠕虫，逻辑炸弹或其他恶意或技术有害的材料。
+* 尝试获得未经授权的访问，干扰，破坏或破坏网站的任何部分，存储网站的服务器或连接到本网站的任何服务器，计算机或数据库。
+* 通过拒绝服务攻击或分布式拒绝服务攻击攻击网站。
+* 否则，请尝试干预网站的正常工作。
 
-The information presented on or through the Website is made available solely for general information purposes. We do not warrant the accuracy, completeness or usefulness of this information. Any reliance you place on such information is strictly at your own risk. We disclaim all liability and responsibility arising from any reliance placed on such materials by you or any other visitor to the Website, or by anyone who may be informed of any of its contents. 
+### 依赖信息发布
 
-This Website includes content provided by third parties, including materials provided by other users, bloggers and third-party licensors, syndicators, aggregators and/or reporting services. All statements and/or opinions expressed in these materials, and all articles and responses to questions and other content, other than the content provided by the Company, are solely the opinions and the responsibility of the person or entity providing those materials. These materials do not necessarily reflect the opinion of the Company. We are not responsible, or liable to you or any third party, for the content or accuracy of any materials provided by any third parties. 
+本网站上或通过本网站呈现的信息仅供一般信息之用。
+我们不保证此信息的准确性，完整性或实用性。
+您对这些信息的任何依赖都是由您自己承担风险。
+我们不承担由您或任何其他访问者对网站或任何可能被告知其内容的任何人依赖这些材料而引起的所有责任和责任。
 
-**Changes to the Website** 
+本网站包含由第三方提供的内容，包括由其他用户，博主和第三方许可人提供的材料，辛迪加，聚合商和/或报告服务。
+在这些材料中表达的所有陈述和/或意见以及所有文章和对问题和其他内容的回应，而非由其提供的内容
+这些材料不一定反映公司的意见。
+我们不对任何第三方提供的任何材料的内容或准确性负责，也不对您或任何第三方承担责任。
 
-We may update the content on this Website from time to time, but its content is not necessarily complete or up-to-date. Any of the material on the Website may be out of date at any given time, and we are under no obligation to update such material. 
+### 对网站的更改
 
-**Information About You and Your Visits to the Website** 
+我们可能不时更新本网站上的内容，但其内容不一定是完整的或最新的。
+网站上的任何资料可能会在任何特定时间过期，我们没有义务更新此类资料。
 
-All information we collect on this Website is subject to our [https://ethereumfoundation.org/devcon3/privacy-policy](https://ethereumfoundation.org/devcon3/privacy-policy). By using the Website, you consent to all actions taken by us with respect to your information in compliance with the Privacy Policy. 
+### 关于您和您访问网站的信息
 
-**Online Purchases and Other Terms and Conditions** 
+我们在本网站上收集的所有信息均受我们的[https://ethereumfoundation.org/devcon3/privacy-policy](https://ethereumfoundation.org/devcon3/privacy-policy）的约束。
+通过使用本网站，您同意我们根据隐私政策就您的信息采取的所有行动。
 
-Additional terms and conditions may also apply to specific portions, services or features of the Website, including the registration and sponsorship for conference events. All such additional terms and conditions are hereby incorporated by this reference into these Terms of Use. In the event of terms that are directly conflicting between these Terms of Use and terms of conditions for the registration or sponsorship of a conference event, the terms and conditions for the event shall control. 
+### 在线购买和其他条款和条件
 
-**Linking to the Website and Social Media Features** 
+附加条款和条件也可能适用于本网站的特定部分，服务或功能，包括会议活动的注册和赞助。
+所有这些附加条款和条件通过此引用并入本使用条款。
+如果这些使用条款与注册或赞助会议事件的条款条款直接冲突，则应以该事件的条款和条件为准。
 
-You may link to our homepage, provided you do so in a way that is fair and legal and does not damage our reputation or take advantage of it, but you must not establish a link in such a way as to suggest any form of association, approval or endorsement on our part without our express written consent. 
+### 链接到网站和社交媒体功能
 
-**Links from the Website** 
+您可以链接到我们的主页，但前提是您的公正合法，不会损害我们的声誉或利用它的优势，但您不得以建立任何形式的关联的方式建立链接，,未经我们明确的书面同意，我们的认可或认可。
 
-If the Website contains links to other sites and resources provided by third parties, these links are provided for your convenience only. This includes links contained in advertisements, including banner advertisements and sponsored links. We have no control over the contents of those sites or resources, and accept no responsibility for them or for any loss or damage that may arise from your use of them. If you decide to access any of the third party websites linked to this Website, you do so entirely at your own risk and subject to the terms and conditions of use for such websites. We reserve the right to withdraw linking permission without notice. 
+### 来自网站的链接
 
-**Geographic Restrictions** 
+如果网站包含第三方提供的其他网站和资源的链接，这些链接仅供您使用。
+这包括广告中包含的链接，包括横幅广告和赞助商链接。
+我们无法控制这些网站或资源的内容，也不对其承担任何责任，也不承担因使用本网站或资源而造成的任何损失或损害
+如果您决定访问链接到本网站的任何第三方网站，您完全承担您的风险并受此类网站的使用条款和条件的约束。
+我们保留取消链接权限的权利，恕不另行通知。
 
-The owner of the Website is based in Switzerland. We make no claims that the Website or any of its content is accessible or appropriate outside of Switzerland. Access to the Website may not be legal by certain persons or in certain countries. If you access the Website from outside Switzerland, you do so on your own initiative and are responsible for compliance with local laws. 
+### 地理限制
 
-**Disclaimer of Warranties** 
+该网站的所有者位于瑞士。
+我们不会声称本网站或其任何内容在瑞士以外地区均可访问或适用。
+访问本网站可能不是某些人或某些国家的合法人士。
+如果您从瑞士境外访问本网站，则主动采取行动并负责遵守当地法律。
 
-You understand that we cannot and do not guarantee or warrant that files available for downloading from the internet or the Website will be free of viruses or other destructive code. You are responsible for implementing sufficient procedures and checkpoints to satisfy your particular requirements for anti-virus protection and accuracy of data input and output, and for maintaining a means external to our site for any reconstruction of any lost data. WE WILL NOT BE LIABLE FOR ANY LOSS OR DAMAGE CAUSED BY A DISTRIBUTED DENIAL-OF-SERVICE ATTACK, VIRUSES OR OTHER TECHNOLOGICALLY HARMFUL MATERIAL THAT MAY INFECT YOUR COMPUTER EQUIPMENT, COMPUTER PROGRAMS, DATA OR OTHER PROPRIETARY MATERIAL DUE TO YOUR USE OF THE WEBSITE OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE OR TO YOUR DOWNLOADING OF ANY MATERIAL POSTED ON IT, OR ON ANY WEBSITE LINKED TO IT. 
+### 免责声明
 
-YOUR USE OF THE WEBSITE, ITS CONTENT AND ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE IS AT YOUR OWN RISK. THE WEBSITE, ITS CONTENT AND ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. NEITHER THE COMPANY NOR ANY PERSON ASSOCIATED WITH THE COMPANY MAKES ANY WARRANTY OR REPRESENTATION WITH RESPECT TO THE COMPLETENESS, SECURITY, RELIABILITY, QUALITY, ACCURACY OR AVAILABILITY OF THE WEBSITE. WITHOUT LIMITING THE FOREGOING, NEITHER THE COMPANY NOR ANYONE ASSOCIATED WITH THE COMPANY REPRESENTS OR WARRANTS THAT THE WEBSITE, ITS CONTENT OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE WILL BE ACCURATE, RELIABLE, ERROR-FREE OR UNINTERRUPTED, THAT DEFECTS WILL BE CORRECTED, THAT OUR SITE OR THE SERVER THAT MAKES IT AVAILABLE ARE FREE OF VIRUSES OR OTHER HARMFUL COMPONENTS OR THAT THE WEBSITE OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE WILL OTHERWISE MEET YOUR NEEDS OR EXPECTATIONS. 
+您了解我们不能也不保证或担保可从互联网或网站下载的文件不含病毒或其他破坏性代码。
+您有责任实施足够的程序和检查点，以满足您对防病毒保护的特定要求以及数据输入和输出的准确性，并为我们网站外部的任何重建丢失数据的方式维护一种手段。
+对于由于您使用本网站而可能感染您的计算机设备，计算机程序，数据或其他专有材料的分布式拒绝服务攻击，病毒或其他技术上有害材料导致的任何损失或损害，我们概不负责，或,通过本网站获得的任何服务或项目，或者您下载在其上发布的任何材料或任何与其相关的网站上的任何服务或项目。
 
-THE COMPANY HEREBY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, STATUTORY OR OTHERWISE, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT AND FITNESS FOR PARTICULAR PURPOSE. 
+您使用本网站及其内容以及通过本网站获得的任何服务或项目的风险由您自行承担。
+网站，其内容以及通过本网站获得的任何服务或项目均按“原样”和“现有”的基础提供，不提供任何明示或暗示的任何形式的保证。
+本公司或与本公司有关的任何人均不就本网站的完整性，安全性，可靠性，质量，准确性或可用性做出任何担保或陈述。
+在不限制前述，也不可与本公司联系本公司或任何人表示OR的网站，其内容或任何服务或项目获得通过该网站认股权证将准确，可靠，无差错或不间断，缺陷将得到纠正，,我们的网站O
 
-SOME JURISDICTIONS DO NOT ALLOW EXCLUSION OF WARRIANTIES OR LIMITATIONS ON THE DURATION OF IMPLIED WARRANTIES, SO THE ABOVE DISCLAIMER MAY NOT APPLY TO YOU IN THEIR ENTIRETIES, BUT WILL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW. 
+本公司特此否认所有形式的保证，无论明示或暗示，法定或其他形式，包括但不限于对适销性，非侵权性和针对特定用途的适用性的任何保证。
 
-**Limitation on Liability** 
+某些司法辖区不允许排除对暗示担保期限的保证或限制，因此上述免责声明可能不适用于您的所有情况，但将适用于适用法律允许的最大范围。
 
-IN NO EVENT WILL THE COMPANY, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND, UNDER ANY LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THE WEBSITE, ANY WEBSITES LINKED TO IT, ANY CONTENT ON THE WEBSITE OR SUCH OTHER WEBSITES OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITE OR SUCH OTHER WEBSITES, INCLUDING ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO, PERSONAL INJURY, PAIN AND SUFFERING, EMOTIONAL DISTRESS, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF BUSINESS OR ANTICIPATED SAVINGS, LOSS OF USE, LOSS OF GOODWILL, LOSS OF DATA, AND WHETHER CAUSED BY TORT (INCLUDING NEGLIGENCE), BREACH OF CONTRACT OR OTHERWISE, EVEN IF FORESEEABLE. THE FOREGOING DOES NOT AFFECT ANY LIABILITY WHICH CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW WHICH MAY INCLUDE FRAUD. 
+### 责任限制
 
-**Indemnification** 
+在任何情况下，本公司，其关联公司及其许可方，服务提供商，员工，代理商，官员或董事均不对因任何法律理论所导致的或与您使用相关的或无法使用的任何类型的损害负责,，本网站，与其相关的任何网站，本网站或其他网站上的任何内容或通过本网站或此类其他网站获得的任何服务或项目，包括任何直接，间接，特殊，附带，间接或惩罚性的损害赔偿，包括但不限于,包括但不限于个人伤害，疼痛和SU，不适，情绪低落，收入损失，利润损失，业务损失或预期存款损失，使用损失，商誉损失，数据丢失以及是否由于侵权行为（包括疏忽） ,，违反合同或其他方面，即使可预见。
+上述内容不影响任何可能包含欺诈行为在适用法律下不能排除或限制的责任。
 
-You agree to defend, indemnify and hold harmless the Company, its affiliates, licensors and service providers, and its and their respective officers, directors, employees, contractors, agents, licensors, suppliers, successors and assigns from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms of Use or your use of the Website, including, but not limited to, any use of the Website's content, services and products other than as expressly authorized in these Terms of Use or your use of any information obtained from the Website. 
+### 保障
 
-**Governing Law and Jurisdiction** 
+您同意捍卫本公司及其附属公司及其授权人和服务提供商及其各自的管理人员，董事，雇员，承包商，代理人，许可人，供应商，继承人和受让人免受任何索赔，债务， ,（包括合理的律师费用）造成的损失，损害，判断，奖励，损失，成本，费用或费用（包括合理的律师费用），包括但不限于任何使用,本网站的内容，服务和产品以外的使用条款明确授权或您使用从本网站获得的任何信息。
 
-All matters relating to the Website and these Terms of Use and any dispute or claim arising therefrom or related thereto (in each case, including non-contractual disputes or claims), shall be governed by and construed in accordance with the internal laws of Switzerland without giving effect to any choice or conflict of law provision or rule (whether of Switzerland or any other jurisdiction). 
+### 治理法律和管辖区
 
-Any legal suit, action or proceeding arising out of, or related to, these Terms of Use or the Website shall be instituted exclusively in the Switzerland in the Kanton of Zug although we retain the right to bring any suit, action or proceeding against you for breach of these Terms of Use in your country of residence or any other relevant country. You waive any and all objections to the exercise of jurisdiction over you by such courts and to venue in such courts. 
+与本网站和本使用条款相关的所有事宜以及由此产生的或与此有关的任何争议或索赔（在每种情况下，包括非合同纠纷或索赔）均应受瑞士国内法的管辖和解释，无,使法律规定或规则（无论是瑞士还是其他任何司法管辖区）的任何选择或冲突生效。
 
-**Waiver and Severability** 
+由于本使用条款或网站引起或与之有关的任何法律诉讼，诉讼或诉讼应仅在瑞士Zug Kanton的瑞士境内提起，尽管我们保留对您提起任何诉讼，诉讼或诉讼的权利，,在您居住的国家或任何其他相关国家/地区违反这些使用条款。
+您放弃对这些法院对您行使管辖权以及在此类法院举行审判的任何和所有异议。
 
-No waiver of by the Company of any term or condition set forth in these Terms of Use shall be deemed a further or continuing waiver of such term or condition or a waiver of any other term or condition, and any failure of the Company to assert a right or provision under these Terms of Use shall not constitute a waiver of such right or provision. 
+### 弃权和可分割性
 
-If any provision of these Terms of Use is held by a court or other tribunal of competent jurisdiction to be invalid, illegal or unenforceable for any reason, such provision shall be eliminated or limited to the minimum extent such that the remaining provisions of the Terms of Use will continue in full force and effect. 
+公司不放弃本使用条款中规定的任何条款或条件，应被视为该条款或条件的进一步或持续放弃或放弃任何其他条款或条件，以及公司未能声明,本使用条款下的权利或条款不构成对此权利或条款的放弃。
 
-**Entire Agreement** 
+如果本“使用条款”的任何条款由法院或其他有管辖权的仲裁庭以任何理由无效，非法或无法执行，则应取消或限制此类条款，以使“条款”中的其他条款,使用将继续完全有效。
 
-The Terms of Use, our Privacy Policy and terms of conditions for the registration of events constitute the sole and entire agreement between you and the Ethereum Foundation with respect to the Website and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Website. 
+### 整个协议
 
-**Your Comments and Concerns** 
+本使用条款，我们的隐私政策和事件注册条件条款构成您与以太坊基金会之间就本网站达成的唯一和完整的协议，并取代所有之前和同期的谅解，协议，声明和保证，,并口头，就网站而言。
 
-This Website is operated by the Company. All other feedback, comments, requests for technical support and other communications relating to the Website should be directed to: notices@ethereum.org. Last modified: May 7, 2017
+### 你的意见和顾虑
+
+本网站由本公司运营。
+所有其他反馈，意见，与本网站有关的技术支持和其他通信请求均应发送至：notices@ethereum.org。
+最后修改日期：2017年5月7日

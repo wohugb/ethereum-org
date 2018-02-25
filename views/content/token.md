@@ -1,188 +1,241 @@
-### The Coin
+# 发行代币
 
-We are going to create a digital token. Tokens in the Ethereum ecosystem can represent any fungible tradable good: coins, loyalty points, gold certificates, IOUs, in-game items, etc. Since all tokens implement some basic features in a standard way, this also means that your token will be instantly compatible with the Ethereum wallet and any other client or contract that uses the same standards.
+## 币
 
-#### Minimum Viable Token
+我们将创建一个数字令牌。
+以太坊生态系统中的代币可以代表任何可替换的可交易商品：硬币，忠诚点，金币，白条，游戏内物品等。
+由于所有标记都以标准方式实现了一些基本功能，这也意味着您的标记将立即生效
 
-The standard token contract can be quite complex. But in essence a very basic token boils down to this:
+### 最小可用令牌
 
-```
+标准令牌合约可能相当复杂。
+但实质上，一个非常基本的令牌归结为：
+
+```js
 !!!include(solidity/token-minimal.sol)!!!
 ```
 
-#### The code
+### 代码
 
-But if you just want to copy paste a more complete code, then use this:
+但是如果你只想复制粘贴更完整的代码，那么使用下面的代码：
 
-
-```
+```js
 !!!include(solidity/token-erc20.sol)!!!
 ```
 
-#### Understanding the code
+### 了解代码
 
 ![Deploy New Contract](/images/tutorial/deploy-new-contract.png)
 
+所以让我们从基础开始
+打开电子钱包应用程序，转到合约选项卡，然后部署新合约。
+在Solidity Contract源代码文本字段中，输入以下代码：
 
-So let's start with the basics. Open the **Wallet** app, go to the *Contracts* tab and then *Deploy New Contract*. On the *Solidity Contract Source code* text field, type the code below:
-
-```
+```js
     contract MyToken {
-        /* This creates an array with all balances */
+        /* 这将创建一个包含所有余额的数组 */
         mapping (address => uint256) public balanceOf;
     }
 ```
 
-A mapping means an associative array, where you associate addresses with balances. The addresses are in the basic hexadecimal Ethereum format, while the balances are integers, ranging from 0 to 115 quattuorvigintillion. If you don't know how much a quattuorvigintillion is, it's many vigintillions more than anything you are planning to use your tokens for. The *public* keyword, means that this variable will be accessible by anyone on the blockchain, meaning all balances are public (as they need to be, in order for clients to display them).
+映射意味着一个关联数组，您将地址与余额相关联。
+地址是基本的十六进制以太坊格式，余额是整数，范围从0到115 quattuorvigintillion。
+如果你不知道quutuorvigintillion是多少，它比许多你打算使用你的代币更令人兴奋。
+public*关键字, 意味着这个变量将被区块链上的任何人访问， 意味着所有的余额都是公开的(因为他们需要，为了让客户展示他们).
 
 ![Edit New Contract](/images/tutorial/edit-contract.png)
 
-If you published your contract right away, it would work but wouldn't be very useful: it would be a contract that could query the balance of your coin for any address–but since you never created a single coin, every one of them would return 0. So we are going to create a few tokens on startup. Add this code *before* the last closing bracket, just under the *mapping..* line.
+如果您立即发布您的合约， 它会起作用但不会非常有用： 这将是一个合约，可以查询您的硬币余额的任何地址 - 但因为你从来没有创建一个硬币， 他们中的每一个都会返回0。
+所以我们将在启动时创建一些令牌。
+在最后一个右括号之前添加此代码，位于*mapping ..*行下方。
 
-```
+```js
     function MyToken() {
         balanceOf[msg.sender] = 21000000;
     }
 ```
 
-Notice that the *function MyToken* has the same name as the *contract MyToken*. This is very important and if you rename one, you have to rename the other too: this is a special, startup function that runs only once and once only when the contract is first uploaded to the network. This function will set the balance of *msg.sender*, the user which deployed the contract, with a balance of 21 million.
+请注意，*函数MyToken *与* contract MyToken *具有相同的名称。
+这非常重要，如果你重命名一个， 你必须重新命名另一个： 这是一个特殊的启动功能，仅在合约首次上传到网络时才运行一次。
+该功能将设置* msg.sender *的平衡， 部署合约的用户，余额为2100万。
 
-The choice of 21 million was rather arbitrary, and you can change it to anything you want in the code, but there's a better way: instead, supply it as a parameter for the function, like this:
+2,100万的选择是相当随意的， 你可以在代码中将其更改为任何你想要的东西， 但有一个更好的方法： 而是将其作为函数的参数提供，如下所示：
 
-```
+```js
     function MyToken(uint256 initialSupply) public {
         balanceOf[msg.sender] = initialSupply;
     }
 ```
 
-Take a look at the right column beside the contract and you'll see a drop-down list, written *pick a contract*. Select the "MyToken" contract and you'll see that now it shows a section called *Constructor parameters*. These are changeable parameters for your token, so you can reuse the same code and only change these variables in the future.
+看看合约旁边的右栏，你会看到一个下拉列表，写*pick a contract*。
+选择`MyToken`合约，你会看到现在它显示了一个名为* Constructor parameters *的部分。
+这些是令牌的可变参数，因此您可以重复使用相同的代码，并且将来只能更改这些变量。
 
 ![Edit New Contract](/images/tutorial/function-picker.png)
 
+现在你有一个创建令牌余额的功能合约，但由于没有任何功能来移动它，它所做的只是保留在同一个帐户上。
+所以我们现在要实施。
+在最后一个括号之前写下以下代码。
 
-Right now you have a functional contract that created balances of tokens but since there isn't any function to move it, all it does is stay on the same account. So we are going to implement that now. Write the following code *before the last bracket*.
-
-```
-    /* Send coins */
+```js
+    /* 发送硬币 */
     function transfer(address _to, uint256 _value) {
-        /* Add and subtract new balances */
+        /* 加减新的余额 */
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
     }
 ```
 
-This is a very straightforward function: it has a recipient and a value as the parameter and whenever someone calls it, it will subtract the *_value* from their balance and add it to the *_to* balance. Right away there's an obvious problem: what happens if the person wants to send more than it owns? Since we don't want to handle debt in this particular contract, we are simply going to make a quick check and if the sender doesn't have enough funds the contract execution will simply stop. It's also to check for overflows, to avoid having a number so big that it becomes zero again.
+这是一个非常简单的功能: 它有一个接收者和一个值作为参数，并且每当有人调用它的时候, 它会从他们的余额中减去* _value *并将其添加到* _to *余额中.
+马上就有一个明显的问题: 如果这个人想要发送比它拥有更多的东西会发生什么？
+由于我们不想在这份特定的合约中处理债务， 我们只需要做一个快速检查，如果发件人没有足够的资金，合约执行就会停止。
+这也是检查溢出， 以避免有一个数量如此之大以至于再次变为零。
 
-To stop a contract execution mid-execution you can either **return** or **throw** The former will cost less gas but it can be more headache as any changes you did to the contract so far will be kept. In the other hand, 'throw' will cancel all contract execution, revert any changes that transaction could have made and the sender will lose all Ether he sent for gas. But since the Wallet can detect that a contract will throw, it always shows an alert, therefore preventing any Ether to be spent at all.
+要在执行中止时停止执行合约，您可以**return**或者**throw**
+前者将减少天然气成本，但可能会更加令人头疼，因为迄今为止对合约所做的任何更改都将保留。
+另一方面， 'throw'将取消所有合约执行， 恢复交易可能发生的任何变化，并且发件人将失去他为天然气发送的所有以太网。
+但是，由于电子钱包可以检测到合约将抛出, 它总是显示一个警报, 因此阻止任何乙醚被花费。
 
-```
+```js
     function transfer(address _to, uint256 _value) {
-        /* Check if sender has balance and for overflows */
+        /* 检查发件人是否有余额和溢出 */
         require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
 
-        /* Add and subtract new balances */
+        /* 加减新的余额 */
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
     }
 ```
 
-Now all that is missing is having some basic information about the contract. In the near future this can be handled by a token registry, but for now we'll add them directly to the contract:
+现在缺少的是有关合约的一些基本信息。
+在不久的将来，这可以通过令牌注册表来处理， 但现在我们将把它们直接添加到合约中：
 
     string public name;
     string public symbol;
     uint8 public decimals;
 
-And now we update the **constructor function** to allow all those variables to be set up at the start:
+现在我们更新**constructor function**以允许在开始时设置所有这些变量：
 
-```
-    /* Initializes contract with initial supply tokens to the creator of the contract */
+```js
+    /* 将初始供应令牌初始化为合约的创建者 */
     function MyToken(uint256 initialSupply, string tokenName, string tokenSymbol, uint8 decimalUnits) {
-        balanceOf[msg.sender] = initialSupply;              // Give the creator all initial tokens
-        name = tokenName;                                   // Set the name for display purposes
-        symbol = tokenSymbol;                               // Set the symbol for display purposes
-        decimals = decimalUnits;                            // Amount of decimals for display purposes
+        balanceOf[msg.sender] = initialSupply;              // 为创建者提供所有初始令牌
+        name = tokenName;                                   // 为显示目的设置名称
+        symbol = tokenSymbol;                               // 设置符号用于显示目的
+        decimals = decimalUnits;                            // 用于显示的小数位数
     }
 ```
 
-Finally, we now need something called **Events**. These are special, empty functions that you call to help clients like the Ethereum Wallet keep track of activities happening in the contract. Events should start with a capital letter. Add this line at the beginning of the contract to declare the event:
+最后，我们现在需要一个名为**Events**的东西。
+这些是特殊的空白功能，您可以致电以帮助像以太坊钱包这样的客户跟踪合约中发生的活动。
+活动应以大写字母开头。
+在合约开始处添加此行以声明事件：
 
-```
+```js
     event Transfer(address indexed from, address indexed to, uint256 value);
 ```
 
-And then you just need to add these two lines inside the "transfer" function:
+然后你只需要在`transfer`函数中添加这两行：
 
-```
+```js
         /* Notify anyone listening that this transfer took place */
         Transfer(msg.sender, _to, _value);
 ```
 
-And now your token is ready!
+现在你的代币已经准备好了！
 
-#### Noticed the comments?
+### 注意到了评论？
 
-What are those @notice and @param comments, you might ask? That's [Natspec](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format) an emerging standard for a natural language specification, which allows wallets to show the user a natural language description of what the contract is about to do. While not currently supported by many wallets, this will change in the future, so it's nice to be prepared.
+那些@notice和@param评论，你可能会问什么？
+这是[Natspec](https://github.com/ethereum/wiki/wiki/Ethereum-Natural-Specification-Format)自然语言规范的新兴标准， 这允许钱包向用户显示合约即将做的事情的自然语言描述。
+虽然目前还没有很多钱包的支持， 这将在未来发生变化， 所以很高兴做好准备。
 
-#### How to deploy
+### 如何部署
 
-If you aren't there already, open the Ethereum Wallet, go to the contracts tab and then click "deploy new contract".
+如果你不在那里，, 打开以太坊钱包, 转到合约选项卡，然后单击`deploy new contract`.
 
-Now get the token source from above and paste it into the "Solidity source field". If the code compiles without any error, you should see a "pick a contract" drop-down list on the right. Get it and select the "MyToken" contract. On the right column, you'll see all the parameters you need to personalize your own token. You can tweak them as you please, but for the purpose of this tutorial we recommend you to pick these parameters: 10,000 as the supply, any name you want, "%" for a symbol and 2 decimal places. Your app should be looking like this:
+现在从上方获取令牌源并将其粘贴到`Solidity source field`.
+如果代码编译没有任何错误，您应该在右侧看到一个`pick a contract`下拉列表。
+获取并选择`MyToken`合约。
+在右栏中，您会看到您需要个性化您自己的令牌的所有参数。
+你可以随意调整它们， 但为了本教程的目的，我们建议您选择这些参数: 10,000为供应品，任何你想要的名称，`％`为符号和2位小数位。
+你的应用应该看起来像这样:
 
 [![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 10](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)
 
-Scroll to the end of the page and you'll see an estimate of the computation cost of that contract and you can select a fee on how much Ether you are willing to pay for it. **Any excess Ether you don't spend will be returned to you** so you can leave the default settings if you wish. Press "deploy", type your account password and wait a few seconds for your transaction to be picked up.
+滚动到页面的末尾，您会看到该合约计算成本的估计值，您可以选择一个费用来确定您愿意为此支付多少乙醚。
+**任何你不会花费的多余的醚将被退还给你**所以你可以保留默认设置，如果你愿意.
+按`deploy`, 输入您的账户密码并等待几秒钟，以便您的交易被提取.
 
 [![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 11](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)
 
-You'll be redirected to the front page where you can see your transaction waiting for confirmations. Click the account named "Etherbase" (your main account) and after no more than a minute you should see that your account will show that you have 100% of the shares you just created.  To send some to a few friends: select "send", and then choose which currency you want to send (Ether or your newly created share), paste your friend's address on the "to" field and press "send".
+您将被重定向到首页，在那里您可以看到您的交易正在等待确认.
+点击名为`Etherbase`（您的主要帐户）的帐户，不超过一分钟后，您应该看到您的帐户将显示您拥有100％的刚创建的股份。
+发送一些给几个朋友： 选择 `send`, 然后选择您想要发送的货币 (醚或你新创建的份额), 将你的朋友的地址粘贴到`to`字段并按`send`。
 
 ![Screen Shot 2015-12-03 at 9.48.15 AM](/images/tutorial/Screen-Shot-2015-12-03-at-9.48.15-AM.png)
 
-If you send it to a friend, they will not see anything in their wallet yet. This is because the wallet only tracks tokens it knows about, and you have to add these manually. Now go to the "Contracts" tab and you should see a link to your newly created contract. Click on it to go to its page. Since this is a very simple contract page there isn't much to do here, just click "copy address" and paste the contract address into a text editor, you'll need it shortly.
+如果你将它发送给朋友，他们将不会在他们的钱包中看到任何东西。
+这是因为钱包只追踪它知道的令牌，并且您必须手动添加这些令牌。
+现在转到`Contracts`选项卡，您应该看到一个指向您新创建合约的链接。
+点击它进入其页面。
+由于这是一个非常简单的合约页面，因此在这里没有太多要做的事情，只需点击`copy address`并将合约地址粘贴到文本编辑器中，您很快就会需要它。
 
-To add a token to watch, go to the contracts page and then click "Watch Token". A pop-up will appear and you only need to paste the contract address. The token name, symbol and decimal number should be automatically filled but if it's not you can put anything you want (it will only affect how it displays on your wallet). Once you do this, you'll automatically be shown any balance you have of that token and you'll be able to send it to anyone else.
+要添加令牌观看，请转到合约页面，然后单击`Watch Token`。
+弹出窗口会出现，您只需要粘贴合约地址。
+令牌名称，符号和十进制数字应自动填充，但如果不是，您可以放入任何您想要的东西（它只会影响它在钱包上的显示方式）。
+一旦你这样做了，你就会自动显示你拥有该令牌的任何平衡，并且你可以发送给它
 
 [![Ethereum Wallet Beta 4 Screen Shot 2015-12-03 at 9.44.42 AM](/images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)](/images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)
 
-And now you have your own crypto token! Tokens by themselves can be useful as [value exchange on local communities](https://en.wikipedia.org/wiki/Local_currency), ways to [keep track of worked hours](https://en.wikipedia.org/wiki/Time-based_currency) or other loyalty programs. But can we make a currency have an intrinsic value by making it useful?
+现在你有你自己的加密标记！,令牌本身可以用作当地社区的[价值交换](https://en.wikipedia.org/wiki/Local_currency), 跟踪[工作时间的方法](https://en.wikipedia.org/wiki/Time-based_currency)或其他忠诚计划.
+但是，通过使货币具有实用价值，我们能否让货币具有内在价值？
 
+## 改善你的令牌
 
-### Improve your token
+您可以部署您的整个加密令牌，而无需触及一行代码, 但是当你开始定制它时，真正的魔法就会发生。
+以下部分将提供有关可以添加到令牌的功能的建议，以使其更适合您的需求。
 
-You can deploy your whole crypto token without ever touching a line of code, but the real magic happens when you start customizing it. The following sections will be suggestions on functions you can add to your token to make it fit your needs more.
+### 更基本的功能
 
-#### More basic functions
+您会注意到基本令牌合约中还有一些功能，比如批准，发送等等。
+这些功能用于您的令牌与其他合约进行交互: 如果你想要把代币卖给分散的交易所， 只是将它们发送到一个地址是不够的因为交易所不会意识到新的令牌或谁发送了它们, 因为合约不能订阅**Events**只能**function calls**.
+所以对于合约， 您应该首先批准他们可以从您的帐户移动的令牌数量，然后通过ping命令让他们知道他们应该做他们的事情 - 或者通过**approveAndCall**完成两项操作。
 
-You'll notice that there some more functions in your basic token contract, like approve, sendFrom and others. These functions are there for your token to interact with other contracts: if you want, say, sell tokens to a decentralized exchange, just sending them to an address will not be enough as the exchange will not be aware of the new tokens or who sent them, because contracts aren't able to subscribe to **Events** only to **function calls**. So for contracts, you should first approve an amount of tokens they can move from your account and then ping them to let them know they should do their thing - or do the two actions in one, with **approveAndCall**.
+因为其中许多功能都需要重新实现令牌的传输, 将它们改为内部函数是有意义的, 这只能由合约本身来调用:
 
-Because many of these functions are having to reimplement the transferring of tokens, it makes sense to change them to an internal function, which can only be called by the contract itself:
-
-```
-    /* Internal transfer, can only be called by this contract */
+```js
+    /* 内部转移，只能由本合约调用 */
     function _transfer(address _from, address _to, uint _value) internal {
-        require (_to != 0x0);                               // Prevent transfer to 0x0 address. Use burn() instead
-        require (balanceOf[_from] >= _value);                // Check if the sender has enough
-        require (balanceOf[_to] + _value > balanceOf[_to]); // Check for overflows
-        require(!frozenAccount[_from]);                     // Check if sender is frozen
-        require(!frozenAccount[_to]);                       // Check if recipient is frozen
-        balanceOf[_from] -= _value;                         // Subtract from the sender
-        balanceOf[_to] += _value;                           // Add the same to the recipient
+        require (_to != 0x0);                               // 防止转移到0x0地址.使用burn（）代替
+        require (balanceOf[_from] >= _value);                // 检查发件人是否足够
+        require (balanceOf[_to] + _value > balanceOf[_to]); // 检查溢出
+        require(!frozenAccount[_from]);                     // 检查发件人是否被冻结
+        require(!frozenAccount[_to]);                       // 检查收件人是否被冻结
+        balanceOf[_from] -= _value;                         // 从发件人中减去
+        balanceOf[_to] += _value;                           // 将其添加到收件人
         Transfer(_from, _to, _value);
     }
 ```
 
-Now all your functions that result in the transfer of coins, can do their own checks and then call **transfer** with the correct parameters. Notice that this function will move coins from any account to any other, without requiring anyone's permission to do so: that's why it's an internal function, only called by the contract: if you add any function calling it, make sure it properly verifies if the caller should be have permission to move those.
+现在所有导致硬币转移的功能, 可以做自己的检查，然后用正确的参数调用**transfer**.
+请注意，此功能会将硬币从任何帐户转移到任何其他帐户，无需任何人的许可: 这就是为什么它是一个内部功能, 只由合约调用: 如果你添加任何调用它的函数, 确保它正确验证主叫方是否有权移动这些内容.
 
-#### Centralized Administrator
+### 集中管理员
 
-All dapps are fully decentralized by default, but that doesn't mean they can't have some sort of central manager, if you want them to. Maybe you want the ability to mint more coins, maybe you want to ban some people from using your currency. You can add any of those features, but the catch is that you can only add them at the beginning, so all the token holders will always know exactly the rules of the game before they decide to own one.
+所有的dapps默认都是完全分散的, 但这并不意味着他们不能拥有某种中央经理, 如果你想要他们.
+也许你想要能够铸造更多的硬币, 也许你想要能够铸造更多的硬币.
+您可以添加任何这些功能, 但问题在于你只能在开始时添加它们, 所以所有的代币持有者在决定拥有游戏之前总是会准确地知道游戏的规则.
 
-For that to happen, you need a central controller of currency. This could be a simple account, but could also be a contract and therefore the decision on creating more tokens will depend on the contract: if it's a democratic organization that can be up to vote, or maybe it can be just a way to limit the power of the token owner.
+为了实现这一点，你需要一个货币中央控制器.
+这可能是一个简单的帐户, 但也可能是合约，因此创建更多令牌的决定将取决于合约: 如果它是一个可以投票的民主组织, 或者它可能只是一种限制令牌所有者权力的方式.
 
-In order to do that we'll learn a very useful property of contracts: **inheritance**. Inheritance allows a contract to acquire properties of a parent contract, without having to redefine all of them. This makes the code cleaner and easier to reuse. Add this code to the first line of your code, before **contract MyToken {**.
+为了做到这一点，我们将学习合约的一个非常有用的属性:**inheritance**.
+继承允许合约获得父合约的财产, 而不必重新定义所有这些.
+这使得代码更清晰，更易于重用.
+将此代码添加到代码的第一行, 之前**contract MyToken {**.
 
-```
+```js
     contract owned {
         address public owner;
 
@@ -201,16 +254,19 @@ In order to do that we'll learn a very useful property of contracts: **inheritan
     }
 ```
 
-This creates a very basic contract that doesn't do anything except define some generic functions about a contract that can be "owned". Now the next step is just to add the text *is owned* to your contract:
+这创建了一个非常基本的合约，除了定义一些关于可以`owned`的合约的通用函数之外，它什么也不做。
+现在下一步就是将文本*is owned*添加到您的合约中：
 
-```
+```js
     contract MyToken is owned {
-        /* the rest of the contract as usual */
+        /* 合约的其余部分照常 */
 ```
 
-This means that all the functions inside **MyToken** now can access the variable *owner* and the modifier *onlyOwner*. The contract also gets a function to transfer ownership. Since it might be interesting to set the owner of the contract at startup, you can also add this to the *constructor function*:
+这意味着现在**MyToken**中的所有函数都可以访问变量* owner *和修饰符* onlyOwner *。
+合约也获得了转让所有权的职能。
+因为在启动时设置合约的所有者可能很有趣, 你也可以把它添加到*constructor function*:
 
-```
+```js
     function MyToken(
         uint256 initialSupply,
         string tokenName,
@@ -222,13 +278,15 @@ This means that all the functions inside **MyToken** now can access the variable
     }
 ```
 
-#### Central Mint
+### 中央薄荷
 
-Suppose you want the amount of coins in circulation to change. This is the case when your tokens actually represent an off blockchain asset (like gold certificates or government currencies) and you want the virtual inventory to reflect the real one. This might also be the case when the currency holders expect some control of the price of the token, and want to issue or remove tokens from circulation.
+假设你想要改变流通中的硬币数量。
+当您的令牌实际上代表区块链资产并且您希望虚拟库存反映[真实资产](如金牌证书或政府货币)时，就是这种情况。
+当货币持有者期望对令牌的价格进行某种控制时，情况也可能如此, 并想发行或删除流通中的令牌.
 
-First, we need to add a variable to store the **totalSupply** and assign it to our constructor function.
+首先，我们需要添加一个变量来存储**totalSupply**并将其分配给我们的构造函数。
 
-```
+```js
     contract MyToken {
         uint256 public totalSupply;
 
@@ -240,9 +298,9 @@ First, we need to add a variable to store the **totalSupply** and assign it to o
     }
 ```
 
-Now let's add a new function finally that will enable the owner to create new tokens:
+现在让我们添加一个新的函数，它将使所有者创建新的令牌：
 
-```
+```js
     function mintToken(address target, uint256 mintedAmount) onlyOwner {
         balanceOf[target] += mintedAmount;
         totalSupply += mintedAmount;
@@ -251,15 +309,20 @@ Now let's add a new function finally that will enable the owner to create new to
     }
 ```
 
-Notice the modifier **onlyOwner** on the end of the function name. This means that this function will be rewritten at compilation to inherit the code from the **modifier onlyOwner** we had defined before. This function's code will be inserted where there's an underline on the modifier function, meaning that this particular function can only be called by the account that is set as the owner. Just add this to a contract with an **owner** modifier and you'll be able to create more coins.
+注意函数名称末尾的修饰符**onlyOwner**。
+这意味着该函数将在编译时被重写，以继承我们之前定义的**modifier onlyOwner**中的代码。
+该函数的代码将插入修改器函数的下划线,这意味着此特定功能只能由设置为所有者的帐户调用。
+只需将它添加到**owner**修饰符的合约中，您就可以创建更多的硬币。
 
-#### Freezing of assets
+### 冻结资产
 
-Depending on your use case, you might need to have some regulatory hurdles on who can and cannot use your tokens. For that to happen, you can add a parameter that enables the contract owner to freeze or unfreeze assets.
+根据您的使用情况， 您可能需要对谁可以或不可以使用您的令牌有一些监管障碍。
+为此，您可以添加一个参数，使合约所有者能够冻结或解冻资产。
 
-Add this variable and function anywhere inside the contract. You can put them anywhere but for good practice we recommend you put the mappings with the other mappings and events with the other events.
+将此变量和函数添加到合约中的任何位置。
+你可以把它们放在任何地方，但为了好的做法，我们建议你将映射与其他事件的映射和事件放在一起。
 
-```
+```js
     mapping (address => bool) public frozenAccount;
     event FrozenFunds(address target, bool frozen);
 
@@ -269,26 +332,31 @@ Add this variable and function anywhere inside the contract. You can put them an
     }
 ```
 
-With this code, all accounts are unfrozen by default but the owner can set any of them into a freeze state by calling **Freeze Account**. Unfortunately, freezing has no practical effect because we haven't added anything to the transfer function. We are changing that now:
+使用此代码，默认情况下所有帐户都会解冻，但所有者可以通过调用**Freeze Account**将其中的任何帐户设置为冻结状态。
+不幸的是，冻结没有实际效果，因为我们没有在转移函数中添加任何内容。
+我们正在改变这一点：
 
-```
+```js
     function transfer(address _to, uint256 _value) {
         require(!frozenAccount[msg.sender]);
 ```
 
-Now any account that is frozen will still have their funds intact, but won't be able to move them. All accounts are unfrozen by default until you freeze them, but you can easily revert that behavior into a whitelist where you need to manually approve every account. Just rename **frozenAccount** into **approvedAccount** and change the last line to:
+现在任何被冻结的账户都会保持其资金不变，但无法移动。
+所有帐户默认解冻，直到您冻结它们， 但是您可以轻松地将该行为恢复为白名单，然后您需要手动批准每个帐户。
+只需将**frozenAccount**重命名为**approvedAccount**并将最后一行更改为：
 
-```
+```js
         require(approvedAccount[msg.sender]);
 ```
 
-#### Automatic selling and buying
+### 自动销售和购买
 
-So far, you've relied on utility and trust to value your token. But if you want you can make the token's value be backed by Ether (or other tokens) by creating a fund that automatically sells and buys them at market value.
+到目前为止，您依靠实用程序和信任来评估您的令牌。
+但是如果你想要的话，你可以通过创建一个能够以市场价值自动销售和购买的基金来让代币的价值得到以太（或其他代币）的支持。
 
-First, let's set the price for buying and selling:
+首先，我们来设置买入和卖出的价格：
 
-```
+```js
     uint256 public sellPrice;
     uint256 public buyPrice;
 
@@ -298,46 +366,55 @@ First, let's set the price for buying and selling:
     }
 ```
 
-This is acceptable for a price that doesn't change very often, as every new price change will require you to execute a transaction and spend a bit of Ether. If you want to have a constant floating price we recommend investigating [standard data feeds](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#data-feeds)
+对于不经常更改的价格，这是可以接受的，因为每次新的价格变化都需要您执行交易并花费一点以太网。
+如果您希望持有浮动价格，我们建议您调查[标准数据Feed](https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#data-feeds)
 
-The next step is making the buy and sell functions:
+下一步是制定买入和卖出功能：
 
-```
+```js
     function buy() payable returns (uint amount){
-        amount = msg.value / buyPrice;                    // calculates the amount
-        require(balanceOf[this] >= amount);               // checks if it has enough to sell
-        balanceOf[msg.sender] += amount;                  // adds the amount to buyer's balance
-        balanceOf[this] -= amount;                        // subtracts amount from seller's balance
-        Transfer(this, msg.sender, amount);               // execute an event reflecting the change
-        return amount;                                    // ends function and returns
+        amount = msg.value / buyPrice;                    // 计算金额
+        require(balanceOf[this] >= amount);               // 检查它是否有足够的销售量
+        balanceOf[msg.sender] += amount;                  // 将该金额添加到买方的余额中
+        balanceOf[this] -= amount;                        // 从卖家的余额中减去金额
+        Transfer(this, msg.sender, amount);               // 执行反映更改的事件
+        return amount;                                    // 结束功能并返回
     }
 
     function sell(uint amount) returns (uint revenue){
-        require(balanceOf[msg.sender] >= amount);         // checks if the sender has enough to sell
-        balanceOf[this] += amount;                        // adds the amount to owner's balance
-        balanceOf[msg.sender] -= amount;                  // subtracts the amount from seller's balance
+        require(balanceOf[msg.sender] >= amount);         // 检查发件人是否有足够的销售量
+        balanceOf[this] += amount;                        // 检查发件人是否有足够的销售量
+        balanceOf[msg.sender] -= amount;                  // 减去卖家余额中的金额
         revenue = amount * sellPrice;
-        msg.sender.transfer(revenue);                     // sends ether to the seller: it's important to do this last to prevent recursion attacks
-        Transfer(msg.sender, this, amount);               // executes an event reflecting on the change
-        return revenue;                                   // ends function and returns
+        msg.sender.transfer(revenue);                     // 向卖家发送乙醚：最后这样做是很重要的，以防止递归攻击
+        Transfer(msg.sender, this, amount);               // 执行反映变化的事件
+        return revenue;                                   // 结束功能并返回
     }
 ```
 
-Notice that this will not create new tokens but change the balance the contract owns. The contract can hold both its own tokens and Ether and the owner of the contract, while it can set prices or in some cases create new tokens (if applicable) it cannot touch the bank's tokens or Ether. The only way this contract can move funds is by selling and buying them.
+请注意，这不会创建新的令牌，但会更改合约所拥有的余额。
+合约既可以拥有自己的代币，也可以拥有合约的所有者，同时可以设定价格，或者在某些情况下创建新的代币（如果适用），它不会触及银行的代币或乙醚。
+这个合约可以调动资金的唯一方式是通过出售和购买它们。
 
-**Note** Buy and sell "prices" are not set in Ether, but in *wei* the minimum currency of the system (equivalent to the cent in the Euro and Dollar, or the Satoshi in Bitcoin). One Ether is 1000000000000000000 wei. So when setting prices for your token in Ether, add 18 zeros at the end.
+**Note**买入和卖出`价格`不是在以太网中设定的，而是在* wei *系统的最低货币 (相当于欧元和美元的分，或比特币中的Satoshi).
+一个以太是1000000000000000000 wei。
+因此，当在Ether中设置令牌价格时，最后添加18个零。
 
-When creating the contract, **send enough Ether to it so that it can buy back all the tokens on the market** otherwise your contract will be insolvent and your users won't be able to sell their tokens.
+在创建合约时，**发送足够的乙醚以便它可以回购市场上所有的代币**否则您的合约将破产，您的用户将无法出售其代币.
 
-The previous examples, of course, describe a contract with a single central buyer and seller, a much more interesting contract would allow a market where anyone can bid different prices, or maybe it would load the prices directly from an external source.
+前面的例子当然描述了与单个中央买方和卖方签订的合约，更有趣的合约将允许任何人都可以出价不同的价格的市场，或者可能直接从外部来源加价。
 
-#### Autorefill
+### 自动填充
 
-Everytime, you make a transaction on Ethereum you need to pay a fee to the miner of the block that will calculate the result of your smart contract. [While this might change in the future](https://github.com/ethereum/EIPs/issues/28), for the moment fees can only be paid in Ether and therefore all users of your tokens need it. Tokens in accounts with a balance smaller than the fee are stuck until the owner can pay for the necessary fee. But in some use cases, you might not want your users to think about Ethereum, blockchain or how to obtain Ether, so one possible approach would have your coin automatically refill the user balance as soon as it detects the balance is dangerously low.
+每次，您在Ethereum上进行交易，您需要向该块矿工支付费用，以计算您的智能合约的结果。
+[虽然这可能在未来发生变化](https://github.com/ethereum/EIPs/issues/28), 目前，费用只能在Ether中支付，因此所有令牌的用户都需要它。
+账户余额小于费用的账户被卡住，直到业主可以支付必要的费用。
+但在某些用例中，您可能不希望用户考虑以太坊， 区块链或如何获得Ether， 所以一旦可能的方法就会让您的硬币在检测到天平的危险性很低时立即自动补充用户余额。
 
-In order to do that, first you need to create a variable that will hold the threshold amount and a function to change it. If you don't know any value, set it to **5 finney (0.005 Ether)**.
+所以一旦可能的方法就会让您的硬币在检测到天平的危险性很低时立即自动补充用户余额。
+如果您不知道任何值，请将其设置为**5 finney（0.005 Ether）**。
 
-```
+```js
     uint minBalanceForAccounts;
 
     function setMinBalance(uint minimumBalanceInFinney) onlyOwner {
@@ -345,10 +422,10 @@ In order to do that, first you need to create a variable that will hold the thre
     }
 ```
 
-Then, add this line to the **transfer** function so that the sender is refunded:
+然后，将此行添加到**transfer**功能，以便发件人退款：
 
-```
-    /* Send coins */
+```js
+    /* 发送硬币 */
     function transfer(address _to, uint256 _value) {
         ...
         if(msg.sender.balance < minBalanceForAccounts)
@@ -356,10 +433,10 @@ Then, add this line to the **transfer** function so that the sender is refunded:
     }
 ```
 
-You can also instead change it so that the fee is paid forward to the receiver by the sender:
+您也可以改变它，以便发件人向收件人支付费用：
 
-```
-    /* Send coins */
+```js
+    /* 发送硬币 */
     function transfer(address _to, uint256 _value) {
         ...
         if(_to.balance<minBalanceForAccounts)
@@ -367,109 +444,144 @@ You can also instead change it so that the fee is paid forward to the receiver b
     }
 ```
 
-This will ensure that no account receiving the token has less than the necessary Ether to pay the fees.
+这将确保没有收到该令牌的账户少于必要的以太网来支付费用。
 
-#### Proof of Work
+### 工作证明
 
-There are some ways to tie your coin supply to a mathematical formula. One of the simplest ways would be to make it a "merged mining" with Ether, meaning that anyone who finds a block on Ethereum would also get a reward from your coin, given that anyone calls the reward function on that block. You can do it using the [special keyword coinbase](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#block-and-transaction-properties) that refers to the miner who finds the block.
+有一些方法可以将您的硬币供应与数学公式结合。
+最简单的方法之一是将其与Ether合并为一个`merged mining` 这意味着任何在以太坊发现块的人都会从你的硬币中获得奖励， 因为任何人都会在该块上调用奖励功能.
+您可以使用特殊关键字[coinbase](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#block-and-transaction-properties)来引用找到该块的矿工。
 
-```
+```js
     function giveBlockReward() {
         balanceOf[block.coinbase] += 1;
     }
 ```
 
-It's also possible to add a mathematical formula, so that anyone who can do math can win a reward. On this next example you have to calculate the cubic root of the current challenge gets a point and the right to set the next challenge:
+也可以添加一个数学公式，这样任何有数学能力的人都可以获得奖励。
+在下一个例子中，你必须计算当前挑战的立方根有一点，并有权设置下一个挑战:
 
-```
-    uint currentChallenge = 1; // Can you figure out the cubic root of this number?
+```js
+    uint currentChallenge = 1; // 你能弄清楚这个数字的立方根吗？
 
     function rewardMathGeniuses(uint answerToCurrentReward, uint nextChallenge) {
-        require(answerToCurrentReward**3 == currentChallenge); // If answer is wrong do not continue
-        balanceOf[msg.sender] += 1;         // Reward the player
-        currentChallenge = nextChallenge;   // Set the next challenge
+        require(answerToCurrentReward**3 == currentChallenge); // 如果答案不对，请不要继续
+        balanceOf[msg.sender] += 1;         // 奖励玩家
+        currentChallenge = nextChallenge;   // 设置下一个挑战
     }
 ```
 
-Of course, while calculating cubic roots can be hard for someone to do on their heads, they are very easy with a calculator, so this game could be easily broken by a computer. Also since the last winner can choose the next challenge, they could pick something they know and therefore would not be a very fair game to other players. There are tasks that are easy for humans but hard for computers but they are usually very hard to code in simple scripts like these. Instead, a fairer system should be one that is very hard for a computer to do, but isn't very hard for a computer to verify. A great candidate would be to create a hash challenge where the challenger has to generate hashes from multiple numbers until they find one that is lower than a given difficulty.
+当然，虽然计算立方根对于某人来说很难做到，但用计算器很容易，所以这个游戏很容易被计算机破坏。
+另外，由于最后的赢家可以选择下一个挑战，他们可以选择他们知道的东西，因此对其他玩家来说不会是一个非常公平的比赛。
+有些任务对于人类来说很容易，但是对于计算机来说很难，但是通常很难在这些简单的脚本中编写代码。
+相反，更公平的系统应该是计算机非常难以做到的系统，但是对于计算机来说不是很难验证。
+一个很好的候选人将创建一个哈希挑战，挑战者必须从多个数字生成哈希，直到他们发现一个低于给定难度的哈希。
 
-This process was first proposed by Adam Back in 1997 as [Hashcash](https://en.wikipedia.org/wiki/Hashcash) and then was implemented in Bitcoin by Satoshi Nakamoto as **Proof of work** in 2008. Ethereum was launched using such system for its security model, but is planning to move from a Proof of Work security model into a [mixed proof of stake and betting system called *Casper*](https://blog.ethereum.org/2015/12/28/understanding-serenity-part-2-casper/).
+这个过程最早由Adam Back于1997年提出为[](https://en.wikipedia.org/wiki/Hashcash)，之后由Satoshi Nakamoto在比特币中实施，作为2008年的**工作证明**。
+以太坊在其安全模型中使用这种系统启动, 但正在计划从证明工作安全模型转变为[混合证明赌注和赌注系统](https://blog.ethereum.org/2015/12/28/understanding-serenity-part-2-casper/)称为*卡斯帕*。
 
-But if you like Hashing as a form of random issuance of coins, you can still create your own Ethereum based currency that has a proof of work issuance:
+但是如果你喜欢哈希作为随机发行硬币的一种形式, 您仍然可以创建您自己的以太坊货币，并拥有工作签发证明：
 
-```
-    bytes32 public currentChallenge;                         // The coin starts with a challenge
-    uint public timeOfLastProof;                             // Variable to keep track of when rewards were given
-    uint public difficulty = 10**32;                         // Difficulty starts reasonably low
+```js
+    bytes32 public currentChallenge;                         // 硬币以挑战开始
+    uint public timeOfLastProof;                             // 变量以跟踪何时给予奖励
+    uint public difficulty = 10**32;                         // 难度开始相当低
 
     function proofOfWork(uint nonce){
-        bytes8 n = bytes8(sha3(nonce, currentChallenge));    // Generate a random hash based on input
-        require(n >= bytes8(difficulty));                   // Check if it's under the difficulty
+        bytes8 n = bytes8(sha3(nonce, currentChallenge));    // 根据输入生成随机哈希
+        require(n >= bytes8(difficulty));                   // 检查它是否有困难
 
-        uint timeSinceLastProof = (now - timeOfLastProof);  // Calculate time since last reward was given
-        require(timeSinceLastProof >=  5 seconds);         // Rewards cannot be given too quickly
-        balanceOf[msg.sender] += timeSinceLastProof / 60 seconds;  // The reward to the winner grows by the minute
+        uint timeSinceLastProof = (now - timeOfLastProof);  // 计算自上次奖励以来的时间
+        require(timeSinceLastProof >=  5 seconds);         // 奖励不能太快
+        balanceOf[msg.sender] += timeSinceLastProof / 60 seconds;  // 对获胜者的奖励会随着分钟而增加
 
-        difficulty = difficulty * 10 minutes / timeSinceLastProof + 1;  // Adjusts the difficulty
+        difficulty = difficulty * 10 minutes / timeSinceLastProof + 1;  // 调整难度
 
-        timeOfLastProof = now;                              // Reset the counter
-        currentChallenge = sha3(nonce, currentChallenge, block.blockhash(block.number - 1));  // Save a hash that will be used as the next proof
+        timeOfLastProof = now;                              // 重置计数器
+        currentChallenge = sha3(nonce, currentChallenge, block.blockhash(block.number - 1));  // 保存将用作下一个证明的散列
     }
 ```
 
-Also change the **Constructor function** (the one that has the same name as the contract, which is called at first upload) to add this line, so the difficulty adjustment will not go crazy:
+还要改变**Constructor function**(与合约名称相同的名称，在首次上传时称为合约)来添加这一行，所以难度调整不会变得疯狂:
 
+```js
         timeOfLastProof = now;
+```
 
-Once the contract is online, select the function "Proof of work", add your favorite number on the **nonce** field and try to execute it. If the confirmation window gives a red warning saying *"Data can't be execute"* go back and pick another number until you find one that allows the transaction to go forward: this process is random. If you find one you will be awarded 1 token for every minute that has passed since the last reward was given, and then the challenge difficulty will be adjusted up or down to target an average of 10 minutes per reward.
+一旦合约在线，选择`工作证明`功能，在**nonce**字段中添加您最喜欢的数字并尝试执行它。
+如果确认窗口发出红色警告，提示*`Data can't be execute`*返回并选择另一个数字，直到找到允许交易前进的数字：此过程是随机的。
+如果你发现一个，你会被授予自从最后一次奖励以来每分钟已经过去的1个令牌, 然后挑战难度会上调或下调，平均每个奖励10分钟。
 
-This process of trying to find the number that will give you a reward is what is called *mining*: if difficulty rises it can be very hard to find a lucky number, but it will always be easy to verify that you found one.
+试图找到能给你奖励的号码的过程就是所谓的*mining*: 如果难度增加，可能很难找到幸运数字, 但验证你找到一个总是很容易.
 
+## 改进的硬币
 
-### Improved Coin
+### 全币代码
 
-#### Full coin code
-
-If you add all the advanced options, this is how the final code should look like:
+如果你添加所有的高级选项，这就是最终代码的样子:
 
 ![Advanced Token](/images/tutorial/advanced-token-deploy.png)
 
-
-```
+```js
 !!!include(solidity/token-advanced.sol)!!!
 ```
 
-#### Deploying
+### 部署
 
-Scroll down and you'll see an estimated cost for deployment. If you want you can change the slider to set a smaller fee, but if the price is too below the average market rate your transaction might take longer to pick up. Click *Deploy* and type your password. After a few seconds you'll be redirected to the dashboard and under **Latest transactions** you'll see a line saying "creating contract". Wait for a few seconds for someone to pick your transaction and then you'll see a slow blue rectangle representing how many other nodes have seen your transaction and confirmed them. The more confirmations you have, the more assurance you have that your code has been deployed.
+向下滚动，您会看到部署的估计成本。
+如果您想要，您可以更改滑块设置较小的费用，但如果价格太低于平均市场价格，您的交易可能需要更长时间才能完成。
+点击*Deploy*并输入您的密码。
+几秒钟后，您将被重定向到仪表板，并在**Latest transactions**下，您会看到一行说`creating contract`。
+等待几秒钟让某人选择你的交易，然后你会看到一个缓慢的蓝色矩形，表示有多少其他节点已经看到你的交易并确认了它们。
+您拥有的确认越多，您的代码已部署的可信度就越高。
 
 ![Created Token](/images/tutorial/created-token.png)
 
-Click on the link that says *Admin page* and you'll be taken the simplest central bank dashboard in the world,   where you can do anything you want with your newly created currency.
+点击*Admin page*链接，您将成为世界上最简单的中央银行仪表板，您可以用新创建的货币进行任何操作。
 
-On the left side under *Read from contract* you have all the options and functions you can use to read information from the contract, for free. If your token has an owner, it will display its address here. Copy that address and paste it into **Balance of** and it will show you the balance of any account (the balance is also automatically shown on any account page that has tokens).
+在*Read from contract*的左侧，您可以免费获得所有可用于从合约中读取信息的选项和功能。
+如果您的令牌拥有所有者，它将在此处显示其地址。
+复制该地址并将其粘贴到**Balance of**中，它将显示任何帐户的余额（余额也会自动显示在具有令牌的任何帐户页面上）。
 
-On the right side, under **Write to Contract** you'll see all the functions you can use to alter or change the blockchain in any way. These will cost gas. If you created a contract that allows you to mint new coins, you should have a function called "Mint Token". Select it.
+在右侧的**Write to Contract**下，您将看到所有可用于以任何方式更改或更改区块链的功能。
+这些将耗费天然气。
+如果您创建了允许您铸造新硬币的合约，则应该有一个名为`Mint Token`的功能。
+选择它。
 
 ![Manage central dollar](/images/tutorial/manage-central-dollar.png)
 
-Select the address where those new currencies will be created and then the amount (if you have decimals set at 2, then add 2 zeros after the amount, to create the correct quantity). On **Execute from** select the account that set as owner, leave the Ether amount at zero and then press execute.
+选择创建新货币的地址，然后选择金额（如果您将小数点设置为2，则在金额后添加2个零，以创建正确数量）。
+开**Execute from**执行**选择设置为所有者的账户，将Ether金额保留为零，然后按执行。
 
-After a few confirmations, the recipient balance will be updated to reflect the new amount. But your recipient wallet might not show it automatically: in order to be aware of custom tokens, the wallet must add them manually to a watch list. Copy your token address (at the admin page, press *copy address*) and send that to your recipient. If they haven't already they should go to the contracts tab, press **Watch Token** and then add the address there. Name, symbols and decimal amounts displayed can be customized by the end user, especially if they have other tokens with similar (or the same) name. The main icon is not changeable and users should pay attention to them when sending and receiving tokens to ensure they are dealing with the real deal and not some copycat token.
+经过几次确认后，收款人余额将会更新以反映新的金额。
+但是您的收件人钱包可能不会自动显示它：为了了解自定义令牌，钱包必须手动将它们添加到监视列表中。
+复制您的令牌地址（在管理页面上，按*复制地址*）并将其发送给您的收件人。
+如果他们还没有进入合约标签，请按**Watch Token**然后在那里添加地址。
+最终用户可以自定义显示的名称，符号和小数量，特别是如果他们有其他类似（或相同）名称的令牌。
+主图标不可更改，用户在发送和接收令牌时应该注意它们，以确保它们处理的是实际交易，而不是一些模仿令牌。
 
 ![add token](/images/tutorial/add-token.png)
 
+### 使用你的硬币
 
-## Using your coin
+部署令牌后，它们将被添加到您观看的令牌列表中，并且总余额将显示在您的帐户中。
+为了发送令牌，只需进入**发送**选项卡并选择一个包含令牌的帐户。
+该帐户拥有的令牌将在* Ether *下面列出。
+选择它们，然后键入要发送的令牌数量。
 
-Once you've deployed your tokens, they will be added to your list of watched tokens, and the total balance will be shown on your account. In order to send tokens, just go to the **Send** tab and select an account that contains tokens. The tokens the account has will be listed just under *Ether*. Select them and then type the amount of tokens you want to send.
-
-If you want to add someone else's token, just go to the **Contracts** tab and click **Watch token**. For example, to add the **Unicorn (🦄)** token to your watch list, just add the address **0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7** and the remaining information will be loaded automatically. Click *Ok* and your token will be added.
+如果您想添加其他人的令牌，只需进入**Contracts**选项卡并点击**Watch token**。
+例如，要将**Unicorn（🦄）**标记添加到您的监视列表中，只需添加地址**0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7**，其余信息将自动加载。
+点击*确定*您的令牌将被添加。
 
 ![Invisible Unicorns](/images/tutorial/unicorn-token.png)
 
-Unicorn tokens are memorabilia created exclusively for those who have donated to the address **0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359** that is controlled by the Ethereum Foundation. For more information about them [read it here](./donate)
+独角兽代币是专为那些捐赠给由以太坊基金会控制的地址**0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359**而创建的纪念品。
+有关它们的更多信息[请阅读此处]（./ donate）
 
-### Now what?
+## 怎么办
 
-You just learned how you can use Ethereum to issue a token, that can represent anything you want. But what can you do with the tokens? You can use, for instance, the tokens to [represent a share in a company](./dao#the-shareholder-association) or you can use a [central committee](./dao#the-code) to vote on when to issue new coins to control inflation. You can also use them to raise money for a cause, via a [crowdsale](./crowdsale). What will you build next?
+你刚刚学会了如何使用以太坊来发行令牌，它可以代表任何你想要的东西。
+但是你可以用令牌做什么？
+例如，您可以使用代币代表公司的[股票](./dao#the-shareholder-association)，或者您可以使用中央委员会对何时发行新币以控制通胀进行[投票(./dao#the-code)]。
+你也可以用它们为一项事业筹集资金，通过[crowdsale](./crowdsale).
+接下来你会构建什么？

@@ -1,179 +1,236 @@
-## FAQ
+# FAQ
 
-### How are ethers created?
+## 醚是如何产生的？
 
-The total supply of ether and its rate of issuance was decided by the donations gathered on the 2014 presale. The results were roughly:
+2014年预售收集的捐款决定了乙醚的总供应量和发行率。
+结果大致如下：
 
-* 60 million ether created to contributors of the presale
-* 12 Million (20% of the above) were created to the development fund, most of it going to early contributors and developers and the remaining to the [Ethereum Foundation](./foundation)
-* 5 ethers are created every block (roughly 15 seconds) to the miner of the block
-* 2-3 ethers are sometimes sent to another miner if they were also able to find a solution but his block wasn't included (called uncle/aunt reward)
+* 为预售的贡献者创建了6000万以太
+* 发展基金创造了1200万美元（上述的20％），其中大部分用于早期捐助者和开发者，其余部分用于[以太坊基金会][1]
+* 每个区块（大约15秒）创建5个区块给矿区的矿工
+* 2-3个醚有时会被送到另一个矿工，如果他们也能找到解决方案，但他的块不包括（称为叔叔/阿姨奖励）
 
-Note that after the [Byzantium update](https://blog.ethereum.org/2017/10/12/byzantium-hf-announcement/) is implemented, the mining and uncle reward is reduced to 3 ethers and 0.625-2.625 ethers, respectively.
+请注意，在[拜占庭更新][2]执行后，采矿和叔叔奖励分别减少为3个醚和0.625-2.625个醚。
 
+## 以太供应是无限的吗？
 
-### Is the ether supply infinite?
+没有。
+根据各方就2014年预售协议达成的条款，乙醚发行量每年上限为1800万乙醚（这个数字相当于初始供应量的25％）。
+这意味着，虽然绝对发行是固定的，但相对通货膨胀率每年都在下降。
+理论上，如果这个发行无限期地保存下来，那么在某个时候，每年创建的新代币的速率将达到每年丢失的平均数量（由于滥用，意外丢失密钥，持有者死亡等），并且在那里
 
-No. According to the terms agreed by all parties on the 2014 presale, issuance of ether is capped at 18 million ether per year (this number equals 25% of the initial supply). This means that while the absolute issuance is fixed, the relative inflation is decreased every year. In theory, if this issuance was kept indefinitely then at some point the rate of new tokens created every year would reach the average amount lost yearly (by misuse, accidental key lost, the death of holders etc) and there would reach an equilibrium.
+但预计这个比例不会被保留：在2018-2019年的某个时候，以太坊将从工作量证明转换到正在开发中的新的共识算法，称为[卡斯帕][3]，预计该算法效率更高，需要的采矿补贴更少。
+发行的确切方法及其将发挥的功能是一个积极研究的领域，但现在可以保证的是（1）当前最大值被认为是上限，casper下的新发行不会超过它（并且是预期的,（2）无论采取什么方法最终挑选出来，它都将是一个分散的智能合约，它不会**给予任何特定人群的优惠待遇，其目的是有益于整体健康和,网络的安全.
 
-But the rate is not expected to be kept: sometime in 2018-2019 Ethereum will be switched from Proof of Work to a new consensus algorithm under development, called [Casper](https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/) that is expected to be more efficient and require less mining subsidy. The exact method of issuance and which function it will serve is an area of active research, but what can be guaranteed now is that (1) the current maximum is considered a ceiling and the new issuance under casper will not exceed it (and is expected to be much less) and (2) whatever method is ultimately picked to issue, it will be a decentralized smart contract that will **not** give preferential treatment to any particular group of people and whose purpose is to benefit the overall health and security of the network.
+## 谁需要以太？
 
+有意构建将使用以太坊区块链的应用程序的开发人员。
+有意构建将使用以太坊区块链的应用程序的开发人员。
 
-### Who needs ether?
+## 我在2014年预售期间买了以太。,我如何访问它？
 
-Developers who intend to build apps that will use the ethereum blockchain. Users who want to access and interact with smart contracts on the ethereum blockchain.
+[以太坊钱包][4]包括一个简单的预售进口。
+下载它，它会自动提供该选项。
 
+![进口预售](/images/tutorial/presale-import.jpg)
 
-### I bought ether during the 2014 presale. How do I access it?
+### 使用命令行
 
-The [Ethereum Wallet](https://github.com/ethereum/mist/releases/latest) includes an easy presale import. Download it and it will offer that option automatically.
+如果您仍然在控制台上，则通过多次按_control + C_并按Enter键退出。
 
-![Import presale](/images/tutorial/presale-import.jpg)
-
-
-#### Using the command line
-
-
-If you are still on the console, then quit it by pressing _control+C_ multiple times and pressing enter.
-
-Then, if you are using **Geth** execute this:
+然后，如果您使用** Geth **执行此操作：
 
     geth wallet import /path/to/my/presale.wallet
 
-Alternatively, if you are using **Eth** execute this:
+或者，如果您正在使用** Eth **，请执行以下操作：
 
     eth --import-presale /path/to/my/presale.wallet
 
-This will prompt for your password and imports your ether presale account. It can be used non-interactively with the _--password_ option taking a password file as argument containing the wallet password in cleartext.
+这将提示输入密码并导入您的以太网预售帐户。
+可以非交互方式使用_--password_选项，以密码文件作为以明文形式包含钱夹密码的参数。
 
-If this does not work, please do not hesitate in contacting us on our [forums](https://forum.ethereum.org), [reddit](https://www.reddit.com/r/ethereum) or at **info (at) ethereum.org**.
+如果这不起作用，请不要犹豫在我们的[论坛] [5]，[reddit] [6]或** info（at）联系我们，
 
-If you don't feel comfortable securing your ether right now but just want to check that your presale wallet is included in the blockchain, then use our [online balance checker](#balance).
+如果您现在不确定自己的乙太好，但只想检查您的预售钱包是否包含在区块链中，那么请使用我们的[在线平衡检查器] [7]。
 
-Read [more about accounts](http://ethdocs.org/en/latest/account-management.html).
+阅读[更多关于帐户] [8]。
 
-### How do I mine ether?
+## 我如何挖掘以太？
 
-The Ethereum network is kept running by computers all over the world. In order to reward the computational costs of both processing the contracts and securing the network, there is a reward that is given to the computer that was able to create the latest block on the chain. Every 15 seconds, on average, a new block is added to the blockchain with the latest transactions processed by the network and the computer that generated this block will be awarded 3 ether. Due to the nature of the algorithm for block generation, this process (generating a proof of work) is guaranteed to be random and rewards are given in proportion to the computational power of each machine.
+阅读[更多关于帐户] [8]。
+为了奖励处理合同和保护网络的计算成本，给予能够创建链上最新块的计算机的奖励。
+平均每15秒将一个新区块添加到区块链中，并使用网络处理的最新交易，并且生成此区块的计算机将被授予3以太网。
+由于块生成算法的本质，这个过程（产生工作证明）是有保证的
 
-This process is usually called **_mining_** in the crypto-currency lingo.
+这个过程通常以加密货币术语称为**_mining_**。
 
-#### CPU MINING Using the command line
+### CPU MINING使用命令行
 
-If you are on a [private network](../cli) (and if you just want to test the technology for free, you should) then any normal computer with a normal CPU will be able to run the network and earn test ether (ether that is only redeemable on the test network where it was generated) through mining. This is the best choice for small-scale network or testing privately, as it's less resource intensive. On the real (or live test) network a normal desktop (or laptop) computer might take a very long time to successfully mine a block and receive ether.
+如果你在[私人网络] [9]（如果你只是想免费测试技术，你应该），那么任何普通CPU的普通电脑将能够运行网络，并赚取测试乙醚,只能在产生测试网络的位置进行赎回）。
+这是小规模网络或私人测试的最佳选择，因为它的资源密集程度较低。
+在真实（或实时测试）网络上，普通台式机（或笔记本电脑）计算机可能需要很长时间才能成功地扫描一个块并接收以太网。
 
-Before you do any mining, you need to set which address will receive your earnings (called "etherbase"). You only need to do this once. Here's how to set your etherbase and then start mining:
+在您进行任何采矿之前，您需要设置哪个地址将收到您的收入（称为“etherbase”）。
+你只需要做一次。
+以下是如何设置您的etherbase然后开始挖掘：
 
 **Geth:**
 
     miner.setEtherbase(eth.accounts[0])
     miner.start()
 
-
 **Eth:**
 
     web3.admin.eth.setMiningBenefactor(web3.eth.accounts[0])
     web3.admin.eth.setMining(true)
 
+但是，在找到任何块之前，您的计算机需要经历一个名为“构建DAG”的过程。
+这个DAG（定向非循环图的缩写）是采矿所需的大型数据结构（〜1GB），旨在防止ASIC机器（“专用集成电路”）大量生产用于采矿乙醚。
+它的目标是保护像您这样的矿工，以便您只需要您的家用电脑即可保持竞争力。
+DAG应该花费大约10分钟时间完成，一旦完成，Geth将自动开始挖掘。
 
-Before you can find any blocks, however, your computer needs to go through a process called “building a DAG”. This DAG (short for “Directed Acyclic Graph”) is a large data structure (~1GB) required for mining, intended to prevent ASIC machines (“Application Specific Integrated Circuits”) from being mass manufactured for mining ether. Its goal is to protect miners like yourself so that you will only ever need your home computer to remain competitive. The DAG should take about 10 minutes to generate and as soon as it finishes, Geth will start mining automatically.
-
-If you have successfully mined a block you will see a message like this among the logs:
+如果您已成功开采块，则会在日志中看到如下消息：
 
     🔨 Mined block #123456
 
-To check your earnings, you can display your balance with:
+要检查您的收入，您可以通过以下方式显示您的余额：
 
     web3.fromWei(web3.eth.getBalance(web3.eth.accounts[0]), "ether")
 
-#### GPU MINING Using the command line
+### CPU挖矿使用命令行
 
+如果您认真考虑在以太网网络上挖掘并获得真正的以太网奖励，那么您应该使用配备功能强大的图形卡的专用计算机来运行网络。
 
-If you are serious about mining on the live ethereum network and getting real ether rewards, then you should use a dedicated computer with very powerful graphics cards in order to run the network.
+**Eth说明:**
 
-
-**Instructions for Eth:**
-
-If you are using **Eth** then GPU mining comes out of the box. Simply quit the console (press control+C multiple times and then enter) and then start it with the --GPU option turned on:
+如果您正在使用** Eth **，那么GPU挖掘即可开箱即用。
+简单地退出控制台（多次按控制+ C然后输入），然后打开 -  GPU选项启动它：
 
     eth -b --genesis path/to/genesis.json -i -m on -G
 
-Once you started, just follow the same instructions as normal CPU mining.
+一旦开始，只需按照与正常CPU采矿相同的说明进行操作即可。
 
+**Geth的说明:**
 
-**Instructions for Geth**
+Geth提供的GPU挖掘目前有两种选择。
+你可以阅读更详细的描述，了解如何在这个[mining post]上安装它[10]。
 
+* **C++ Etherminer**.
+这是专业矿工的版本。
+要安装它，请按照指南[安装整个C ++以太坊代码] [11]。
 
-There are currently two options for GPU mining in Geth available. You can read a more detailed description of how to install it on this [mining post](https://forum.ethereum.org/discussion/197/mining-faq-live-updates).
+* **Go experimental GPU branch**.
+它是实验性的，所以你需要从源头上构建并获取它。
+这个版本专注于业余爱好者和开发人员。
+要安装它，[从源克隆geth] [12]，然后切换到[GPU矿工分支] [13]。
 
-* **C++ Etherminer**. This is a version for the pro miners. To install it, follow the guide to [install the whole C++ ethereum code](https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients).
+### 有关采矿的更多信息
 
-* **Go experimental GPU branch**. It's experimental so you need to build go from source to get it. This version is focused on hobbyists and developers. To install it, [clone geth from source](https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu) and then switch to the [GPU Miner branch](https://github.com/ethereum/go-ethereum/tree/gpu_miner).
+* 以太坊的工作证明算法不使用Scrypt或Sha256，而是利用[EtHash] [14]，一个桥本/匕首混合。
+你可以在[Ethereum gitBook，采矿章节] [15]中阅读关于这个背后的理论及其设计的所有内容。
+请注意，我们计划推出Serenity（未来版本，以太坊发展路线图上的一个重要里程碑）
 
+* Ethash工作证明算法的内存很难，每个GPU上至少需要1 GB以上的内存。
+我说1+是因为DAG是一组数据，这些数据被推入和移出GPU以实现并行化，成本高昂，将从1GB开始，并将持续增长无限期。
+2GB应该是全年继续采矿所需要的一个很好的近似值。
 
+* 挖掘威力大致与[内存带宽]成比例[16]。
+挖掘威力大致与[内存带宽]成比例[16]。
+经验证据已经证实了这一点，R9 290x定期上榜。
 
-#### More information on Mining
+* ASIC和FPGA在财务上效率低下时受到强烈的阻碍，这在[独立审计] [17]中得到了证实。
+不要指望在市场上看到他们，如果你这样做，请谨慎行事。
 
-* Ethereum's proof of work algorithm does not make use of Scrypt or Sha256, instead, it leverages [EtHash](https://github.com/ethereum/wiki/wiki/Ethash), a Hashimoto / Dagger hybrid. You can read all about the theory behind this and its design in the [Ethereum gitBook, mining chapter](https://ethereum-homestead.readthedocs.io/en/latest/mining.html). Note that for Serenity (a future release, a major milestone on the Ethereum development roadmap) we are planning to switch to Proof of Stake (PoS).
+## 比特币和以太之间有什么关系？
 
-* The Ethash proof of work algorithm is memory hard, you'll need at least 1+GB of RAM on each GPU. I say 1+ because the DAG, which is the set of data that's being pushed in and out of the GPU to make parallelisation costly, will start at 1GB and will continue growing indefinitely. 2GB should be a good approximation of what's needed to continue mining throughout the year.
+![比特币和以太坊](/images/bitcoin-and-ethereum-sitting-on-a-tree@2x.png)
 
-* Mining prowess roughly scales proportionally to [memory bandwidth](https://en.wikipedia.org/wiki/AMD_Radeon_Rx_200_series#Chipset_table). As our implementation is written in OpenCL, AMD GPUs will be 'faster' than similarly priced NVIDIA GPUs. Empirical evidence has already confirmed this, with R9 290x regularly topping benchmarks.
+如果没有比特币 - 技术和货币 - 以太坊永远不可能实现，而且我们认为自己不是
+乙醚应被视为“加密燃料”，这是一种令牌，其目的是为计算付费，并且不打算成为
 
-* ASICs and FPGAs are strongly discouraged by being rendered financially inefficient, which was confirmed in [an independent audit](https://github.com/LeastAuthority/ethereum-analyses/blob/master/PoW.md#HardwareFeasibility). Don't expect to see them on the market, and if you do, proceed with extreme caution.
+您可以在以太坊生态系统中使用比特币的方式有很多种：
 
+* **交易BTC用于ETH:** 多家第三方公司正在努力使以太网和比特币交换尽可能简单和无缝。
+如果需要的话，可以用比特币交易比特币以执行合约，并立即将其交易，以保持比特币网络的价值。
+最新版本的钱包包括了以太币和比特币之间的自动转换。
 
-### What's the relationship between bitcoin and ether?
+* **使用挂钩派生:** 以太坊是在多方之间创建复杂交易的绝佳工具。
+如果你有各方信任的比特币价格来源，那么可以创建一个[ethereum based currency] [18]，其价值与比特币的市场价值挂钩。
+这意味着您可以将比特币交易给代币，该代币可以保证始终兑换相同数量的比特币，同时仍与其他以太坊合同完全兼容。
 
-![Bitcoin and Ethereum](/images/bitcoin-and-ethereum-sitting-on-a-tree@2x.png)
+* **使用比特币中继转换双向挂钩**: [比特币中继] [19]是一段代码，可让您将比特币链接到以太坊。
+这意味着您可以使用比特币的本地有限脚本功能将比特币锁定为与以太坊合约直接相关的合约，然后可以发行以比特币为基础的以太坊代币。
+继电器正在开发中，随着实施经过测试并证明是安全的，我们将在此处列出它们。
 
-Ethereum would never be possible without bitcoin—both the technology and the currency—and we see ourselves not as a competing currency but as complementary within the digital ecosystem. Ether is to be treated as "crypto-fuel", a token whose purpose is to pay for computation, and is not intended to be used as or considered a currency, asset, share or anything else.
+## 如何使用命令行发送以太网？
 
-There are many ways in which you can use Bitcoins within the Ethereum ecosystem:
+**注意：以太坊地址还没有内置检查。这意味着，如果您输错地址，您的以太网将永远丢失，无需二次确认窗口。如果你的移动量很大，那么从你可以承受损失的数量开始，直到你感觉舒服为止。**
 
-* **Trade BTC for ETH:** multiple third-party companies are working to make the exchanging of ether and bitcoins as easy and seamless as possible. If so desired one could trade bitcoins for ether with the purpose of executing contracts and trade it back immediately in order to keep their value pegged and secured by the bitcoin network. The latest version of the wallet includes an automatic conversion between ether and bitcoin.
+以太坊有两种类型的账户：*正常账户*，持有只能用私钥和*合约*移动的乙醚，乙醚只能由自己的内部代码控制。
+在本节中，我们重点关注前者。
+本指南的其余部分将专注于后者。
 
-* **Use a pegged derivative:** Ethereum is a great tool for creating complex trading between multiple parties. If you have a source for the price of Bitcoin that all parties trust, then it's possible to create an [ethereum based currency](/token) whose value is pegged to the market value of Bitcoin. This means that you could trade bitcoins to a token that is guaranteed to always trade back to the same amount of bitcoins while still being fully compatible with other ethereum contracts.
+同样，您的交易也有两种类型：发送到正常账户的交易是* ether转账*，其余的是与智能合约交流*。
 
-* **Use a Bitcoin relay to convert a 2-way peg**: [the bitcoin relay](https://github.com/ethereum/btcrelay/) is a piece of code that allows you to sidechain a bitcoin into ethereum. This means that you can use Bitcoin's native limited scripting capability to lock a bitcoin into a contract that is directly connected to an ethereum contract, which can then issue an ethereum based token that is guaranteed to be backed by bitcoin. The relay is under development and as implementations are tested and proved to be secure, we will list them here.
-
-
-## How do I send ether using the command line?
-
-**ATTENTION: Ethereum addresses don't have built-in checks on them yet. That means that if you mistype an address, your ether will be lost forever, without a secondary confirmation window. If you are moving a significant amount, start with smaller quantities that you can afford to lose, until you feel comfortable enough.**
-
-There are two types of accounts in Ethereum: *normal accounts*, holding ether that can only be moved with a private key and *contracts*, which hold ether only controlled by their own internal code. In this section, we focus on the former. The remainder of this guide will be dedicated to the latter.
-
-Similarly, your transactions are also of two types: those sent to normal accounts are *ether transfers*, while the rest are *communication* with smart contracts.
-
-Before you execute your first ether transfer you need a friend to send your ether to. If you don’t have any, you can also create as many new accounts as you want, following the steps discussed previously and simply move your funds between accounts you own. Assuming you created a second account to send the ether to:
+在你执行你的第一次以太网传输之前，你需要一个朋友来发送你的乙醚。
+如果您没有任何账户，您也可以根据您以前讨论的步骤创建任意数量的新账户，并简单地在您拥有的账户之间转移资金。
+假设您创建了第二个帐户来将以太网发送至：
 
     var sender    = web3.eth.accounts[0];
     var recipient = web3.eth.accounts[1];
 
     var amount = web3.toWei(0.01, "ether");
 
-The first two lines set local variables with account numbers for easier access later. Change the sender and recipient addresses to whatever you like. If you are adding a friend's account address instead, put it in between quotes like ‘0xffd25e388bf07765e6d7a00d6ae83fa750460c7e'. The third line converts the chosen amount to the network's base unit (wei).
+前两行用局部变量设置帐号，以便稍后访问。
+将发件人和收件人地址更改为您喜欢的任何内容。
+如果您要添加朋友的帐户地址，请将其放在“0xffd25e388bf07765e6d7a00d6ae83fa750460c7e”之类的引号之间。
+第三行将选择的数量转换为网络的基本单位（wei）。
 
-Although there are many names for ether denominations, we will use only two: “ether” and “wei”. Wei is the atomic unit of ether, and is the one used on the system level. Most day-to-day transactions will be done with ether, which is equivalent to one quintillion wei, or a 1 followed by 18 zeros. So before sending any transactions, it’s very important to convert the amount to wei, and for that, you can use the _web3.toWei_ function.
+虽然以太名称有很多名字，但我们只用两个：“以太”和“伟”。
+魏是乙醚的原子单位，是系统级别上使用的。
+大多数日常交易将使用乙醚来完成，这相当于一个万亿分之一，或者一个1，然后是18个零。
+因此，在发送任何交易之前，将金额转换为wei非常重要，为此，您可以使用_web3.toWei_函数。
 
-After having set the variables above, send the transaction with:
+在设置好以上变量之后，发送事务：
 
     web3.eth.sendTransaction({from: sender, to: recipient, value: amount})
 
-Waiting a few seconds, the transaction should be complete. To check the balance of an account, simply type:
+等待几秒钟，交易应该完成。
+要检查帐户的余额，只需输入：
 
     web3.eth.getBalance(recipient)
 
-**Tip:** If you are using _Geth_ then you can just use **eth** instead of **web3.eth** command.
+**小费:** 如果您使用_Geth_，那么您可以使用** eth **而不是** web3.eth **命令。
 
-### Transaction Receipts
+### 交易收据
 
-Anytime you create a transaction in Ethereum, the string that is returned is the **Transaction Hash**. You can use those to keep track of a transaction in progress, or the amount of gas spent in a past transaction using _eth.getTransaction()_ and _eth.getTransactionReceipt_. Here's how to use it:
+无论何时您在以太坊创建交易，返回的字符串都是**交易哈希**。
+您可以使用这些来跟踪正在进行的交易，或者使用_eth.getTransaction（）_和_eth.getTransactionReceipt_过去的事务花费的天然气量。
+以下是如何使用它：
 
     var tx =  web3.eth.sendTransaction({from: web3.eth.accounts[0], to: web3.eth.accounts[1], value: amount});
     web3.eth.getTransaction(tx);
 
-And if the transaction has been picked up already, you can check its receipt with this:
+如果交易已被提取，您可以使用以下方式查看收据：
 
     web3.eth.getTransactionReceipt(tx);
+
+[1]: ./foundation
+[2]: https://blog.ethereum.org/2017/10/12/byzantium-hf-announcement/
+[3]: https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/
+[4]: https://github.com/ethereum/mist/releases/latest
+[5]: https://forum.ethereum.org
+[6]: https://www.reddit.com/r/ethereum
+[7]: #balance
+[8]: http://ethdocs.org/en/latest/account-management.html
+[9]: ../cli
+[10]: https://forum.ethereum.org/discussion/197/mining-faq-live-updates
+[11]: https://github.com/ethereum/cpp-ethereum/wiki/Installing-clients
+[12]: https://github.com/ethereum/go-ethereum/wiki/Installation-Instructions-for-Ubuntu
+[13]: https://github.com/ethereum/go-ethereum/tree/gpu_miner
+[14]: https://github.com/ethereum/wiki/wiki/Ethash
+[15]: https://ethereum-homestead.readthedocs.io/en/latest/mining.html
+[16]: https://en.wikipedia.org/wiki/AMD_Radeon_Rx_200_series#Chipset_table
+[17]: https://github.com/LeastAuthority/ethereum-analyses/blob/master/PoW.md#HardwareFeasibility
+[18]: /token
+[19]: https://github.com/ethereum/btcrelay/

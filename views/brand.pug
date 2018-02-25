@@ -1,20 +1,20 @@
 extends layout
 
 block vars
-  - var title='Branding Guidelines'
+  - var title='品牌指南'
   - var url='brand'
 
 block content
   include mixins/recipes.pug
-  +inner-header("Branding Guidelines")
+  +inner-header("品牌指南")
 
   .main-tutorial.inner-page.even
     .container
       .row
         .col-md-12
-          h2 Visual Identity Guide
-          p If you are a designer using our logo in a work, please follow the  
-            a(href="/images/logos/Ethereum_Visual_Identity_1.0.0.pdf", target="_blank") Ethereum Visual Identity Guide
+          h2 视觉识别指南
+          p 如果您是设计师在工作中使用我们的标志，请按照
+            a(href="/images/logos/Ethereum_Visual_Identity_1.0.0.pdf", target="_blank") 以太坊视觉识别指南
             |:
 
           p
@@ -27,4 +27,4 @@ block content
         .col-md-12
           include:markdown-it content/branding.md
 
-          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/branding.md') Improve this page
+          a.button.small(href='https://github.com/ethereum/ethereum-org/edit/master/views/content/branding.md') 改进此页面

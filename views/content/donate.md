@@ -1,8 +1,17 @@
+# 其他方法来帮助
 
-## Other ways to help
+还有很多其他的方式来帮助以太坊网络。
+如果你喜欢与人见面并组织活动，你可以设置一个[聚会在你附近][1]。
+如果你喜欢待在家里，你可以自愿在我们的[堆栈交换][2]回答技术问题，或者在[Reddit论坛][3]帮助新手。
+您可以通过[运行完整节点客户端][4]或[矿工][5]并在[网络统计信息显示板][6]上共享您的统计信息来帮助网络。
 
-There are many other ways to help the Ethereum network. If you like meeting people and organizing events, you can set up a [Meetup near you](https://www.meetup.com/topics/ethereum/). If you prefer staying at home, you can volunteer at answering technical questions at our [Stack Exchange](https://ethereum.stackexchange.com/) or helping newcomers at [Reddit forum](https://www.reddit.com/r/ethereum). And you can always help the network by [running a full node client](https://github.com/ethereum/mist/releases) or a [Miner](https://github.com/ethereum/webthree-umbrella/releases/latest) and sharing your statistics at [the network stats dashboard](https://ethstats.net).
+但真正帮助以太坊采用的最好方法是**去那里建立一些真棒！**
 
-But the best way to truly help ethereum adoption is to **go out there and build something awesome!**
+## 如果你已经donat
 
-## If you have already donated
+[1]: https://www.meetup.com/topics/ethereum/
+[2]: https://ethereum.stackexchange.com/
+[3]: https://www.reddit.com/r/ethereum
+[4]: https://github.com/ethereum/mist/releases
+[5]: https://github.com/ethereum/webthree-umbrella/releases/latest
+[6]: https://ethstats.net

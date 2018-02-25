@@ -6,29 +6,29 @@ mixin gethRecipe(header)
 
   .row
     .col-md-6
-      h3 Install and run the 
-        strong Command Line Interface
-      p We've built 
-        a(href='https://github.com/ethereum/mist/releases/latest') easy to use graphical tools
-        | , but if you are a developer you probably want to install the command line tools.
+      h3 安装并运行
+        strong 命令行界面
+      p 我们已经建成
+        a(href='https://github.com/ethereum/mist/releases/latest') 易于使用的图形工具
+        | , 但如果您是开发人员，您可能需要安装命令行工具。
 
     .col-md-6
       +gethFigure
 
   .row
     .col-md-6
-      a(href="/cli").button Install the Command line tools
-    
+      a(href="/cli").button 安装命令行工具
+
     .col-md-6
       .recipe
-        h4 You'll need:
+        h4 你会需要的
         ul
-          li 
-            Basic command line skills 
-          li 
-            Basic coding skills
-          li 
-            1-2 GB free space for the blockchain
+          li
+            Basic 命令行技能
+          li
+            Basic 编码技能
+          li
+            1-2 区块链使用GB可用空间
 
 mixin etherRecipe(header)
   if header
@@ -36,30 +36,30 @@ mixin etherRecipe(header)
 
   .row
     .col-md-6
-      h3 Learn about the ether, the crypto-fuel of the Ethereum network
-      
-      p Ether is the internal 'fuel' of Ethereum. Programs running on Ethereum need to pay the network for the resources they consume. Volunteers earn this ether by validating transactions, securing the network.
+      h3 了解以太坊，以太坊网络的密码燃料
 
-      p Alternatively, if you participated in the presale to fund Ethereum's development, or won a reward from the Olympic or 
-        a(href="https://bounty.ethdev.com/") Bug Bounty 
-        | programs, you will have a wallet file (.json) that can be imported and give you access to your ether.
-    
-      p You can also get some from a friend or purchase it online.
+      p 以太是以太坊的内部'燃料'。 在以太坊上运行的程序需要向网络支付他们消耗的资源。 通过验证交易来确保网络安全，志愿者可以获得这种好处。
+
+      p 或者，如果您参与了预售以资助以太坊的发展，或者从奥运或
+        a(href="https://bounty.ethdev.com/") Bug奖励
+        | 计划中获得奖励，您将拥有一个可导入的钱包文件（.json），并允许您访问以太网。
+
+      p 您也可以从朋友处获得一些或在线购买。
 
     .col-md-6
       +etherFigure
 
   .row
     .col-md-6
-      a(href="/ether").button Learn about ether 
-    
+      a(href="/ether").button 了解以太
+
     .col-md-6
       .recipe
-        h4 You will:
+        h4 你会：
         ul
-          li Learn what ether is and how many exist
-          li Import your presale wallet
-          li Learn how to send transactions using the command line
+          li 了解以太和存在多少
+          li 导入您的预售钱包
+          li 了解如何使用命令行发送事务
 
 mixin greeterRecipe(header)
   if header
@@ -67,26 +67,26 @@ mixin greeterRecipe(header)
 
   .row
     .col-md-6
-      h3 Create the Greeter, your first live contract
+      h3 创建Greeter，您的第一份生活合同
 
-      p This tutorial will teach you how to build a contract using the command line
+      p 本教程将教您如何使用命令行构建合同
 
-      p The greeter is a very simple contract that greets “Hello World” when poked. If you have never created any contracts in Ethereum before, this is where you should start. 
+      p 欢迎仪式是一个非常简单的合同，当被戳穿时迎接“Hello World”。 如果你以前从未在以太坊制作过任何合约，这就是你应该开始的地方。
 
     .col-md-6
       +greeterFigure
 
   .row
     .col-md-6
-      a(href="/greeter").button Summon the Greeter 
-    
+      a(href="/greeter").button 召唤温和者
+
     .col-md-6
       .recipe
-        h4 You can build:
+        h4 你可以构建：
         ul
-          li Your first smart contract
-          li A professional jokster that is paid to tell jokes
-          li A long living inteligent bot that answer questions
+          li 你的第一个智能合约
+          li 一个专业的jokster，付钱去讲笑话
+          li 一个长寿的智能机器人，可以回答问题
 
 mixin tokenRecipe(header)
   if header
@@ -94,26 +94,27 @@ mixin tokenRecipe(header)
 
   .row
     .col-md-6
-      h3 Design and issue your own cryptocurrency
+      h3 设计和发行你自己的加密货币
 
-      p Create a tradeable digital token that can be used as a currency, a representation of an asset, a virtual share, a proof of membership or anything at all. These tokens use a standard coin API so your contract will be automatically compatible with any wallet, other contract or exchange also using this standard. 
+      p 创建一个可用作货币，可用作资产的表示，虚拟共享，会员资格证明或任何其他信息的可交易数字代币。
+        | 这些代币使用标准的硬币API，因此您的合同将自动与使用此标准的任何钱包，其他合同或交易所兼容。
 
-      p The total amount of tokens in circulation can be set to a simple fixed amount or fluctuate based on any programmed ruleset.
+      p 循环中的令牌总量可以设置为简单的固定数量或根据任何已编程的规则组进行波动。
 
     .col-md-6
       +tokenFigure
 
   .row
     .col-md-6
-      a(href="/token").button Issue your token 
-    
+      a(href="/token").button 发布你的令牌
+
     .col-md-6
       .recipe
-        h4 You can build:
+        h4 你可以构建：
         ul
-          li A tradeable token with a fixed supply
-          li A central bank that can issue money
-          li A puzzle-based cryptocurrency
+          li 具有固定供应的可交易令牌
+          li 可以发行货币的中央银行
+          li 基于谜题的加密货币
 
 
 mixin crowdsaleRecipe(header)
@@ -123,28 +124,28 @@ mixin crowdsaleRecipe(header)
   .row
     .col-md-6
       +crowdsaleFigure
-    
-    .col-md-6    
-      h3 Kickstart a project with a trustless crowdsale
 
-      p Do you already have ideas that you want to develop on Ethereum? Maybe you need help and some funds to bring them to life, but who would lend money to someone they don’t trust?
+    .col-md-6
+      h3 以无可信赖的众包启动一个项目
 
-      p Using Ethereum, you can create a contract that will hold a contributor's money until any given date or goal is reached. Depending on the outcome, the funds will either be released to the project owners or safely returned back to the contributors. All of this is possible without requiring a centralized arbitrator, clearinghouse or having to trust anyone.
+      p 你有没有想要在以太坊发展的想法？ 也许你需要帮助和一些资金来实现它们，但是谁会借钱给他们不信任的人？
 
-      p You can even use the token you created earlier to keep track of the distribution of rewards.
+      p 使用以太坊，您可以创建一个合同，持有贡献者的钱，直到达到任何给定的日期或目标。根据结果​​，资金将被释放给项目业主或安全返回给贡献者。 所有这些都是可能的，不需要集中的仲裁员，交换所或者不得不信任任何人。
+
+      p 您甚至可以使用您之前创建的令牌来跟踪奖励的分配情况。
 
   .row
     .col-md-6
-      a(href="/crowdsale").button Kickstart your project 
+      a(href="/crowdsale").button 启动你的项目
 
     .col-md-6
       .recipe
-        h4 You can build:
+        h4 你可以构建：
         ul
-          li A crowdfund to pre-sell a product
-          li A crowdsale to sell virtual shares in a blockchain organization
-          li An auction of a limited number of items
-  
+          li 用于预售产品的众筹
+          li 在区块链组织中出售虚拟股票的众包
+          li 拍卖数量有限的物品
+
 mixin daoRecipe(header)
   if header
     h2 #{header}
@@ -154,26 +155,26 @@ mixin daoRecipe(header)
       +daoFigure
 
     .col-md-6
-      h3 Create a democratic autonomous organization
+      h3 创建一个民主自治组织
 
-      p Now that you have developed your idea and secured funds, what’s next? You have to hire managers, find a trustworthy CFO to handle the accounts, run board meetings and do a bunch of paperwork. 
+      p 既然你已经发展了你的想法和担保基金，接下来会是什么？ 你必须聘请经理人，找一个值得信赖的首席财务官来处理账户，举办董事会会议并做一堆文件。
 
-      p Or you can simply leave all that to an Ethereum contract. It will collect proposals from your backers and submit them through a completely transparent voting process.
+      p 或者你可以把所有这些都留给以太坊合同。 它将收集你的支持者的建议并通过完全透明的投票程序提交。
 
-      p One of the many advantages of having a robot run your organization is that it is immune to any outside influence as it’s guaranteed to execute only what it was programmed to. And because the Ethereum network is decentralized, you'll be able to provide services with a 100% uptime guarantee. 
-    
+      p 让机器人运行你的组织的好处之一是，它可以免受任何外部影响，因为它保证只执行它所编程的内容。 由于以太坊网络是分散式的，您将能够提供100％的正常运行时间保证。
+
   .row
     .col-md-6
-      a(href="/dao").button Start your organization 
+      a(href="/dao").button 组建你的组织
 
     .col-md-6
       .recipe
-        h4 You can build:
+        h4 你可以组建
         ul
-          li A virtual organization where members vote on issues
-          li A transparent association based on shareholder voting
-          li Your own country with an unchangeable constitution
-          li A better delegative democracy
+          li 一个虚拟组织，成员们就问题进行投票
+          li 基于股东投票的透明协会
+          li 你的组织拥有不变的宪法
+          li 一个更好的代表民主
 
 mixin futureRecipe(header)
   if header
@@ -181,16 +182,16 @@ mixin futureRecipe(header)
 
   .row
     .col-md-6
-      h3 Build a new kind of decentralized application
+      h3 构建一种新的分布式应用程序
 
-      p Now it's your turn: start building what you dream of creating in Ethereum! Could your business be enhanced by operating on a cryptographically secure, decentralized, tamper-proof network?
+      p 现在轮到你了：开始建立你在Ethereum创建的梦想吧！ 通过在密码安全的，分散的防篡改网络上运行，您的业务可以得到增强吗？
 
-      p Check out the 
-        a(href="https://www.stateofthedapps.com", target="_blank") many great projects
-        | * already being built on Ethereum. And since you'll be among the first developers in the world that are able to program decentralized applications, some of them might need your help. 
-      
-      p.small  
-        em *The above list is maintained by an independent party and the Foundation does not endorse its content or any particular project
+      p 查看已经在Ethereum上构建的
+        a(href="https://www.stateofthedapps.com", target="_blank") 许多伟大项目*。
+        | 由于您将成为世界上第一批能够编写分散应用程序的开发人员，其中一些开发人员可能需要您的帮助。
+
+      p.small
+        em *以上列表由独立方保存，基金会不认可其内容或任何特定项目
 
     .col-md-6.future-figure
       +futureFigure
@@ -200,11 +201,11 @@ mixin toc()
 
 mixin inner-header(title)
   .inner-header.default-header.scrollme(class!=attributes.class)
-    .breadcrumb.animateme(data-when="exit", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20") 
-      a(href="/").index Ethereum  
-      | »  
-      strong #{title} 
-    a(href="/").back « Main page
+    .breadcrumb.animateme(data-when="exit", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
+      a(href="/").index Ethereum
+      | »
+      strong #{title}
+    a(href="/").back « 主页
     figure.ethereum-logo.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="120", data-opacity="0.5", data-scale="0.6", data-easing="linear")
 
-    h3.text-center.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="30", data-opacity="0", data-scale="0.7", data-easing="linear")  #{title} 
+    h3.text-center.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="30", data-opacity="0", data-scale="0.7", data-easing="linear")  #{title}

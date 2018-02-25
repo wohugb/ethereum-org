@@ -1,8 +1,8 @@
-## Ethereum Wallet
+# 以太坊钱包
 
 The Ethereum Wallet is an app that allows you to interact with the Ethereum blockchain on your own computer easily.
 
-![](/images/wallet-screenshot.png)
+![Ethereum Wallet](/images/wallet-screenshot.png)
 
 Ethereum Wallet allows you to receive and transfer ether or any ethereum compatible token, as well as allowing you to deploy a contract or interact with any smart contract deployed on the network. The Wallet supports the Main ethereum chain, test chains and even private networks.
 

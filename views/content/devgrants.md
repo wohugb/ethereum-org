@@ -1,11 +1,10 @@
+# DEVGRANTS
 
-## DEVGRANTS
+DEVGRANTS是以太坊基金会努力资助“公共工程<#publicworks>”项目促进更大的以太坊生态系统内的进一步发展。
 
-DEVGRANTS is an effort by the Ethereum Foundation to fund "public works <#publicworks>" projects facilitating further developments within the greater Ethereum ecosystem. 
+## 公共工程
 
-### Public Works 
-#### (why Devgrants?)
-
+### (why Devgrants?)
 
 > **"What vast additions to the conveniences and comforts of living might mankind have acquired, if the money spent in wars had been employed in works of public utility; what an extension of agriculture even to the tops of our mountains; what rivers rendered navigable, or joined by canals; what bridges, aqueducts, new roads, and other public works, edifices, and improvements might not have been obtained by spending those millions in doing good..."**
 >
@@ -22,7 +21,7 @@ In the case of Ethereum and DEVGRANTS, “public works” may imply any the foll
 
 The future of Ethereum is just getting started. By providing talented developers with a frictionless path towards their public works projects, the commons is enriched. And by participating in this public service, donor organizations receive the opportunity to meet experienced developers to discuss potential further collaboration.
 
-#### What Devgrants Is Not
+### What Devgrants Is Not
 
 **It is NOT a venture capital program.**
 We will not “invest” or “grant” funding for projects which do not have on-going development.
@@ -33,7 +32,7 @@ We do not seek to describe specific goals in advance nor do we wish to attribute
 **It is NOT a DApp seed-funding program.**
 More appropriate options for funding your DApp are available at this time. That said, if you need assistance in finding funding for your project that is a commercial endeavor or otherwise does not meet our general grant-writing criteria, we make no promises, but email us and we will see if we can point you in the right direction.
 
-#### Devgrants History 
+### Devgrants History
 
 **Casper**
 Proof-of-Stake (PoS) research & development critical for a scalable Ethereum 2.0
@@ -50,9 +49,9 @@ Ethereum for mobile device; the first mobile Ethereum client
 **EthEmbedded**
 Ethereum for embedded devices, paving the way for smart contract-controlled IoT.
 
-### Process
+## Process
 
-#### Eligibiltiy 
+### Eligibiltiy
 
 To be eligible, you must:
 
@@ -65,9 +64,9 @@ Grant funding may be used to help deliver or maximize value of personal contribu
 - payment of expenses incurred as part of collaborative workflow;
 - payment to help with subsistence costs of project members (generally when taking time from employment).
 
-### How To Apply
+## How To Apply
 
-#### The application process
+### The application process
 
 Parties interested in receiving funding should get in touch with the DEVGRANTS administrator at grants@ethereum.org, submitting three items:
 
@@ -79,19 +78,19 @@ We additionally ask that you include one or more means of realtime contact – X
 
 The Ethereum Foundation will make a best effort to evaluate new proposals within 2 weeks of receipt. Approved applicants will be requested to sign a contract with The Ethereum Foundation, and to accelerate development as soon as possible. The contract is a legal contract between the successful applicant and The Ethereum Foundation, and we recommend that all applicants review the terms carefully, prior to submitting their application.
 
-#### Evaluation 
+### Evaluation
 
 How will evaluation work?
 
-****Step 1: Initial evaluation**
+#### Step 1: Initial evaluation
 
 The initial evaluation will be conducted by the DEVGRANTS administrator, consisting of a review of the application, a high-level investigation into the state of the project, and an online interview with one or more of the project developers. This evaluation will concern itself with the social and technical merits of the project, including its broader applicability and benefit to the Ethereum ecosystem, the general character of its developers, and the progress made so far.
 
-**Step 2: Final evaluation**
+#### Step 2: Final evaluation
 
 Final evaluations will be conducted by the DEVGRANTS board, a team consisting of founding members of Ethereum, plus the DEVGRANTS administrator. This evaluation will review the summarized results of the initial evaluations of the previous two weeks. Applicants may or may not be invited to parts of this discussion for the purposes of further review and examination.
 
-**What should a proposal describe?**
+#### What should a proposal describe
 
 While we understand that each project will have unique properties to underline and stress, all applications will benefit from addressing the following unambiguously:
 
@@ -105,7 +104,7 @@ While we understand that each project will have unique properties to underline a
 
 While exceptions can be made in certain cases, DEVGRANTS is targeting needs ranging from USD $1,000 to $25,000 per project, or just enough to cover a few months of living expenses for one or more developers.
 
-#### Disbursement
+### Disbursement
 
 The Ethereum Foundation can offer disbursement in two different ways, depending on the amount requested, the length of the project’s proposed development period, and the work done upfront:
 
@@ -120,5 +119,3 @@ The desired method can and should be requested in the application, but The Ether
 **What about transparency?**
 
 All projects approved by DEVGRANTS may be made public in both name and application, here on the DEVGRANTS Web site, and also on the @DEVGRANTS Twitter account. In most cases, any project funded will already have a publicly-accessible repository, and in all cases must adhere to one or more specified open source licenses.
-
-

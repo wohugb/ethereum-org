@@ -1,10 +1,10 @@
+# 人群销售
 
-
-### Crowdfund your idea
+## 人群基金你的想法
 
 Sometimes a good idea takes a lot of funds and collective effort. You could ask for donations, but donors prefer to give to projects they are more certain will get traction and proper funding. This is an example where a crowdfunding would be ideal: you set up a goal and a deadline for reaching it. If you miss your goal, the donations are returned, therefore reducing the risk for donors. Since the code is open and auditable, there is no need for a centralized, trusted platform and therefore the only fees everyone will pay are just the gas fees.
 
-#### Tokens and DAOs
+### 令牌和DAOs
 
 In this example we will make a better crowdfunding by solving two important problems: how rewards are managed and kept, and how the money is spent after the funds are raised.
 
@@ -14,23 +14,21 @@ Also, generally those who are funding can't have any say on how the money is spe
 
 ![Get the necessary contracts](/images/tutorial/token-crowdsale.png)
 
-
 * If you are just testing, switch the wallet to the testnet and start mining.
 
 * First of all, create a [fixed supply token](./token#the-code). For this example, we are going to create a supply of **100**, use the name **gadgets**, the box emoji (📦) as a symbol and **0** decimal places. Deploy it and save the address.
 
 * Now create a [shareholder association](./dao#the-shareholder-association). In this example we are going to use the address of the token we just created as the **Shares Address**, a minimum quorum of **10**, and **1500** minutes (25 hours) as the voting time. Deploy this contract and save the address.
 
-
-#### The code
+### 代码
 
 Now copy this code and let's create the crowdsale:
 
-```
+```js
 !!!include(solidity/crowdsale.sol)!!!
 ```
 
-#### Code highlights
+### 代码亮点
 
 Notice that in the **Crowdsale** function (the one that is called upon contract creation), how the variables **deadline** and **fundingGoal** are set:
 
@@ -50,8 +48,7 @@ Notice that the contract understands what a *token* is because we defined it ear
 
 This doesn't fully describe how the contract works or all the functions it has, but describes only the ones this contract needs: a token is a contract with a *transfer* function, and we have one at this address.
 
-
-#### How to use
+### 我们如何
 
 Go to **contracts** and then **deploy contract**:
 
@@ -73,7 +70,7 @@ Put a gas price, click deploy and wait for your crowdsale to be created. Once th
 
 This is a very important point. The crowdsale we are building will be completely controlled by the token holders. This creates the danger that someone controlling 50%+1 of all the tokens will be able to send all the funds to themselves. You can try to create special code on the association contract to prevent these hostile takeovers, or you can instead have all the funds sent to a simple address. To simplify we are simply selling off half of all the gadgets: if you want to further decentralize this, split the remaining half between trusted organizations.
 
-#### Raise funds
+### 筹集资金
 
 Once the crowdsale has all the necessary tokens, contributing to it is easy and you can do it from any ethereum wallet: just send funds to it. You can see the relevant code bit here:
 
@@ -92,19 +89,17 @@ The contract has a safeWithdrawl() function, without any parameters, that can be
 
 ![Crowdsale execution](/images/tutorial/crowdsale-execute.png)
 
-### Extending the crowdsale
+## 扩大众包
 
-#### What if the crowdsale overshoots its target?
+### 如果众包超过它的目标呢？
 
 In our code, only two things can happen: either the crowdsale reaches its target or it doesn't. Since the token amount is limited, it means that once the goal has been reached no one else can contribute. But the history of crowdfunding is full of projects that overshoot their goals in much less time than predicted or that raised many times over the required amount.
 
-#### Unlimited crowdsale
+### 无限的众包
 
 So we are going to modify our project slightly so that instead of sending a limited set of tokens, the project actually creates a new token out of thin air whenever someone sends them ether. First of all, we need to create a [Mintable token](./token#central-mint).
 
 Then modify the crowdsale to rename all mentions of **transfer** to **mintToken**:
-
-
 
     contract token { function mintToken(address receiver, uint amount){  } }
     // ...
@@ -121,4 +116,3 @@ Once you published the crowdsale contract, get its address and go into your **To
 * Modify the crowdsale such that when a token is bought, also send the same quantity of tokens to the founder's account so that they always control 50% of the project
 * Modify the Organization to create a veto power to some trusted third party that could stop any hostile proposal
 * Modify the token to allow a central trusted party to freeze token accounts, so as to require a verification that there isn't any single entity controlling a majority of them
-

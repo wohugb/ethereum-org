@@ -1,40 +1,39 @@
 extends layout
 
 block vars
-  - var title='Ethereum Project'
+  - var title='以太坊项目'
 
 block content
   .main-tutorial.scrollme.intro
     .scrollme.row.introduction.animateme(data-when="span", data-from="0", data-to="1", data-opacity="0.2", data-translatey="300", data-easing="linear")
-      h1.animateme(data-when="span", data-from="0", data-to="1", data-scale="0.75", data-translatey="100", data-easing="linear") Ethereum: Build unstoppable applications
+      h1.animateme(data-when="span", data-from="0", data-to="1", data-scale="0.75", data-translatey="100", data-easing="linear") Ethereum: 构建不可阻挡的应用程序
 
   .legal-modal
     .legal-text
       .bad-robot
         img(src='images/bad-robot@2x.png', width='113')
-        h3 Please agree to this before downloading
+        h3 下载前请同意这一点
       include:markdown-it content/agreement.md
-    a(href='#cancel').button-cancel Mmmm nevermind...
-    a(href='#proceed').button-proceed Sure I understand and agree
+    a(href='#cancel').button-cancel 嗯 没关系...
+    a(href='#proceed').button-proceed 当然，我明白并同意
 
   .main-content.build-apps
     .container
       .row
         .col-md-6
-          h2 Build unstoppable applications
+          h2 构建不可阻挡的应用程序
 
-          p Ethereum is a  
-            strong decentralized platform that runs smart contracts
-            | : applications that run exactly as programmed without any possibility of downtime, censorship, fraud or third-party interference.
+          p 以太坊是一个
+            strong 运行智能合约的分散式平台
+            | : 应用程序完全按照程序运行，不存在停机，审查，欺诈或第三方干扰的可能性。
 
-          p These apps run on a custom built  
-            strong blockchain, an enormously powerful shared global infrastructure that can move value around and represent the ownership of property. 
-          
-          p This enables developers to create markets, store registries of debts or promises, move funds in accordance with instructions given long in the past (like a will or a futures contract) and many other things that have not been invented yet, all without a middleman or counterparty risk.
+          p 这些应用程序在定制的区块链上运行, 一个非常强大的共享全球基础设施，可以转移价值并代表财产的所有权.
 
-          p The project was bootstrapped via an ether presale in August 2014 by fans all around the world. It is developed by the  
-            a(href='./foundation') Ethereum Foundation
-            |, a Swiss non-profit, with contributions from great minds across the globe.
+          p 这使开发人员能够创造市场, 存储债务或承诺的注册, 按照过去很长时间的指示（如遗嘱或期货合同）和许多其他尚未发明的东西, 全部没有中间商或交易对手风险。
+
+          p 该项目于2014年8月由世界各地的粉丝通过以太币预售启动. 它由瑞士非盈利性的
+            a(href='./foundation') 以太坊基金会
+            | 开发，其全球贡献卓着。
 
         .col-md-6
           .row
@@ -54,41 +53,39 @@ block content
 
           .row
             .col-md-12.caption.caption-server-figure
-              p On traditional server architectures, every application has to set up its own servers that run their own code in isolated silos, making sharing of data hard. If a single app is compromised or goes offline, many users and other apps are affected.
+              p 在传统的服务器体系结构中，每个应用程序都必须建立自己的服务器，这些服务器在孤立的孤岛中运行自己的代码，难以共享数据. 如果单个应用程序遭到入侵或掉线，许多用户和其他应用程序都会受到影响。
 
-              p On a blockchain, anyone can set up a node that replicates the necessary data for all nodes to reach an agreement and be compensated by users and app developers. This allows user data to remain private and apps to be decentralized like the Internet was supposed to work.
+              p 在区块链中，任何人都可以设置一个节点，复制所有节点的必要数据以达成协议，并由用户和应用程序开发人员进行补偿。 这允许用户数据保持私密性，应用程序可以像互联网应用那样分散。
 
   .main-content.wallet
     .container
       .row
         .col-md-6
-          h2 Smart money, smart wallet
+          h2 智能钱币，智能钱包
 
-          p The  
-            strong Ethereum Wallet  
-            | is a gateway to decentralized applications on the Ethereum blockchain. It allows you to hold and secure ether and other crypto-assets built on Ethereum, as well as write, deploy and use smart contracts.
+          p 以太坊钱包是在以太坊区块链上分散应用的门户。 它使您能够保存和保护以太坊以及其他以Ethereum为基础的加密资产，以及编写，部署和使用智能合约。
 
           a(href=mistReleaseOSX).button.mac.ethereum-wallet.require-legal
-            strong Download
-            | Ethereum Wallet for Mac OS X
+            strong 下载
+            | 以太坊钱包为Mac OS X
 
           a(href=mistReleaseWin64).button.win64.ethereum-wallet.require-legal
-            strong Download
-            |  Ethereum Wallet for Windows 64 bits
+            strong 下载
+            |  以太坊钱包为Windows 64位
 
           a(href=mistReleaseWin32).button.win32.ethereum-wallet
-            strong Download
-            |  Ethereum Wallet for Windows 32 bits (requires Command Line tools)
+            strong 下载
+            |  用于Windows 32位的以太坊钱包（需要命令行工具）
 
           a(href="https://github.com/ethereum/mist/releases/latest").button.linux.ethereum-wallet.require-legal
-            strong Download
-            |  Ethereum Wallet for Linux
+            strong 下载
+            |  用于Linux的以太坊钱包
 
           a(href="https://github.com/ethereum/mist/releases/latest").allversions.button.ethereum-wallet.require-legal
-            strong Download
-            |  Ethereum Wallet (Windows 64 bits, Linux and OS X)
+            strong 下载
+            |  以太坊钱包（Windows 64位，Linux和OS X）
 
-          a(href="https://github.com/ethereum/mist/releases/latest").allversions.ethereum-wallet.link.require-legal See all versions
+          a(href="https://github.com/ethereum/mist/releases/latest").allversions.ethereum-wallet.link.require-legal 查看所有版本
 
         .col-md-6
           .row
@@ -96,21 +93,21 @@ block content
               .wallet-figure-outer.scrollme
                 figure.wallet-figure.scrollme.animateme(data-when="span", data-from="0.425", data-to="0.475", data-opacity="0", data-translatey="-100")
                   .wallet-01.animateme(data-when="enter", data-from="0.9", data-to="0", data-opacity="0.5", data-scale="0.8", data-translatey="100")
-                  .caption.animateme(data-when="enter", data-from="0.9", data-to="0.1", data-opacity="0.5", data-scale="0.8", data-translatey="100") Hold ether or any Ethereum-based token in safe wallets
+                  .caption.animateme(data-when="enter", data-from="0.9", data-to="0.1", data-opacity="0.5", data-scale="0.8", data-translatey="100") 将以太币或任何以太坊衍生品代币放在安全钱包中
 
                 figure.wallet-figure.scrollme.animateme(data-when="span", data-from="0.67", data-to="0.68", data-opacity="0", data-translatey="-100")
                   .wallet-02.animateme(data-when="span", data-from="0.5", data-to="0.45", data-opacity="0", data-translatey="100")
-                  .caption.animateme(data-when="span", data-from="0.5", data-to="0.45", data-opacity="0", data-translatey="100") Easy template-based contract creation
+                  .caption.animateme(data-when="span", data-from="0.5", data-to="0.45", data-opacity="0", data-translatey="100") 简单的基于模板的合同创建
 
                 figure.wallet-figure.scrollme
                   .wallet-03.animateme(data-when="span", data-from="0.7", data-to="0.675", data-opacity="0", data-translatey="100")
-                  .caption.animateme(data-when="span", data-from="0.7", data-to="0.65", data-opacity="0", data-translatey="100") Your accessible interface to blockchain applications
+                  .caption.animateme(data-when="span", data-from="0.7", data-to="0.65", data-opacity="0", data-translatey="100") 您访问区块链应用程序的可访问界面
 
   .col-md-12.scrollme.main-menu
     .breadcrumb.index.animateme(data-when="exit", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
       strong Ethereum
-      a(href="#community") Join the Community
-      a(href="./donate").donation-button Donate
+      a(href="#community") 加入社区
+      a(href="./donate").donation-button 捐
 
   include ./includes/recipes.pug
 
@@ -118,11 +115,11 @@ block content
       .container
         .row.scrollme
           .col-md-6
-            h3 Get the command line tools
+            h3 获取命令行工具
 
-            p If you feel more comfortable around a terminal, you can download our command line tools. We have different client implementations built in Go, C++, Python, Java and more.
+            p 如果您在终端附近感觉更舒适，可以下载我们的命令行工具。 我们在Go，C ++，Python，Java等内置了不同的客户端实现。
 
-            a(href="/cli").button.require-legal Install the command line tools
+            a(href="/cli").button.require-legal 安装命令行工具
 
           .col-md-6
             figure(data-when="span", data-from="0.8", data-to="0", data-opacity="0", data-translatey="300").geth-console.animateme
