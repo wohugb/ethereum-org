@@ -15,8 +15,18 @@
 
 在你开始之前：
 
+<<<<<<< HEAD
 * [安装以太坊CLI][2]
 * [详细了解合同][3]
+=======
+Before you begin:
+
+* [Install the Ethereum CLI](https://ethereum.org/cli)
+* [Learn more about contracts](https://github.com/ethereum/go-ethereum/wiki/Contracts-and-Transactions)
+
+Please confirm that the GUI is closed before entering the `geth` console.
+Run `geth` to begin the sync process (this may take a while on the first run).
+>>>>>>> origin/develop
 
 请在进入`geth`控制台之前确认GUI已关闭。
 运行`geth`开始同步过程(第一次运行可能需要一段时间)。
@@ -77,6 +87,7 @@ Greeter是一个智能数字化实体，它存在于区块链中，并能够根�
 1. 编译后的代码
 2. 应用程序二进制接口，它是一个定义如何与合约进行交互的JavaScript对象
 
+<<<<<<< HEAD
 你可以通过使用Solidity编译器来获得这两个。
 如果你还没有安装编译器，你可以：
 
@@ -86,9 +97,17 @@ Greeter是一个智能数字化实体，它存在于区块链中，并能够根�
 #### Solc在您的机器上
 
 如果您在机器上安装了编译器，则需要编译合约以获取编译的代码和应用程​​序二进制接口。
+=======
+Both of these you can get by using a compiler. You could use the solidity compiler for this.
+
+If you have not installed a compiler, then you need to install one. You can find [instructions for installing Solidity here](http://solidity.readthedocs.io/en/develop/installing-solidity.html).
+
+#### Compiling your contract 
+>>>>>>> origin/develop
 
     solc -o target --bin --abi Greeter.sol
 
+<<<<<<< HEAD
 这将创建两个文件，一个文件包含已编译的代码，另一个文件在名为target的目录中创建应用程序二进制接口。
 
     $tree
@@ -123,6 +142,38 @@ var greeter = greeterFactory.new(_greeting,{from:eth.accounts[0],data:greeterCom
 
     if(!contract.address) {
         console.log("Contract transaction send: TransactionHash: " + contract.transactionHash + " waiting to be mined...");
+=======
+Now you have the compiler installed, you need to compile the contract to acquire the compiled code and Application Binary Interface.
+
+    solc -o target --bin --abi Greeter.sol
+
+This will create two files, one file containing the compiled code and one file creating the Application Binary Interface in a directory called target.
+
+    $tree
+    .
+    ├── Greeter.sol
+    └── target
+       ├── Greeter.abi
+       ├── Greeter.bin
+       ├── Mortal.abi
+       └── Mortal.bin
+
+You will see that there are files created for both contracts; but because Greeter includes Mortal you do not need to deploy Mortal to deploy Greeter.
+
+You can use these two files to create and deploy the contract.
+
+    var greeterFactory = eth.contract(<contents of the file Greeter.abi>)
+
+    var greeterCompiled = "0x" + "<contents of the file Greeter.bin"
+
+You have now compiled your code and made it available to Geth.  Now you need to get it ready for deployment, this includes setting some variables up, like what greeting you want to use. Edit the first line below to something more interesting than "Hello World!" and execute these commands:
+    
+	
+	var _greeting = "Hello World!"
+
+    var greeter = greeterFactory.new(_greeting,{from:eth.accounts[0],data:greeterCompiled,gas:47000000}, function(e, contract){
+        if(!e) {
+>>>>>>> origin/develop
 
     } else {
         console.log("Contract mined! Address: " + contract.address);
@@ -137,9 +188,14 @@ var greeter = greeterFactory.new(_greeting,{from:eth.accounts[0],data:greeterCom
 将源代码(在本页顶部)复制到[Remix][5]，它会自动编译你的代码。
 您可以放心地忽略右侧任何黄色警告框。
 
+<<<<<<< HEAD
 要访问已编译的代码，请确保右窗格中的下拉菜单选择了"greeter"。
 然后点击直接在下拉菜单右侧的**Details**按钮。
 在弹出窗口中，向下滚动并复制**WEB3DEPLOY**文本框中的所有代码。
+=======
+
+#### Using the online compiler
+>>>>>>> origin/develop
 
 在您的计算机上创建一个临时文本文件并粘贴该代码。
 确保将第一行更改为如下所示：
