@@ -684,11 +684,184 @@
 <p>标准令牌合约可能相当复杂。
 但实质上，一个非常基本的令牌归结为：</p>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">token</span><span class="o">-</span><span class="nx">minimal</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+
+<span class="nx">contract</span> <span class="nx">MyToken</span> <span class="p">{</span>
+    <span class="cm">/* This creates an array with all balances */</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">balanceOf</span><span class="p">;</span>
+
+    <span class="cm">/* Initializes contract with initial supply tokens to the creator of the contract */</span>
+    <span class="kd">function</span> <span class="nx">MyToken</span><span class="p">(</span>
+        <span class="nx">uint256</span> <span class="nx">initialSupply</span>
+        <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">initialSupply</span><span class="p">;</span>              <span class="c1">// Give the creator all initial tokens</span>
+    <span class="p">}</span>
+
+    <span class="cm">/* Send coins */</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>           <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+</span> <span class="nx">_value</span> <span class="o">&gt;=</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]);</span> <span class="c1">// Check for overflows</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                    <span class="c1">// Subtract from the sender</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">_value</span><span class="p">;</span>                           <span class="c1">// Add the same to the recipient</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h3 id="_4">代码<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>但是如果你只想复制粘贴更完整的代码，那么使用下面的代码：</p>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">token</span><span class="o">-</span><span class="nx">erc20</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="kr">interface</span> <span class="nx">tokenRecipient</span> <span class="p">{</span> <span class="kd">function</span> <span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span> <span class="kr">public</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">TokenERC20</span> <span class="p">{</span>
+    <span class="c1">// Public variables of the token</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">symbol</span><span class="p">;</span>
+    <span class="nx">uint8</span> <span class="kr">public</span> <span class="nx">decimals</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+    <span class="c1">// 18 decimals is the strongly suggested default, avoid changing it</span>
+    <span class="nx">uint256</span> <span class="kr">public</span> <span class="nx">totalSupply</span><span class="p">;</span>
+
+    <span class="c1">// This creates an array with all balances</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">balanceOf</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">))</span> <span class="kr">public</span> <span class="nx">allowance</span><span class="p">;</span>
+
+    <span class="c1">// This generates a public event on the blockchain that will notify clients</span>
+    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">);</span>
+
+    <span class="c1">// This notifies clients about the amount burnt</span>
+    <span class="nx">event</span> <span class="nx">Burn</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">);</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor function</span>
+<span class="cm">     *</span>
+<span class="cm">     * Initializes contract with initial supply tokens to the creator of the contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">TokenERC20</span><span class="p">(</span>
+        <span class="nx">uint256</span> <span class="nx">initialSupply</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenName</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenSymbol</span>
+    <span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">totalSupply</span> <span class="o">=</span> <span class="nx">initialSupply</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="nx">uint256</span><span class="p">(</span><span class="nx">decimals</span><span class="p">);</span>  <span class="c1">// Update total supply with the decimal amount</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">totalSupply</span><span class="p">;</span>                <span class="c1">// Give the creator all initial tokens</span>
+        <span class="nx">name</span> <span class="o">=</span> <span class="nx">tokenName</span><span class="p">;</span>                                   <span class="c1">// Set the name for display purposes</span>
+        <span class="nx">symbol</span> <span class="o">=</span> <span class="nx">tokenSymbol</span><span class="p">;</span>                               <span class="c1">// Set the symbol for display purposes</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Internal transfer, only can be called by this contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">_transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">_value</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="c1">// Prevent transfer to 0x0 address. Use burn() instead</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="mh">0x0</span><span class="p">);</span>
+        <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="c1">// Check for overflows</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+</span> <span class="nx">_value</span> <span class="o">&gt;</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]);</span>
+        <span class="c1">// Save this for an assertion in the future</span>
+        <span class="nx">uint</span> <span class="nx">previousBalances</span> <span class="o">=</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">+</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">];</span>
+        <span class="c1">// Subtract from the sender</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="c1">// Add the same to the recipient</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="nx">Transfer</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="c1">// Asserts are used to use static analysis to find bugs in your code. They should never fail</span>
+        <span class="nx">assert</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">+</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">==</span> <span class="nx">previousBalances</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Transfer tokens</span>
+<span class="cm">     *</span>
+<span class="cm">     * Send `_value` tokens to `_to` from your account</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _to The address of the recipient</span>
+<span class="cm">     * @param _value the amount to send</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Transfer tokens from other address</span>
+<span class="cm">     *</span>
+<span class="cm">     * Send `_value` tokens to `_to` on behalf of `_from`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _from The address of the sender</span>
+<span class="cm">     * @param _to The address of the recipient</span>
+<span class="cm">     * @param _value the amount to send</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">transferFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_value</span> <span class="o">&lt;=</span> <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]);</span>     <span class="c1">// Check allowance</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Set allowance for other address</span>
+<span class="cm">     *</span>
+<span class="cm">     * Allows `_spender` to spend no more than `_value` tokens on your behalf</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _spender The address authorized to spend</span>
+<span class="cm">     * @param _value the max amount they can spend</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">approve</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">][</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Set allowance for other address and notify</span>
+<span class="cm">     *</span>
+<span class="cm">     * Allows `_spender` to spend no more than `_value` tokens on your behalf, and then ping the contract about it</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _spender The address authorized to spend</span>
+<span class="cm">     * @param _value the max amount they can spend</span>
+<span class="cm">     * @param _extraData some extra information to send to the approved contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span>
+        <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Destroy tokens</span>
+<span class="cm">     *</span>
+<span class="cm">     * Remove `_value` tokens from the system irreversibly</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _value the amount of money to burn</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">burn</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>   <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>            <span class="c1">// Subtract from the sender</span>
+        <span class="nx">totalSupply</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                      <span class="c1">// Updates totalSupply</span>
+        <span class="nx">Burn</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Destroy tokens from other account</span>
+<span class="cm">     *</span>
+<span class="cm">     * Remove `_value` tokens from the system irreversibly on behalf of `_from`.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _from the address of the sender</span>
+<span class="cm">     * @param _value the amount of money to burn</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">burnFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>                <span class="c1">// Check if the targeted balance is enough</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_value</span> <span class="o">&lt;=</span> <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]);</span>    <span class="c1">// Check allowance</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                         <span class="c1">// Subtract from the targeted balance</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>             <span class="c1">// Subtract from the sender&#39;s allowance</span>
+        <span class="nx">totalSupply</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                              <span class="c1">// Update totalSupply</span>
+        <span class="nx">Burn</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h3 id="_5">了解代码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
@@ -1085,6 +1258,250 @@ uint8 public decimals;
 <p>如果你添加所有的高级选项，这就是最终代码的样子:</p>
 <p><img alt="Advanced Token" src="../images/tutorial/advanced-token-deploy.png" /></p>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">token</span><span class="o">-</span><span class="nx">advanced</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">owned</span> <span class="p">{</span>
+    <span class="nx">address</span> <span class="kr">public</span> <span class="nx">owner</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">owned</span><span class="p">()</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">modifier</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">transferOwnership</span><span class="p">(</span><span class="nx">address</span> <span class="nx">newOwner</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">newOwner</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">tokenRecipient</span> <span class="p">{</span> <span class="kd">function</span> <span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span> <span class="kr">public</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">TokenERC20</span> <span class="p">{</span>
+    <span class="c1">// Public variables of the token</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">symbol</span><span class="p">;</span>
+    <span class="nx">uint8</span> <span class="kr">public</span> <span class="nx">decimals</span> <span class="o">=</span> <span class="mi">18</span><span class="p">;</span>
+    <span class="c1">// 18 decimals is the strongly suggested default, avoid changing it</span>
+    <span class="nx">uint256</span> <span class="kr">public</span> <span class="nx">totalSupply</span><span class="p">;</span>
+
+    <span class="c1">// This creates an array with all balances</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">balanceOf</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">))</span> <span class="kr">public</span> <span class="nx">allowance</span><span class="p">;</span>
+
+    <span class="c1">// This generates a public event on the blockchain that will notify clients</span>
+    <span class="nx">event</span> <span class="nx">Transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">);</span>
+
+    <span class="c1">// This notifies clients about the amount burnt</span>
+    <span class="nx">event</span> <span class="nx">Burn</span><span class="p">(</span><span class="nx">address</span> <span class="nx">indexed</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">value</span><span class="p">);</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constrctor function</span>
+<span class="cm">     *</span>
+<span class="cm">     * Initializes contract with initial supply tokens to the creator of the contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">TokenERC20</span><span class="p">(</span>
+        <span class="nx">uint256</span> <span class="nx">initialSupply</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenName</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenSymbol</span>
+    <span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">totalSupply</span> <span class="o">=</span> <span class="nx">initialSupply</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">**</span> <span class="nx">uint256</span><span class="p">(</span><span class="nx">decimals</span><span class="p">);</span>  <span class="c1">// Update total supply with the decimal amount</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">totalSupply</span><span class="p">;</span>                <span class="c1">// Give the creator all initial tokens</span>
+        <span class="nx">name</span> <span class="o">=</span> <span class="nx">tokenName</span><span class="p">;</span>                                   <span class="c1">// Set the name for display purposes</span>
+        <span class="nx">symbol</span> <span class="o">=</span> <span class="nx">tokenSymbol</span><span class="p">;</span>                               <span class="c1">// Set the symbol for display purposes</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Internal transfer, only can be called by this contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">_transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">_value</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="c1">// Prevent transfer to 0x0 address. Use burn() instead</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="mh">0x0</span><span class="p">);</span>
+        <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="c1">// Check for overflows</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+</span> <span class="nx">_value</span> <span class="o">&gt;</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]);</span>
+        <span class="c1">// Save this for an assertion in the future</span>
+        <span class="nx">uint</span> <span class="nx">previousBalances</span> <span class="o">=</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">+</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">];</span>
+        <span class="c1">// Subtract from the sender</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="c1">// Add the same to the recipient</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="nx">Transfer</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="c1">// Asserts are used to use static analysis to find bugs in your code. They should never fail</span>
+        <span class="nx">assert</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">+</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">==</span> <span class="nx">previousBalances</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Transfer tokens</span>
+<span class="cm">     *</span>
+<span class="cm">     * Send `_value` tokens to `_to` from your account</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _to The address of the recipient</span>
+<span class="cm">     * @param _value the amount to send</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Transfer tokens from other address</span>
+<span class="cm">     *</span>
+<span class="cm">     * Send `_value` tokens to `_to` in behalf of `_from`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _from The address of the sender</span>
+<span class="cm">     * @param _to The address of the recipient</span>
+<span class="cm">     * @param _value the amount to send</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">transferFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_value</span> <span class="o">&lt;=</span> <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]);</span>     <span class="c1">// Check allowance</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Set allowance for other address</span>
+<span class="cm">     *</span>
+<span class="cm">     * Allows `_spender` to spend no more than `_value` tokens in your behalf</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _spender The address authorized to spend</span>
+<span class="cm">     * @param _value the max amount they can spend</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">approve</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">][</span><span class="nx">_spender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">_value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Set allowance for other address and notify</span>
+<span class="cm">     *</span>
+<span class="cm">     * Allows `_spender` to spend no more than `_value` tokens in your behalf, and then ping the contract about it</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _spender The address authorized to spend</span>
+<span class="cm">     * @param _value the max amount they can spend</span>
+<span class="cm">     * @param _extraData some extra information to send to the approved contract</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">approveAndCall</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_spender</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span>
+        <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">tokenRecipient</span> <span class="nx">spender</span> <span class="o">=</span> <span class="nx">tokenRecipient</span><span class="p">(</span><span class="nx">_spender</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">approve</span><span class="p">(</span><span class="nx">_spender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">spender</span><span class="p">.</span><span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Destroy tokens</span>
+<span class="cm">     *</span>
+<span class="cm">     * Remove `_value` tokens from the system irreversibly</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _value the amount of money to burn</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">burn</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>   <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>            <span class="c1">// Subtract from the sender</span>
+        <span class="nx">totalSupply</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                      <span class="c1">// Updates totalSupply</span>
+        <span class="nx">Burn</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Destroy tokens from other account</span>
+<span class="cm">     *</span>
+<span class="cm">     * Remove `_value` tokens from the system irreversibly on behalf of `_from`.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param _from the address of the sender</span>
+<span class="cm">     * @param _value the amount of money to burn</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">burnFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>                <span class="c1">// Check if the targeted balance is enough</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">_value</span> <span class="o">&lt;=</span> <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]);</span>    <span class="c1">// Check allowance</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                         <span class="c1">// Subtract from the targeted balance</span>
+        <span class="nx">allowance</span><span class="p">[</span><span class="nx">_from</span><span class="p">][</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>             <span class="c1">// Subtract from the sender&#39;s allowance</span>
+        <span class="nx">totalSupply</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                              <span class="c1">// Update totalSupply</span>
+        <span class="nx">Burn</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/******************************************/</span>
+<span class="cm">/*       ADVANCED TOKEN STARTS HERE       */</span>
+<span class="cm">/******************************************/</span>
+
+<span class="nx">contract</span> <span class="nx">MyAdvancedToken</span> <span class="nx">is</span> <span class="nx">owned</span><span class="p">,</span> <span class="nx">TokenERC20</span> <span class="p">{</span>
+
+    <span class="nx">uint256</span> <span class="kr">public</span> <span class="nx">sellPrice</span><span class="p">;</span>
+    <span class="nx">uint256</span> <span class="kr">public</span> <span class="nx">buyPrice</span><span class="p">;</span>
+
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">bool</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">frozenAccount</span><span class="p">;</span>
+
+    <span class="cm">/* This generates a public event on the blockchain that will notify clients */</span>
+    <span class="nx">event</span> <span class="nx">FrozenFunds</span><span class="p">(</span><span class="nx">address</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">frozen</span><span class="p">);</span>
+
+    <span class="cm">/* Initializes contract with initial supply tokens to the creator of the contract */</span>
+    <span class="kd">function</span> <span class="nx">MyAdvancedToken</span><span class="p">(</span>
+        <span class="nx">uint256</span> <span class="nx">initialSupply</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenName</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">tokenSymbol</span>
+    <span class="p">)</span> <span class="nx">TokenERC20</span><span class="p">(</span><span class="nx">initialSupply</span><span class="p">,</span> <span class="nx">tokenName</span><span class="p">,</span> <span class="nx">tokenSymbol</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{}</span>
+
+    <span class="cm">/* Internal transfer, only can be called by this contract */</span>
+    <span class="kd">function</span> <span class="nx">_transfer</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">_value</span><span class="p">)</span> <span class="nx">internal</span> <span class="p">{</span>
+        <span class="nx">require</span> <span class="p">(</span><span class="nx">_to</span> <span class="o">!=</span> <span class="mh">0x0</span><span class="p">);</span>                               <span class="c1">// Prevent transfer to 0x0 address. Use burn() instead</span>
+        <span class="nx">require</span> <span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">_value</span><span class="p">);</span>               <span class="c1">// Check if the sender has enough</span>
+        <span class="nx">require</span> <span class="p">(</span><span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+</span> <span class="nx">_value</span> <span class="o">&gt;</span> <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]);</span> <span class="c1">// Check for overflows</span>
+        <span class="nx">require</span><span class="p">(</span><span class="o">!</span><span class="nx">frozenAccount</span><span class="p">[</span><span class="nx">_from</span><span class="p">]);</span>                     <span class="c1">// Check if sender is frozen</span>
+        <span class="nx">require</span><span class="p">(</span><span class="o">!</span><span class="nx">frozenAccount</span><span class="p">[</span><span class="nx">_to</span><span class="p">]);</span>                       <span class="c1">// Check if recipient is frozen</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_from</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">_value</span><span class="p">;</span>                         <span class="c1">// Subtract from the sender</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">_to</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">_value</span><span class="p">;</span>                           <span class="c1">// Add the same to the recipient</span>
+        <span class="nx">Transfer</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">_value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// @notice Create `mintedAmount` tokens and send it to `target`</span>
+    <span class="c1">/// @param target Address to receive the tokens</span>
+    <span class="c1">/// @param mintedAmount the amount of tokens it will receive</span>
+    <span class="kd">function</span> <span class="nx">mintToken</span><span class="p">(</span><span class="nx">address</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">mintedAmount</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">balanceOf</span><span class="p">[</span><span class="nx">target</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">mintedAmount</span><span class="p">;</span>
+        <span class="nx">totalSupply</span> <span class="o">+=</span> <span class="nx">mintedAmount</span><span class="p">;</span>
+        <span class="nx">Transfer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">mintedAmount</span><span class="p">);</span>
+        <span class="nx">Transfer</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">mintedAmount</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// @notice `freeze? Prevent | Allow` `target` from sending &amp; receiving tokens</span>
+    <span class="c1">/// @param target Address to be frozen</span>
+    <span class="c1">/// @param freeze either to freeze it or not</span>
+    <span class="kd">function</span> <span class="nx">freezeAccount</span><span class="p">(</span><span class="nx">address</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">freeze</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">frozenAccount</span><span class="p">[</span><span class="nx">target</span><span class="p">]</span> <span class="o">=</span> <span class="nx">freeze</span><span class="p">;</span>
+        <span class="nx">FrozenFunds</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">freeze</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// @notice Allow users to buy tokens for `newBuyPrice` eth and sell tokens for `newSellPrice` eth</span>
+    <span class="c1">/// @param newSellPrice Price the users can sell to the contract</span>
+    <span class="c1">/// @param newBuyPrice Price users can buy from the contract</span>
+    <span class="kd">function</span> <span class="nx">setPrices</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">newSellPrice</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">newBuyPrice</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">sellPrice</span> <span class="o">=</span> <span class="nx">newSellPrice</span><span class="p">;</span>
+        <span class="nx">buyPrice</span> <span class="o">=</span> <span class="nx">newBuyPrice</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// @notice Buy tokens from contract by sending ether</span>
+    <span class="kd">function</span> <span class="nx">buy</span><span class="p">()</span> <span class="nx">payable</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">uint</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">value</span> <span class="o">/</span> <span class="nx">buyPrice</span><span class="p">;</span>               <span class="c1">// calculates the amount</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">amount</span><span class="p">);</span>              <span class="c1">// makes the transfers</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// @notice Sell `amount` tokens to contract</span>
+    <span class="c1">/// @param amount amount of tokens to be sold</span>
+    <span class="kd">function</span> <span class="nx">sell</span><span class="p">(</span><span class="nx">uint256</span> <span class="nx">amount</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">balance</span> <span class="o">&gt;=</span> <span class="nx">amount</span> <span class="o">*</span> <span class="nx">sellPrice</span><span class="p">);</span>      <span class="c1">// checks if the contract has enough ether to buy</span>
+        <span class="nx">_transfer</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">amount</span><span class="p">);</span>              <span class="c1">// makes the transfers</span>
+        <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">.</span><span class="nx">transfer</span><span class="p">(</span><span class="nx">amount</span> <span class="o">*</span> <span class="nx">sellPrice</span><span class="p">);</span>          <span class="c1">// sends ether to the seller. It&#39;s important to do this last to avoid recursion attacks</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h3 id="_18">部署<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>

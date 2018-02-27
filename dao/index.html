@@ -808,6 +808,310 @@
 <h3 id="_2">区块链大会<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <h4 id="_3">代码<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">congress</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">owned</span> <span class="p">{</span>
+    <span class="nx">address</span> <span class="kr">public</span> <span class="nx">owner</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">owned</span><span class="p">()</span>  <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">modifier</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">transferOwnership</span><span class="p">(</span><span class="nx">address</span> <span class="nx">newOwner</span><span class="p">)</span> <span class="nx">onlyOwner</span>  <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">newOwner</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+    <span class="nx">event</span> <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">address</span> <span class="nx">sender</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">Token</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">Token</span><span class="p">(</span><span class="nx">_token</span><span class="p">);</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">transferFrom</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_value</span><span class="p">));</span>
+        <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="p">()</span> <span class="nx">payable</span>  <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">Token</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">transferFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">Congress</span> <span class="nx">is</span> <span class="nx">owned</span><span class="p">,</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+    <span class="c1">// Contract Variables and events</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">minimumQuorum</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">debatingPeriodInMinutes</span><span class="p">;</span>
+    <span class="kr">int</span> <span class="kr">public</span> <span class="nx">majorityMargin</span><span class="p">;</span>
+    <span class="nx">Proposal</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">proposals</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">numProposals</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">memberId</span><span class="p">;</span>
+    <span class="nx">Member</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">members</span><span class="p">;</span>
+
+    <span class="nx">event</span> <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">recipient</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">description</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">Voted</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">voter</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">justification</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">ProposalTallied</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">quorum</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">active</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">MembershipChanged</span><span class="p">(</span><span class="nx">address</span> <span class="nx">member</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">isMember</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">ChangeOfRules</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">newMinimumQuorum</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">newDebatingPeriodInMinutes</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">newMajorityMargin</span><span class="p">);</span>
+
+    <span class="nx">struct</span> <span class="nx">Proposal</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">recipient</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">amount</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">description</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">votingDeadline</span><span class="p">;</span>
+        <span class="nx">bool</span> <span class="nx">executed</span><span class="p">;</span>
+        <span class="nx">bool</span> <span class="nx">proposalPassed</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">numberOfVotes</span><span class="p">;</span>
+        <span class="kr">int</span> <span class="nx">currentResult</span><span class="p">;</span>
+        <span class="nx">bytes32</span> <span class="nx">proposalHash</span><span class="p">;</span>
+        <span class="nx">Vote</span><span class="p">[]</span> <span class="nx">votes</span><span class="p">;</span>
+        <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">bool</span><span class="p">)</span> <span class="nx">voted</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">struct</span> <span class="nx">Member</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">member</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">memberSince</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">struct</span> <span class="nx">Vote</span> <span class="p">{</span>
+        <span class="nx">bool</span> <span class="nx">inSupport</span><span class="p">;</span>
+        <span class="nx">address</span> <span class="nx">voter</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">justification</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Modifier that allows only shareholders to vote and create new proposals</span>
+    <span class="nx">modifier</span> <span class="nx">onlyMembers</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">memberId</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor function</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">Congress</span> <span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">minimumQuorumForProposals</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">minutesForDebate</span><span class="p">,</span>
+        <span class="kr">int</span> <span class="nx">marginOfVotesForMajority</span>
+    <span class="p">)</span>  <span class="nx">payable</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">changeVotingRules</span><span class="p">(</span><span class="nx">minimumQuorumForProposals</span><span class="p">,</span> <span class="nx">minutesForDebate</span><span class="p">,</span> <span class="nx">marginOfVotesForMajority</span><span class="p">);</span>
+        <span class="c1">// It’s necessary to add an empty first member</span>
+        <span class="nx">addMember</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+        <span class="c1">// and let&#39;s add the founder, to save a step later</span>
+        <span class="nx">addMember</span><span class="p">(</span><span class="nx">owner</span><span class="p">,</span> <span class="s1">&#39;founder&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add member</span>
+<span class="cm">     *</span>
+<span class="cm">     * Make `targetMember` a member named `memberName`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param targetMember ethereum address to be added</span>
+<span class="cm">     * @param memberName public name for that member</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">addMember</span><span class="p">(</span><span class="nx">address</span> <span class="nx">targetMember</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">memberName</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">uint</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">]</span> <span class="o">=</span> <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+            <span class="nx">id</span> <span class="o">=</span> <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">members</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Member</span><span class="p">({</span><span class="nx">member</span><span class="o">:</span> <span class="nx">targetMember</span><span class="p">,</span> <span class="nx">memberSince</span><span class="o">:</span> <span class="nx">now</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">memberName</span><span class="p">});</span>
+        <span class="nx">MembershipChanged</span><span class="p">(</span><span class="nx">targetMember</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Remove member</span>
+<span class="cm">     *</span>
+<span class="cm">     * @notice Remove membership from `targetMember`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param targetMember ethereum address to be removed</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">removeMember</span><span class="p">(</span><span class="nx">address</span> <span class="nx">targetMember</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">];</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">members</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">members</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">delete</span> <span class="nx">members</span><span class="p">[</span><span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+        <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Change voting rules</span>
+<span class="cm">     *</span>
+<span class="cm">     * Make so that proposals need to be discussed for at least `minutesForDebate/60` hours,</span>
+<span class="cm">     * have at least `minimumQuorumForProposals` votes, and have 50% + `marginOfVotesForMajority` votes to be executed</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param minimumQuorumForProposals how many members must vote on a proposal for it to be executed</span>
+<span class="cm">     * @param minutesForDebate the minimum amount of delay between when a proposal is made and when it can be executed</span>
+<span class="cm">     * @param marginOfVotesForMajority the proposal needs to have 50% plus this number</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">changeVotingRules</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">minimumQuorumForProposals</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">minutesForDebate</span><span class="p">,</span>
+        <span class="kr">int</span> <span class="nx">marginOfVotesForMajority</span>
+    <span class="p">)</span> <span class="nx">onlyOwner</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">minimumQuorum</span> <span class="o">=</span> <span class="nx">minimumQuorumForProposals</span><span class="p">;</span>
+        <span class="nx">debatingPeriodInMinutes</span> <span class="o">=</span> <span class="nx">minutesForDebate</span><span class="p">;</span>
+        <span class="nx">majorityMargin</span> <span class="o">=</span> <span class="nx">marginOfVotesForMajority</span><span class="p">;</span>
+
+        <span class="nx">ChangeOfRules</span><span class="p">(</span><span class="nx">minimumQuorum</span><span class="p">,</span> <span class="nx">debatingPeriodInMinutes</span><span class="p">,</span> <span class="nx">majorityMargin</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add Proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `weiAmount / 1e18` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send, in wei</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposal</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">proposalID</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalID</span><span class="p">];</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span> <span class="o">=</span> <span class="nx">beneficiary</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span> <span class="o">=</span> <span class="nx">weiAmount</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">jobDescription</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">=</span> <span class="nx">keccak256</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">votingDeadline</span> <span class="o">=</span> <span class="nx">now</span> <span class="o">+</span> <span class="nx">debatingPeriodInMinutes</span> <span class="o">*</span> <span class="mi">1</span> <span class="nx">minutes</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">proposalID</span><span class="p">,</span> <span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">);</span>
+        <span class="nx">numProposals</span> <span class="o">=</span> <span class="nx">proposalID</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="nx">proposalID</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add proposal in Ether</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `etherAmount` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     * This is a convenience function to use if the amount to be given is in round number of ether units.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param etherAmount amount of ether to send</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposalInEther</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">etherAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">newProposal</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">etherAmount</span> <span class="o">*</span> <span class="mi">1</span> <span class="nx">ether</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Check if a proposal code matches</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber ID number of the proposal to query</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">checkProposalCode</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">constant</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">codeChecksOut</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+        <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">keccak256</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Log a vote for a proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Vote `supportsProposal? in support of : against` proposal #`proposalNumber`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber number of proposal</span>
+<span class="cm">     * @param supportsProposal either in favor or against it</span>
+<span class="cm">     * @param justificationText optional justification text</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">vote</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">bool</span> <span class="nx">supportsProposal</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">justificationText</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span> <span class="kr">public</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">voteID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>         <span class="c1">// Get the proposal</span>
+        <span class="nx">require</span><span class="p">(</span><span class="o">!</span><span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]);</span>         <span class="c1">// If has already voted, cancel</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>                     <span class="c1">// Set this voter as having voted</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span><span class="o">++</span><span class="p">;</span>                              <span class="c1">// Increase the number of votes</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">supportsProposal</span><span class="p">)</span> <span class="p">{</span>                         <span class="c1">// If they support the proposal</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="o">++</span><span class="p">;</span>                          <span class="c1">// Increase score</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>                                        <span class="c1">// If they don&#39;t</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="o">--</span><span class="p">;</span>                          <span class="c1">// Decrease the score</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Create a log of this event</span>
+        <span class="nx">Voted</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span>  <span class="nx">supportsProposal</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">justificationText</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Finish vote</span>
+<span class="cm">     *</span>
+<span class="cm">     * Count the votes proposal #`proposalNumber` and execute it if approved</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber proposal number</span>
+<span class="cm">     * @param transactionBytecode optional: if the transaction contained a bytecode, you need to send it</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">executeProposal</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">transactionBytecode</span><span class="p">)</span> <span class="kr">public</span> <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+
+        <span class="nx">require</span><span class="p">(</span><span class="nx">now</span> <span class="o">&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">votingDeadline</span>                                            <span class="c1">// If it is past the voting deadline</span>
+            <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">p</span><span class="p">.</span><span class="nx">executed</span>                                                         <span class="c1">// and it has not already been executed</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">keccak256</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">)</span>  <span class="c1">// and the supplied code matches the proposal</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span> <span class="o">&gt;=</span> <span class="nx">minimumQuorum</span><span class="p">);</span>                                  <span class="c1">// and a minimum quorum has been reached...</span>
+
+        <span class="c1">// ...then execute result</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span> <span class="o">&gt;</span> <span class="nx">majorityMargin</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Proposal passed; execute the transaction</span>
+
+            <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Avoid recursive calling</span>
+            <span class="nx">require</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">)(</span><span class="nx">transactionBytecode</span><span class="p">));</span>
+
+            <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// Proposal failed</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Fire Events</span>
+        <span class="nx">ProposalTallied</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h4 id="_4">如何部署<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
@@ -919,6 +1223,267 @@
 部署此合同并将其地址保存在文本文件中。</p>
 <p>现在给股东代码：</p>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">association</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">owned</span> <span class="p">{</span>
+    <span class="nx">address</span> <span class="kr">public</span> <span class="nx">owner</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">owned</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">modifier</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">transferOwnership</span><span class="p">(</span><span class="nx">address</span> <span class="nx">newOwner</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">newOwner</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+    <span class="nx">event</span> <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">address</span> <span class="nx">sender</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">){</span>
+        <span class="nx">Token</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">Token</span><span class="p">(</span><span class="nx">_token</span><span class="p">);</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">transferFrom</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_value</span><span class="p">));</span>
+        <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="p">()</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">Token</span> <span class="p">{</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">balanceOf</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">transferFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * The shareholder association contract itself</span>
+<span class="cm"> */</span>
+<span class="nx">contract</span> <span class="nx">Association</span> <span class="nx">is</span> <span class="nx">owned</span><span class="p">,</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">minimumQuorum</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">debatingPeriodInMinutes</span><span class="p">;</span>
+    <span class="nx">Proposal</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">proposals</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">numProposals</span><span class="p">;</span>
+    <span class="nx">Token</span> <span class="kr">public</span> <span class="nx">sharesTokenAddress</span><span class="p">;</span>
+
+    <span class="nx">event</span> <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">recipient</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">description</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">Voted</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">voter</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">ProposalTallied</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">quorum</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">active</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">ChangeOfRules</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">newMinimumQuorum</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">newDebatingPeriodInMinutes</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">newSharesTokenAddress</span><span class="p">);</span>
+
+    <span class="nx">struct</span> <span class="nx">Proposal</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">recipient</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">amount</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">description</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">votingDeadline</span><span class="p">;</span>
+        <span class="nx">bool</span> <span class="nx">executed</span><span class="p">;</span>
+        <span class="nx">bool</span> <span class="nx">proposalPassed</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">numberOfVotes</span><span class="p">;</span>
+        <span class="nx">bytes32</span> <span class="nx">proposalHash</span><span class="p">;</span>
+        <span class="nx">Vote</span><span class="p">[]</span> <span class="nx">votes</span><span class="p">;</span>
+        <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">bool</span><span class="p">)</span> <span class="nx">voted</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">struct</span> <span class="nx">Vote</span> <span class="p">{</span>
+        <span class="nx">bool</span> <span class="nx">inSupport</span><span class="p">;</span>
+        <span class="nx">address</span> <span class="nx">voter</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Modifier that allows only shareholders to vote and create new proposals</span>
+    <span class="nx">modifier</span> <span class="nx">onlyShareholders</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">sharesTokenAddress</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor function</span>
+<span class="cm">     *</span>
+<span class="cm">     * First time setup</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">Association</span><span class="p">(</span><span class="nx">Token</span> <span class="nx">sharesAddress</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">minimumSharesToPassAVote</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">minutesForDebate</span><span class="p">)</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">changeVotingRules</span><span class="p">(</span><span class="nx">sharesAddress</span><span class="p">,</span> <span class="nx">minimumSharesToPassAVote</span><span class="p">,</span> <span class="nx">minutesForDebate</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Change voting rules</span>
+<span class="cm">     *</span>
+<span class="cm">     * Make so that proposals need to be discussed for at least `minutesForDebate/60` hours</span>
+<span class="cm">     * and all voters combined must own more than `minimumSharesToPassAVote` shares of token `sharesAddress` to be executed</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param sharesAddress token address</span>
+<span class="cm">     * @param minimumSharesToPassAVote proposal can vote only if the sum of shares held by all voters exceed this number</span>
+<span class="cm">     * @param minutesForDebate the minimum amount of delay between when a proposal is made and when it can be executed</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">changeVotingRules</span><span class="p">(</span><span class="nx">Token</span> <span class="nx">sharesAddress</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">minimumSharesToPassAVote</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">minutesForDebate</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">sharesTokenAddress</span> <span class="o">=</span> <span class="nx">Token</span><span class="p">(</span><span class="nx">sharesAddress</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">minimumSharesToPassAVote</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="nx">minimumSharesToPassAVote</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="nx">minimumQuorum</span> <span class="o">=</span> <span class="nx">minimumSharesToPassAVote</span><span class="p">;</span>
+        <span class="nx">debatingPeriodInMinutes</span> <span class="o">=</span> <span class="nx">minutesForDebate</span><span class="p">;</span>
+        <span class="nx">ChangeOfRules</span><span class="p">(</span><span class="nx">minimumQuorum</span><span class="p">,</span> <span class="nx">debatingPeriodInMinutes</span><span class="p">,</span> <span class="nx">sharesTokenAddress</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add Proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `weiAmount / 1e18` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send, in wei</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposal</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyShareholders</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">proposalID</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalID</span><span class="p">];</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span> <span class="o">=</span> <span class="nx">beneficiary</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span> <span class="o">=</span> <span class="nx">weiAmount</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">jobDescription</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">=</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">votingDeadline</span> <span class="o">=</span> <span class="nx">now</span> <span class="o">+</span> <span class="nx">debatingPeriodInMinutes</span> <span class="o">*</span> <span class="mi">1</span> <span class="nx">minutes</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">proposalID</span><span class="p">,</span> <span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">);</span>
+        <span class="nx">numProposals</span> <span class="o">=</span> <span class="nx">proposalID</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+
+        <span class="k">return</span> <span class="nx">proposalID</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add proposal in Ether</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `etherAmount` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     * This is a convenience function to use if the amount to be given is in round number of ether units.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param etherAmount amount of ether to send</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposalInEther</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">etherAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyShareholders</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">newProposal</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">etherAmount</span> <span class="o">*</span> <span class="mi">1</span> <span class="nx">ether</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Check if a proposal code matches</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber ID number of the proposal to query</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">checkProposalCode</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">constant</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">codeChecksOut</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+        <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Log a vote for a proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Vote `supportsProposal? in support of : against` proposal #`proposalNumber`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber number of proposal</span>
+<span class="cm">     * @param supportsProposal either in favor or against it</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">vote</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">bool</span> <span class="nx">supportsProposal</span>
+    <span class="p">)</span>
+        <span class="nx">onlyShareholders</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">voteID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">true</span><span class="p">);</span>
+
+        <span class="nx">voteID</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">votes</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">votes</span><span class="p">[</span><span class="nx">voteID</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Vote</span><span class="p">({</span><span class="nx">inSupport</span><span class="o">:</span> <span class="nx">supportsProposal</span><span class="p">,</span> <span class="nx">voter</span><span class="o">:</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">});</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">numberOfVotes</span> <span class="o">=</span> <span class="nx">voteID</span> <span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="nx">Voted</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span>  <span class="nx">supportsProposal</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">voteID</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Finish vote</span>
+<span class="cm">     *</span>
+<span class="cm">     * Count the votes proposal #`proposalNumber` and execute it if approved</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber proposal number</span>
+<span class="cm">     * @param transactionBytecode optional: if the transaction contained a bytecode, you need to send it</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">executeProposal</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">transactionBytecode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+
+        <span class="nx">require</span><span class="p">(</span><span class="nx">now</span> <span class="o">&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">votingDeadline</span>                                             <span class="c1">// If it is past the voting deadline</span>
+            <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">p</span><span class="p">.</span><span class="nx">executed</span>                                                          <span class="c1">// and it has not already been executed</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">));</span> <span class="c1">// and the supplied code matches the proposal...</span>
+
+
+        <span class="c1">// ...then tally the results</span>
+        <span class="nx">uint</span> <span class="nx">quorum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">yea</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">nay</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span>  <span class="nx">p</span><span class="p">.</span><span class="nx">votes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Vote</span> <span class="nx">storage</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">votes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="nx">uint</span> <span class="nx">voteWeight</span> <span class="o">=</span> <span class="nx">sharesTokenAddress</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">voter</span><span class="p">);</span>
+            <span class="nx">quorum</span> <span class="o">+=</span> <span class="nx">voteWeight</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">inSupport</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">yea</span> <span class="o">+=</span> <span class="nx">voteWeight</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">nay</span> <span class="o">+=</span> <span class="nx">voteWeight</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="nx">require</span><span class="p">(</span><span class="nx">quorum</span> <span class="o">&gt;=</span> <span class="nx">minimumQuorum</span><span class="p">);</span> <span class="c1">// Check if a minimum quorum has been reached</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">yea</span> <span class="o">&gt;</span> <span class="nx">nay</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Proposal passed; execute the transaction</span>
+
+            <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="nx">require</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">)(</span><span class="nx">transactionBytecode</span><span class="p">));</span>
+
+            <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// Proposal failed</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Fire Events</span>
+        <span class="nx">ProposalTallied</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">yea</span> <span class="o">-</span> <span class="nx">nay</span><span class="p">,</span> <span class="nx">quorum</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalPassed</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h4 id="_10">部署和使用<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
@@ -982,6 +1547,143 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 最终的结果应该是，投票数最多的账户是最有信任的账户</p>
 <h4 id="_13">代码<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">liquid</span><span class="o">-</span><span class="nx">democracy</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">token</span> <span class="p">{</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">balanceOf</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">LiquidDemocracy</span> <span class="p">{</span>
+    <span class="nx">token</span> <span class="kr">public</span> <span class="nx">votingToken</span><span class="p">;</span>
+    <span class="nx">bool</span>  <span class="nx">underExecution</span><span class="p">;</span>
+    <span class="nx">address</span> <span class="kr">public</span> <span class="nx">appointee</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">voterId</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint256</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">voteWeight</span><span class="p">;</span>
+
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">delegatedPercent</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">lastWeightCalculation</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">numberOfDelegationRounds</span><span class="p">;</span>
+
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">numberOfVotes</span><span class="p">;</span>
+    <span class="nx">DelegatedVote</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">delegatedVotes</span><span class="p">;</span>
+    <span class="nx">string</span> <span class="kr">public</span> <span class="nx">forbiddenFunction</span><span class="p">;</span>
+
+    <span class="nx">event</span> <span class="nx">NewAppointee</span><span class="p">(</span><span class="nx">address</span> <span class="nx">newAppointee</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">changed</span><span class="p">);</span>
+
+    <span class="nx">struct</span> <span class="nx">DelegatedVote</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">nominee</span><span class="p">;</span>
+        <span class="nx">address</span> <span class="nx">voter</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor function</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">LiquidDemocracy</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">votingWeightToken</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">forbiddenFunctionCall</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">percentLossInEachRound</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">votingToken</span> <span class="o">=</span> <span class="nx">token</span><span class="p">(</span><span class="nx">votingWeightToken</span><span class="p">);</span>
+        <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">delegatedVotes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">DelegatedVote</span><span class="p">({</span><span class="nx">nominee</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">voter</span><span class="o">:</span> <span class="mi">0</span><span class="p">});</span>
+        <span class="nx">forbiddenFunction</span> <span class="o">=</span> <span class="nx">forbiddenFunctionCall</span><span class="p">;</span>
+        <span class="nx">delegatedPercent</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="nx">percentLossInEachRound</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">delegatedPercent</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">)</span> <span class="nx">delegatedPercent</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Vote for an address</span>
+<span class="cm">     *</span>
+<span class="cm">     * Send your vote weight to another address</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param nominatedAddress the destination address receiving the sender&#39;s vote</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">vote</span><span class="p">(</span><span class="nx">address</span> <span class="nx">nominatedAddress</span><span class="p">)</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">voteIndex</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">voterId</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span><span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">voterId</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+            <span class="nx">numberOfVotes</span><span class="o">++</span><span class="p">;</span>
+            <span class="nx">voteIndex</span> <span class="o">=</span> <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+            <span class="nx">numberOfVotes</span> <span class="o">=</span> <span class="nx">voteIndex</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">voteIndex</span> <span class="o">=</span> <span class="nx">voterId</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="nx">delegatedVotes</span><span class="p">[</span><span class="nx">voteIndex</span><span class="p">]</span> <span class="o">=</span> <span class="nx">DelegatedVote</span><span class="p">({</span><span class="nx">nominee</span><span class="o">:</span> <span class="nx">nominatedAddress</span><span class="p">,</span> <span class="nx">voter</span><span class="o">:</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">});</span>
+
+        <span class="k">return</span> <span class="nx">voteIndex</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Perform Executive Action</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param target the destination address to interact with</span>
+<span class="cm">     * @param valueInWei the amount of ether to send along with the transaction</span>
+<span class="cm">     * @param bytecode the data bytecode for the transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">execute</span><span class="p">(</span><span class="nx">address</span> <span class="nx">target</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">valueInWei</span><span class="p">,</span> <span class="nx">bytes32</span> <span class="nx">bytecode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">appointee</span>                             <span class="c1">// If caller is the current appointee,</span>
+            <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">underExecution</span> <span class="c1">//                                   // if the call is being executed,</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">bytes4</span><span class="p">(</span><span class="nx">bytecode</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">bytes4</span><span class="p">(</span><span class="nx">sha3</span><span class="p">(</span><span class="nx">forbiddenFunction</span><span class="p">))</span>  <span class="c1">// and it&#39;s not trying to do the forbidden function</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">numberOfDelegationRounds</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">);</span>                     <span class="c1">// and delegation has been calculated enough</span>
+
+        <span class="nx">underExecution</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">assert</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">valueInWei</span><span class="p">)(</span><span class="nx">bytecode</span><span class="p">));</span> <span class="c1">// Then execute the command.</span>
+        <span class="nx">underExecution</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Calculate Votes</span>
+<span class="cm">     *</span>
+<span class="cm">     * Go thruogh all the delegated vote logs and tally up each address&#39;s total rank</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">calculateVotes</span><span class="p">()</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">address</span> <span class="nx">winner</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">currentWinner</span> <span class="o">=</span> <span class="nx">appointee</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">currentMax</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">weight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nx">DelegatedVote</span> <span class="nx">storage</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">delegatedVotes</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">now</span> <span class="o">&gt;</span> <span class="nx">lastWeightCalculation</span> <span class="o">+</span> <span class="mi">90</span> <span class="nx">minutes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">numberOfDelegationRounds</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="nx">lastWeightCalculation</span> <span class="o">=</span> <span class="nx">now</span><span class="p">;</span>
+
+            <span class="c1">// Distribute the initial weight</span>
+            <span class="k">for</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">delegatedVotes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">nominee</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">delegatedVotes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">voter</span><span class="p">]</span> <span class="o">=</span> <span class="nx">votingToken</span><span class="p">.</span><span class="nx">balanceOf</span><span class="p">(</span><span class="nx">delegatedVotes</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">voter</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">numberOfDelegationRounds</span><span class="o">++</span><span class="p">;</span>
+            <span class="nx">uint</span> <span class="nx">lossRatio</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="nx">delegatedPercent</span> <span class="o">**</span> <span class="nx">numberOfDelegationRounds</span> <span class="o">/</span> <span class="mi">100</span> <span class="o">**</span> <span class="nx">numberOfDelegationRounds</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">lossRatio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">delegatedVotes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+                    <span class="nx">v</span> <span class="o">=</span> <span class="nx">delegatedVotes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">nominee</span> <span class="o">!=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">voter</span> <span class="o">&amp;&amp;</span> <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">voter</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">weight</span> <span class="o">=</span> <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">voter</span><span class="p">]</span> <span class="o">*</span> <span class="nx">lossRatio</span> <span class="o">/</span> <span class="mi">100</span><span class="p">;</span>
+                        <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">voter</span><span class="p">]</span> <span class="o">-=</span> <span class="nx">weight</span><span class="p">;</span>
+                        <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">nominee</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">weight</span><span class="p">;</span>
+                    <span class="p">}</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">numberOfDelegationRounds</span><span class="o">&gt;</span><span class="mi">3</span> <span class="o">&amp;&amp;</span> <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">nominee</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nx">currentMax</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">currentWinner</span> <span class="o">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">nominee</span><span class="p">;</span>
+                        <span class="nx">currentMax</span> <span class="o">=</span> <span class="nx">voteWeight</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">nominee</span><span class="p">];</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">numberOfDelegationRounds</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">NewAppointee</span><span class="p">(</span><span class="nx">currentWinner</span><span class="p">,</span> <span class="nx">appointee</span> <span class="o">==</span> <span class="nx">currentWinner</span><span class="p">);</span>
+            <span class="nx">appointee</span> <span class="o">=</span> <span class="nx">currentWinner</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="nx">currentWinner</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h4 id="_14">部署<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
@@ -1113,6 +1815,300 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 这是故意的，因为它允许某人<a href="../crowdsale#scheduling-a-call">安排交易</a>或聘请其他人执行它。</p>
 <h4 id="_19">代码<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
 <div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">time</span><span class="o">-</span><span class="nx">lock</span><span class="o">-</span><span class="nx">multisig</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
+<span class="nx">pragma</span> <span class="nx">solidity</span> <span class="o">^</span><span class="mf">0.4.16</span><span class="p">;</span>
+
+<span class="nx">contract</span> <span class="nx">owned</span> <span class="p">{</span>
+    <span class="nx">address</span> <span class="kr">public</span> <span class="nx">owner</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">owned</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">modifier</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span> <span class="o">==</span> <span class="nx">owner</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">transferOwnership</span><span class="p">(</span><span class="nx">address</span> <span class="nx">newOwner</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">owner</span> <span class="o">=</span> <span class="nx">newOwner</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+    <span class="nx">event</span> <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">address</span> <span class="nx">sender</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">);</span>
+
+    <span class="kd">function</span> <span class="nx">receiveApproval</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">_extraData</span><span class="p">){</span>
+        <span class="nx">Token</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">Token</span><span class="p">(</span><span class="nx">_token</span><span class="p">);</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">t</span><span class="p">.</span><span class="nx">transferFrom</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">_value</span><span class="p">));</span>
+        <span class="nx">receivedTokens</span><span class="p">(</span><span class="nx">_from</span><span class="p">,</span> <span class="nx">_value</span><span class="p">,</span> <span class="nx">_token</span><span class="p">,</span> <span class="nx">_extraData</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="p">()</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="nx">receivedEther</span><span class="p">(</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">Token</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">transferFrom</span><span class="p">(</span><span class="nx">address</span> <span class="nx">_from</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">_to</span><span class="p">,</span> <span class="nx">uint256</span> <span class="nx">_value</span><span class="p">)</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">success</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">contract</span> <span class="nx">TimeLockMultisig</span> <span class="nx">is</span> <span class="nx">owned</span><span class="p">,</span> <span class="nx">tokenRecipient</span> <span class="p">{</span>
+
+    <span class="nx">Proposal</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">proposals</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="kr">public</span> <span class="nx">numProposals</span><span class="p">;</span>
+    <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">uint</span><span class="p">)</span> <span class="kr">public</span> <span class="nx">memberId</span><span class="p">;</span>
+    <span class="nx">Member</span><span class="p">[]</span> <span class="kr">public</span> <span class="nx">members</span><span class="p">;</span>
+    <span class="nx">uint</span> <span class="nx">minimumTime</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+    <span class="nx">event</span> <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">recipient</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">description</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">Voted</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">position</span><span class="p">,</span> <span class="nx">address</span> <span class="nx">voter</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">justification</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">ProposalExecuted</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">,</span> <span class="kr">int</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">deadline</span><span class="p">);</span>
+    <span class="nx">event</span> <span class="nx">MembershipChanged</span><span class="p">(</span><span class="nx">address</span> <span class="nx">member</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">isMember</span><span class="p">);</span>
+
+    <span class="nx">struct</span> <span class="nx">Proposal</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">recipient</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">amount</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">description</span><span class="p">;</span>
+        <span class="nx">bool</span> <span class="nx">executed</span><span class="p">;</span>
+        <span class="kr">int</span> <span class="nx">currentResult</span><span class="p">;</span>
+        <span class="nx">bytes32</span> <span class="nx">proposalHash</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">creationDate</span><span class="p">;</span>
+        <span class="nx">Vote</span><span class="p">[]</span> <span class="nx">votes</span><span class="p">;</span>
+        <span class="nx">mapping</span> <span class="p">(</span><span class="nx">address</span> <span class="p">=&gt;</span> <span class="nx">bool</span><span class="p">)</span> <span class="nx">voted</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">struct</span> <span class="nx">Member</span> <span class="p">{</span>
+        <span class="nx">address</span> <span class="nx">member</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">name</span><span class="p">;</span>
+        <span class="nx">uint</span> <span class="nx">memberSince</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">struct</span> <span class="nx">Vote</span> <span class="p">{</span>
+        <span class="nx">bool</span> <span class="nx">inSupport</span><span class="p">;</span>
+        <span class="nx">address</span> <span class="nx">voter</span><span class="p">;</span>
+        <span class="nx">string</span> <span class="nx">justification</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Modifier that allows only shareholders to vote and create new proposals</span>
+    <span class="nx">modifier</span> <span class="nx">onlyMembers</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">memberId</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor function</span>
+<span class="cm">     *</span>
+<span class="cm">     * First time setup</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">TimeLockMultisig</span><span class="p">(</span><span class="nx">address</span> <span class="nx">founder</span><span class="p">,</span> <span class="nx">address</span><span class="p">[]</span> <span class="nx">initialMembers</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">minimumAmountOfMinutes</span><span class="p">)</span> <span class="nx">payable</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">founder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="nx">owner</span> <span class="o">=</span> <span class="nx">founder</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">minimumAmountOfMinutes</span> <span class="o">!=</span><span class="mi">0</span><span class="p">)</span> <span class="nx">minimumTime</span> <span class="o">=</span> <span class="nx">minimumAmountOfMinutes</span><span class="p">;</span>
+        <span class="c1">// It’s necessary to add an empty first member</span>
+        <span class="nx">addMember</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+        <span class="c1">// and let&#39;s add the founder, to save a step later</span>
+        <span class="nx">addMember</span><span class="p">(</span><span class="nx">owner</span><span class="p">,</span> <span class="s1">&#39;founder&#39;</span><span class="p">);</span>
+        <span class="nx">changeMembers</span><span class="p">(</span><span class="nx">initialMembers</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add member</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param targetMember address to add as a member</span>
+<span class="cm">     * @param memberName label to give this member address</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">addMember</span><span class="p">(</span><span class="nx">address</span> <span class="nx">targetMember</span><span class="p">,</span> <span class="nx">string</span> <span class="nx">memberName</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">uint</span> <span class="nx">id</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">]</span> <span class="o">=</span> <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+            <span class="nx">id</span> <span class="o">=</span> <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">id</span> <span class="o">=</span> <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">];</span>
+        <span class="p">}</span>
+
+        <span class="nx">members</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Member</span><span class="p">({</span><span class="nx">member</span><span class="o">:</span> <span class="nx">targetMember</span><span class="p">,</span> <span class="nx">memberSince</span><span class="o">:</span> <span class="nx">now</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">memberName</span><span class="p">});</span>
+        <span class="nx">MembershipChanged</span><span class="p">(</span><span class="nx">targetMember</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Remove member</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param targetMember the member to remove</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">removeMember</span><span class="p">(</span><span class="nx">address</span> <span class="nx">targetMember</span><span class="p">)</span> <span class="nx">onlyOwner</span> <span class="p">{</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">i</span> <span class="o">=</span> <span class="nx">memberId</span><span class="p">[</span><span class="nx">targetMember</span><span class="p">];</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">members</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">members</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="k">delete</span> <span class="nx">members</span><span class="p">[</span><span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+        <span class="nx">members</span><span class="p">.</span><span class="nx">length</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Edit existing members</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param newMembers array of addresses to update</span>
+<span class="cm">     * @param canVote new voting value that all the values should be set to</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">changeMembers</span><span class="p">(</span><span class="nx">address</span><span class="p">[]</span> <span class="nx">newMembers</span><span class="p">,</span> <span class="nx">bool</span> <span class="nx">canVote</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">newMembers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">canVote</span><span class="p">)</span>
+                <span class="nx">addMember</span><span class="p">(</span><span class="nx">newMembers</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+            <span class="k">else</span>
+                <span class="nx">removeMember</span><span class="p">(</span><span class="nx">newMembers</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add Proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `weiAmount / 1e18` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send, in wei</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposal</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">proposalID</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">.</span><span class="nx">length</span><span class="o">++</span><span class="p">;</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalID</span><span class="p">];</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span> <span class="o">=</span> <span class="nx">beneficiary</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span> <span class="o">=</span> <span class="nx">weiAmount</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="nx">jobDescription</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">=</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">creationDate</span> <span class="o">=</span> <span class="nx">now</span><span class="p">;</span>
+        <span class="nx">ProposalAdded</span><span class="p">(</span><span class="nx">proposalID</span><span class="p">,</span> <span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">);</span>
+        <span class="nx">numProposals</span> <span class="o">=</span> <span class="nx">proposalID</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+        <span class="nx">vote</span><span class="p">(</span><span class="nx">proposalID</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="nx">proposalID</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Add proposal in Ether</span>
+<span class="cm">     *</span>
+<span class="cm">     * Propose to send `etherAmount` ether to `beneficiary` for `jobDescription`. `transactionBytecode ? Contains : Does not contain` code.</span>
+<span class="cm">     * This is a convenience function to use if the amount to be given is in round number of ether units.</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param etherAmount amount of ether to send</span>
+<span class="cm">     * @param jobDescription Description of job</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">newProposalInEther</span><span class="p">(</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">etherAmount</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">jobDescription</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalID</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">newProposal</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">etherAmount</span> <span class="o">*</span> <span class="mi">1</span> <span class="nx">ether</span><span class="p">,</span> <span class="nx">jobDescription</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Check if a proposal code matches</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber ID number of the proposal to query</span>
+<span class="cm">     * @param beneficiary who to send the ether to</span>
+<span class="cm">     * @param weiAmount amount of ether to send</span>
+<span class="cm">     * @param transactionBytecode bytecode of transaction</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">checkProposalCode</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">address</span> <span class="nx">beneficiary</span><span class="p">,</span>
+        <span class="nx">uint</span> <span class="nx">weiAmount</span><span class="p">,</span>
+        <span class="nx">bytes</span> <span class="nx">transactionBytecode</span>
+    <span class="p">)</span>
+        <span class="nx">constant</span>
+        <span class="nx">returns</span> <span class="p">(</span><span class="nx">bool</span> <span class="nx">codeChecksOut</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+        <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">beneficiary</span><span class="p">,</span> <span class="nx">weiAmount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Log a vote for a proposal</span>
+<span class="cm">     *</span>
+<span class="cm">     * Vote `supportsProposal? in support of : against` proposal #`proposalNumber`</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber number of proposal</span>
+<span class="cm">     * @param supportsProposal either in favor or against it</span>
+<span class="cm">     * @param justificationText optional justification text</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">vote</span><span class="p">(</span>
+        <span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span>
+        <span class="nx">bool</span> <span class="nx">supportsProposal</span><span class="p">,</span>
+        <span class="nx">string</span> <span class="nx">justificationText</span>
+    <span class="p">)</span>
+        <span class="nx">onlyMembers</span>
+    <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span> <span class="c1">// Get the proposal</span>
+        <span class="nx">require</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">true</span><span class="p">);</span>           <span class="c1">// If has already voted, cancel</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">voted</span><span class="p">[</span><span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>                     <span class="c1">// Set this voter as having voted</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">supportsProposal</span><span class="p">)</span> <span class="p">{</span>                         <span class="c1">// If they support the proposal</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="o">++</span><span class="p">;</span>                          <span class="c1">// Increase score</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>                                        <span class="c1">// If they don&#39;t</span>
+            <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="o">--</span><span class="p">;</span>                          <span class="c1">// Decrease the score</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Create a log of this event</span>
+        <span class="nx">Voted</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span>  <span class="nx">supportsProposal</span><span class="p">,</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">sender</span><span class="p">,</span> <span class="nx">justificationText</span><span class="p">);</span>
+
+        <span class="c1">// If you can execute it now, do it</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nx">now</span> <span class="o">&gt;</span> <span class="nx">proposalDeadline</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">)</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">proposalHash</span> <span class="o">==</span> <span class="nx">sha3</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">supportsProposal</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">executeProposal</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">proposalDeadline</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">deadline</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+        <span class="nx">uint</span> <span class="nx">factor</span> <span class="o">=</span> <span class="nx">calculateFactor</span><span class="p">(</span><span class="nx">uint</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="p">),</span> <span class="p">(</span><span class="nx">members</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">creationDate</span> <span class="o">+</span> <span class="nx">uint</span><span class="p">(</span><span class="nx">factor</span> <span class="o">*</span> <span class="nx">minimumTime</span> <span class="o">*</span>  <span class="mi">1</span> <span class="nx">minutes</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">calculateFactor</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">uint</span> <span class="nx">b</span><span class="p">)</span> <span class="nx">constant</span> <span class="nx">returns</span> <span class="p">(</span><span class="nx">uint</span> <span class="nx">factor</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">**</span><span class="p">(</span><span class="mi">20</span> <span class="o">-</span> <span class="p">(</span><span class="mi">20</span> <span class="o">*</span> <span class="nx">a</span><span class="p">)</span><span class="o">/</span><span class="nx">b</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Finish vote</span>
+<span class="cm">     *</span>
+<span class="cm">     * Count the votes proposal #`proposalNumber` and execute it if approved</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param proposalNumber proposal number</span>
+<span class="cm">     * @param transactionBytecode optional: if the transaction contained a bytecode, you need to send it</span>
+<span class="cm">     */</span>
+    <span class="kd">function</span> <span class="nx">executeProposal</span><span class="p">(</span><span class="nx">uint</span> <span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">bytes</span> <span class="nx">transactionBytecode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Proposal</span> <span class="nx">storage</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">proposals</span><span class="p">[</span><span class="nx">proposalNumber</span><span class="p">];</span>
+
+        <span class="nx">require</span><span class="p">(</span><span class="nx">now</span> <span class="o">&gt;=</span> <span class="nx">proposalDeadline</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">)</span>                                         <span class="c1">// If it is past the voting deadline</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span> <span class="o">&gt;</span> <span class="mi">0</span>                                                              <span class="c1">// and a minimum quorum has been reached</span>
+            <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">p</span><span class="p">.</span><span class="nx">executed</span>                                                                      <span class="c1">// and it is not currently being executed</span>
+            <span class="o">&amp;&amp;</span> <span class="nx">checkProposalCode</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">,</span> <span class="nx">transactionBytecode</span><span class="p">));</span>  <span class="c1">// and the supplied code matches the proposal...</span>
+
+
+        <span class="nx">p</span><span class="p">.</span><span class="nx">executed</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="nx">assert</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">recipient</span><span class="p">.</span><span class="nx">call</span><span class="p">.</span><span class="nx">value</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">amount</span><span class="p">)(</span><span class="nx">transactionBytecode</span><span class="p">));</span>
+
+        <span class="c1">// Fire Events</span>
+        <span class="nx">ProposalExecuted</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">currentResult</span><span class="p">,</span> <span class="nx">proposalDeadline</span><span class="p">(</span><span class="nx">proposalNumber</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 
 <h4 id="_20">部署和使用<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
