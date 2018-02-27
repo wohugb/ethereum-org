@@ -447,8 +447,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#time-locked-multisig" title="Time-Locked Multisig" class="md-nav__link">
-    Time-Locked Multisig
+  <a href="#multisig" title="时间锁定Multisig" class="md-nav__link">
+    时间锁定Multisig
   </a>
   
     <nav class="md-nav">
@@ -709,8 +709,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#time-locked-multisig" title="Time-Locked Multisig" class="md-nav__link">
-    Time-Locked Multisig
+  <a href="#multisig" title="时间锁定Multisig" class="md-nav__link">
+    时间锁定Multisig
   </a>
   
     <nav class="md-nav">
@@ -807,7 +807,7 @@
 一旦预定的时间和一定数量的成员投了票，建议就可以执行：</p>
 <h3 id="_2">区块链大会<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <h4 id="_3">代码<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>!!!include(solidity/dao-congress.sol)!!!
+<div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">congress</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
 </pre></div>
 
 <h4 id="_4">如何部署<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
@@ -918,7 +918,7 @@
 如果您希望能够以百分之几的百分比进行交易，那么将供应量增加100倍或1000倍，然后将相应数量的零作为</strong>小数**添加。
 部署此合同并将其地址保存在文本文件中。</p>
 <p>现在给股东代码：</p>
-<div class="codehilite"><pre><span></span>!!!include(solidity/dao-association.sol)!!!
+<div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">association</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
 </pre></div>
 
 <h4 id="_10">部署和使用<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
@@ -981,7 +981,7 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 你的投票权重被委托给他们，他们又可以将其委托给他们信任的另一位选民等等。
 最终的结果应该是，投票数最多的账户是最有信任的账户</p>
 <h4 id="_13">代码<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>!!!include(solidity/dao-liquid-democracy.sol)!!!
+<div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">liquid</span><span class="o">-</span><span class="nx">democracy</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
 </pre></div>
 
 <h4 id="_14">部署<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
@@ -1055,7 +1055,7 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 您可以使用相同的技术来创建代表民主所拥有的<a href="../token">Mintable Token</a>，然后允许被任命人创建令牌或冻结帐户。</p>
 <p>为了防止权力滥用，您可以设置一个被禁止者无法做到的<strong>禁止功能</strong>。
 如果你遵循我们的例子，禁止功能是<strong> transferOwnership（地址）</strong>，以防止被任命者将协会的所有权转让给他们自己（在政治上，当总统使用他的行政权力向他们自己转让某些使用过的东西,属于总统，这是一场政变或盗用）。</p>
-<h3 id="time-locked-multisig">Time-Locked Multisig<a class="headerlink" href="#time-locked-multisig" title="Permanent link">&para;</a></h3>
+<h3 id="multisig">时间锁定Multisig<a class="headerlink" href="#multisig" title="Permanent link">&para;</a></h3>
 <p>有时候，时间也可以被用作一个很好的安全机制。
 以下代码基于DAO大会，但有不同的转折。
 而不是每个需要X个成员批准的行动，相反，任何交易都可以由单个成员发起，但他们都需要最小的延迟时间才能被执行，这取决于交易的支持,。
@@ -1067,12 +1067,11 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 <p>一个已经被所有密钥批准的交易可以在十分钟后被执行（这个数额是可配置的），并且每5％的成员没有投票时它所需要的时间增加一倍（如果他们积极投票，则每增加一倍,反对）。
 如果这是一个简单的以太事务处理，只要支持表决将它放在所需的时间内，就会立即执行事务处理，但是更复杂的事务处理需要用正确的字节码手动执行。
 这些是默认值，但创建合同时可以设置不同的值：</p>
-<p><strong>批准交易的成员数量：大致的时间延迟</strong></p>
 <table>
 <thead>
 <tr>
-<th>量</th>
-<th>延迟</th>
+<th>批准交易的成员数量</th>
+<th>大致的时间延迟</th>
 </tr>
 </thead>
 <tbody>
@@ -1113,7 +1112,7 @@ for (uint i = 0; i &lt;  p.votes.length; ++i) {
 <p>一旦最少时间过去了，任何人都可以执行交易<a href="../dao#add-a-simple-proposal-send-ether">（参见“国会”以获得更完整的步行）</a>。
 这是故意的，因为它允许某人<a href="../crowdsale#scheduling-a-call">安排交易</a>或聘请其他人执行它。</p>
 <h4 id="_19">代码<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
-<div class="codehilite"><pre><span></span>!!!include(solidity/dao-time-lock-multisig.sol)!!!
+<div class="codehilite"><pre><span></span><span class="o">!!!</span><span class="nx">include</span><span class="p">(</span><span class="nx">solidity</span><span class="o">/</span><span class="nx">dao</span><span class="o">-</span><span class="nx">time</span><span class="o">-</span><span class="nx">lock</span><span class="o">-</span><span class="nx">multisig</span><span class="p">.</span><span class="nx">sol</span><span class="p">)</span><span class="o">!!!</span>
 </pre></div>
 
 <h4 id="_20">部署和使用<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
