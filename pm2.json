@@ -1,0 +1,28 @@
+{
+  "apps": [
+    {
+      "name": "eth-docs",
+      "cwd": "./",
+      "script": "bin/www",
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "ignore_watch": [
+        "[\\/\\\\]\\./",
+        "node_modules",
+        "data",
+        ".git",
+        "logs",
+        "poster"
+      ],
+      "merge_logs": true,
+      "env": {
+        "NODE_ENV": "development",
+        "NODE_DEBUG": "request",
+        "args": [
+          "--ignore-watch=.git|node_modules|logs|data"
+        ],
+        "APP": "eth"
+      },
+      "watch": true
+    }
+  ]
+}

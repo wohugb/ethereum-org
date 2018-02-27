@@ -2,11 +2,11 @@
 
 ## 安全警告
 
-* **You are responsible for your own computer security.** If your machine is compromised you **will** lose your ether, access to any contracts and possibly more.
+* **您对自己的计算机安全负责。** 如果你的机器受到威胁，你将**失去你的以太网，获得任何合同，甚至更多。
 
-* **You are responsible for your own actions.** If you mess something up or break any laws while using this software, it's your fault, and your fault only.
+* **你对自己的行为负责。** 如果你在使用这个软件时弄乱了某些东西或违反了任何法律，那只是你的错，而且只是你的错。
 
-* **You are responsible for your own karma.** Don't be a jerk and respect the rights of others. What goes around comes around.
+* **你对自己的业力负责。** 不要成为混蛋，要尊重别人的权利。,善有善报恶有恶报。
 
 ## 法律警告
 
@@ -14,70 +14,111 @@
 
 #### 免责声明和保证
 
-* **The user expressly knows and agrees that the user is using the Ethereum platform at the user’s sole risk.**
-* **The user acknowledges that the user has an adequate understanding of the risks, usage and intricacies of cryptographic tokens and blockchain-based open source software, eth platform and ethereum**
-* **The user acknowledges and agrees that, to the fullest extent permitted by any applicable law, the disclaimers of liability contained herein apply to any and all damages or injury whatsoever caused by or related to risks of, use of, or inability to use, ethereum or the Ethereum platform under any cause or action whatsoever of any kind in any jurisdiction, including, without limitation, actions for breach of warranty, breach of contract or tort (including negligence) and that neither Stiftung Ethereum (i.e. Ethereum Foundation) nor Ethereum team shall be liable for any indirect, incidental, special, exemplary or consequential damages, including for loss of profits, goodwill or data that occurs as a result.**
-* **Some jurisdictions do not allow the exclusion of certain warranties or the limitation or exclusion of liability for certain types of damages. Therefore, some of the above limitations in this section may not apply to a user. In particular, nothing in these terms shall affect the statutory rights of any user or exclude injury arising from any willful misconduct or fraud of Stiftung Ethereum.**
+* **用户明确知道并同意用户使用以太坊平台的风险由用户承担。**
+* **用户承认用户对密码令牌和基于区块链的开源软件，eth平台和ethereum的风险，使用和复杂性有充分的理解**
+* **用户承认并同意，在任何适用法律允许的最大范围内，此处包含的责任免责声明适用于因以下原因造成或与之相关的任何或所有损害或伤害：使用或不能使用以太坊或,以太坊平台根据任何管辖范围内的任何原因或行为采取任何行动，包括但不限于违反保证，违反合同或侵权行为（包括疏忽）的行为，并且以太坊（即以太坊基金会）和以太坊团队均不得,对任何间接的，附带的，特殊的，示范性的或后果性的损害负责，包括因此而导致的利润损失，商誉或数据损失。**
+* **有些司法管辖区不允许排除某些担保或限制或免除某些类型的损害赔偿责任。因此，本节中的某些上述限制可能不适用于用户。 特别是，这些条款中的任何内容都不会影响任何用户的法定权利，也不会排除Stiftung Ethereum的任何故意不当行为或欺诈行为所造成的伤害。**
 
 ### 长版
 
-The following Terms and Conditions (“Terms”) govern the use of the Ethereum open source software platform (“Ethereum Platform”). Prior to any use of the Ethereum Platform, the User confirms to understand and expressly agrees to all of the Terms. All capitalized terms in this agreement will be given the same effect and meaning as in the Terms. The group of developers and other personnel that is now, or will be, employed by, or contracted with, Stiftung Ethereum (“Stiftung Ethereum”) is termed the “Ethereum Team.” The Platform will be developed by persons and entities who support Ethereum, including both volunteers and developers who are paid by nonprofit entities interested in supporting the Ethereum Platform.
+以下条款和条件（以下简称“条款”）适用于以太坊开源软件平台（以太坊平台）的使用。
+在使用以太坊平台之前，用户应确认理解并明确同意所有条款。
+本协议中的所有大写术语将具有与条款中相同的效果和含义。
+现在或将要聘用或与Stiftung Ethereum（“Stiftung Ethereum”）合作的开发人员和其他人员被称为“以太坊团队”。该平台将由支持以太坊的个人和实体开发,，包括志愿者和开发者，他们都是由有意支持以太坊平台的非营利实体支付的。
 
-The user acknowledges the following serious risks to any use the Ethereum Platform and ETH and expressly agrees to neither hold Ethereum Stiftung nor the Ethereum Team liable should any of the following risks occur:
+用户承认使用以太坊平台和ETH会带来以下严重风险，并明确同意以下任何风险发生时既不持有以太坊基金会也不承担以太坊团队的责任：
 
 #### 在一个或多个司法管辖区管理行为的风险
 
-The Ethereum Platform and ETH could be impacted by one or more regulatory inquiries or regulatory actions, which could impede or limit the ability of Stiftung Ethereum to continue to develop the Ethereum Platform, or which could impede or limit the ability of a User to use Ethereum Platform or ETH.
+以太坊平台和ETH可能受到一项或多项监管查询或管理行为的影响，这可能会阻碍或限制Stiftung以太坊继续开发以太坊平台的能力，或可能阻碍或限制用户使用以太坊的能力,平台或ETH。
 
 #### 替代，非官方以太网网络的风险
 
-It is possible that alternative Ethereum-based networks could be established, which utilize the same open source source code and open source protocol underlying the Ethereum Platform. The Ethereum network may compete with these alternative Ethereum-based networks, which could potentially negatively impact the Ethereum Platform and ETH.
+有可能建立替代的以太坊网络，它们利用Ethereum平台的相同的开源源代码和开源协议。
+以太坊网络可能会与这些替代以太坊网络竞争，这可能会对以太坊平台和ETH产生负面影响。
 
 #### 对以太坊平台或分布式应用程序不感兴趣的风险
 
-It is possible that the Ethereum Platform will not be used by a large number of external businesses, individuals, and other organizations and that there will be limited public interest in the creation and development of distributed applications. Such a lack of interest could impact the development of the Ethereum Platform and potential uses of ETH.  It cannot predict the success of its own development efforts or the efforts of other third parties.
+以太坊平台有可能不会被大量的外部企业，个人和其他组织使用，并且在分布式应用程序的创建和开发中公众的兴趣有限。
+这种缺乏兴趣可能会影响以太坊平台的开发和ETH的潜在用途。
+它无法预测自己的发展成果或其他第三方的努力。
 
 #### 以太坊平台的发展风险不会满足用户的期望
 
-The User recognizes that the Ethereum Platform is under development and may undergo significant changes before release. The User acknowledges that any expectations regarding the form and functionality of the Ethereum Platform held by the User may not be met upon release of the Ethereum Platform, for any number of reasons including a change in the design and implementation plans and execution of the implementation of the Ethereum Platform.
+用户认识到以太坊平台正在开发中，并且在发布之前可能会发生重大变化。
+用户承认，在以太坊平台发布之后，用户所持有的以太坊平台形式和功能的任何期望可能无法满足，原因有多种原因，包括设计和实施计划的变更以及执行,以太坊平台。
 
 #### 以太坊平台核心基础架构软件存在安全弱点的风险
 
-The Ethereum Platform rests on open-source software, and there is a risk that the Ethereum Stiftung or the Ethereum Team, or other third parties not directly affiliated with the Stiftung Ethereum, may introduce weaknesses or bugs into the core infrastructural elements of the Ethereum Platform causing the system to lose ETH stored in one or more User accounts or other accounts or lose sums of other valued tokens issued on the Ethereum Platform.
+以太坊平台依赖于开源软件，以及以太坊基金会或以太坊团队或其他不直接隶属于以太坊的第三方有可能在以太坊平台的核心基础设施元素中引入弱点或错误,导致系统失去存储在一个或多个用户帐户或其他帐户中的ETH，或者失去在以太坊平台上发行的其他有价值令牌的总和。
 
 #### 密码学领域的弱点或可利用突破的风险
 
-Cryptography is an art, not a science. And the state of the art can advance over time. Advances in code cracking, or technical advances such as the development of quantum computers, could present risks to cryptocurrencies and the Ethereum Platform, which could result in the theft or loss of ETH. To the extent possible, Stiftung Ethereum intends to update the protocol underlying the Ethereum Platform to account for any advances in cryptography and to incorporate additional security measures, but it cannot predict the future of cryptography or guarantee that any security updates will be made in a timely or successful manner.
+密码学是一门艺术，而不是一门科学。
+最先进的技术可以随着时间推移而发展。
+代码破解或量子计算机开发等技术进步可能会对加密货币和以太坊平台带来风险，这可能会导致ETH被盗或丢失。
+在可能的范围内，Stiftung以太坊计划更新Ethereum平台的基础协议，以解决密码学领域的任何进展，并纳入其他安全措施，但它无法预测加密技术的未来，也无法保证任何安全更新将及时进行,或成功的方式。
 
 #### 乙醚采矿攻击的风险
 
-As with other cryptocurrencies, the blockchain used for the Ethereum Platform is susceptible to mining attacks, including but not limited to:
+与其他加密货币一样，用于以太坊平台的区块链也容易受到采矿攻击，包括但不限于：
 
-* Double-spend attacks
-* Majority mining power attacks,
-* “Selfish-mining” attacks
-* Race condition attacks.
+* 双花攻击
+* 多数采矿权攻击，
+* “自私采矿”攻击
+* 种族条件攻击。
 
-Any successful attacks present a risk to the Ethereum Platform, expected proper execution and sequencing of ETH transactions, and expected proper execution and sequencing of contract computations. Despite the efforts of the Ethereum Stiftung and Team, known or novel mining attacks may be successful.
+任何成功的攻击都会给以太坊平台带来风险，预计ETH交易的正确执行和排序，并预计合同计算的正确执行和排序。
+尽管以太坊基金会和团队的努力，已知或新颖的采矿攻击可能会成功。
 
 #### 快速采用和需求增加的风险
 
-If the Ethereum Platform is rapidly adopted, the demand for ETH could rise dramatically and at a pace that exceeds the rate with which ETH miners can create new ETH tokens. Under such a scenario, the entire Ethereum Platform could become destabilized, due to the increased cost of running distributed applications. In turn, this could dampen interest in the Ethereum Platform and ETH. Instability in the demand of for ETH may lead to a negative change of the economical parameters of an Ethereum based business which could result in the business being unable to continue to operate economically or to cease operation.
+如果以太坊平台得到迅速采用，对ETH的需求可能会急剧增加，且速度将超过ETH矿工创建新ETH代币的速度。
+在这种情况下，由于运行分布式应用程序的成本增加，整个以太坊平台可能会变得不稳定。
+反过来，这可能会抑制对以太坊平台和ETH的兴趣。
+ETH需求的不稳定性可能导致以太坊业务的经济参数发生负面变化，这可能导致业务无法继续经济运行或停止运营。
 
 #### 快速采用的风险以及以太坊平台上的计算应用程序处理能力不足
 
-If the Ethereum Platform is rapidly adopted, the demand for transaction processing and distributed application computations could rise dramatically and at a pace that exceeds the rate with which ETH miners can bring online additional mining power. Under such a scenario, the entire Ethereum Platform could become destabilized, due to the increased cost of running distributed applications. In turn, this could dampen interest in the Ethereum Platform and ETH. Insufficiency of computational resources and an associated rise in the price of ETH could result in businesses being unable to acquire scarce computational resources to run their distributed applications. This would represent revenue losses to businesses or worst case, cause businesses to cease operations because such operations have become uneconomical due to distortions in the crypto-economy.
+如果以太坊平台得到迅速采用，交易处理和分布式应用计算的需求可能会急剧上升，且速度将超过ETH矿工在线增加在线挖掘能力的速度。
+在这种情况下，由于运行分布式应用程序的成本增加，整个以太坊平台可能会变得不稳定。
+反过来，这可能会抑制对以太坊平台和ETH的兴趣。
+计算资源的不足以及ETH价格的相关提高可能导致企业无法获得稀缺的计算资源来运行其分布式应用程序。
+这将代表企业的收入损失或最坏的情况，导致企业停止运营，因为由于加密经济的扭曲，此类运营变得不经济。
 
-Acknowledgment, Acceptance of all Risks and Disclaimer of Warranties and Liabilities
-**THE USER EXPRESSLY KNOWS AND AGREES THAT THE USER IS USING THE Ethereum PLATFORM AT THE USER’S SOLE RISK. THE USER REPRESENTS THAT THE USER HAS AN ADEQUATE UNDERSTANDING OF THE RISKS, USAGES AND INTRICACIES OF CRYPTOGRAPHIC TOKENS AND BLOCKCHAIN-BASED OPEN SOURCE SOFTWARE, ETH PLATFORM AND ETH.  THE USER ACKNOWLEDGES AND AGREES THAT, TO THE FULLEST EXTENT PERMITTED BY ANY APPLICABLE LAW, THE DISCLAIMERS OF LIABILITY CONTAINED HEREIN APPLY TO ANY AND ALL DAMAGES OR INJURY WHATSOEVER CAUSED BY OR RELATED TO RISKS OF, USE OF, OR INABILITY TO USE, ETH OR THE Ethereum PLATFORM UNDER ANY CAUSE OF ACTION WHATSOEVER OF ANY KIND IN ANY JURISDICTION, INCLUDING, WITHOUT LIMITATION, ACTIONS FOR BREACH OF WARRANTY, BREACH OF CONTRACT OR TORT (INCLUDING NEGLIGENCE) AND THAT NEITHER Stiftung Ethereum NOR ETHEREUM TEAM SHALL BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY OR CONSEQUENTIAL DAMAGES, INCLUDING FOR LOSS OF PROFITS, GOODWILL OR DATA. SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR CERTAIN TYPES OF DAMAGES. THEREFORE, SOME OF THE ABOVE LIMITATIONS IN THIS SECTION MAY NOT APPLY TO A USER. IN PARTICULAR, NOTHING IN THESE TERMS SHALL AFFECT THE STATUTORY RIGHTS OF ANY USER OR EXCLUDE INJURY ARISING FROM ANY WILLFUL MISCONDUCT OR FRAUD OF Stiftung Ethereum**.
+确认，接受所有风险和免责保证和责任
+**用户明确知道并同意用户独自承担使用以太坊平台的风险。
+用户声明用户已充分了解密码令牌和基于BLOCKCHAIN的开放源代码软件，ETH平台和ETH的风险，使用和隐含性。
+用户承认并同意，在任何适用法律允许的最大范围内，本文中包含的免责声明适用于因使用或无法使用ETH或与ETH相关的任何和所有损害或伤害,以太坊平台在任何管辖区因任何原因采取任何行动的原因，包括但不限于违反保证，违约或侵权（包括疏忽）的行为，以及Stiftung Ethereum或ETHEREUM团队均不对任何间接责任,，偶然的，特殊的，惩罚性的或相应的损害赔偿，包括利润损失，商誉或数据损失。
+某些司法辖区不允许排除某些担保或限制或排除对某些类型的损害的责任。
+因此，本节中的某些上述限制可能不适用于用户。
+特别是，这些条款中的任何内容都不会影响任何用户的法定权利或排除由于以太坊的任何不当行为或欺诈行为而导致的伤害**。
 
 #### 临时性网络不一致的风险
 
-We recommend any groups handling large or important transactions to maintain a voluntary 24 hour waiting period on any ether deposited. In case the integrity of the network is at risk due to issues in the clients, we will endeavor to publish patches in a timely fashion to address the issues. We will endeavour to provide solutions within the voluntary 24 hour waiting period.
+我们建议任何处理大型或重要交易的团体在任何存放的乙醚上维持24小时自愿等待期。
+如果网络完整性由于客户问题而面临风险，我们将努力及时发布补丁以解决问题。
+我们将尽力在24小时自愿等待期内提供解决方案。
 
 #### 争议解决
 
-All disputes or claims arising out of, relating to, or in connection with the Terms, the breach thereof, or use of the Ethereum Platform shall be finally settled under the Rules of Arbitration of the International Chamber of Commerce by one or more arbitrators appointed in accordance with said Rules. All claims between the parties relating to these Terms that are capable of being resolved by arbitration, whether sounding in contract, tort, or otherwise, shall be submitted to ICC arbitration. Prior to commencing arbitration, the parties have a duty to negotiate in good faith and attempt to resolve their dispute in a manner other than by submission to ICC arbitration. The arbitration panel shall consist of one arbitrator only, unless the ICC Court of Arbitration determines that the dispute is such as to warrant three arbitrators. If the Court determines that one arbitrator is sufficient, then such arbitrator shall be Swiss resident. If the Court determines that three arbitrators are necessary, then each party shall have 30 days to nominate an arbitrator of its choice -- in the case of the Claimant, measured from receipt of notification of the ICC Court’s decision to have three arbitrators; in the case of Respondent, measured from receipt of notification of Claimant’s nomination. All nominations must be Swiss resident. If a party fails to nominate an arbitrator, the Court will do so. The Court shall also appoint the chairman. All arbitrators shall be and remain “independent” of the parties involved in the arbitration. The place of arbitration shall be Zug, Switzerland. The language of the arbitration shall be English. In deciding the merits of the dispute, the tribunal shall apply the laws of Switzerland and any discovery shall be limited and shall not involve any depositions or any other examinations outside of a formal hearing. The tribunal shall not assume the powers of amiable compositeur or decide the case ex aequo et bono. In the final award, the tribunal shall fix the costs of the arbitration and decide which of the parties shall bear such costs in what proportion. Every award shall be binding on the parties. The parties undertake to carry out the award without delay and waive their right to any form of recourse against the award in so far as such waiver can validly be made.
+因本条款，违约或使用以太坊平台而产生的，与此有关或与之有关的任何争议或索赔，最终应根据国际商会仲裁规则由一名或多名仲裁员在,根据上述规则。
+双方之间关于这些条款的所有关于能够通过仲裁解决的索赔，无论是合同声明，侵权行为还是其他方式，均应提交给国际商会仲裁。
+在开始仲裁之前，双方有义务进行真诚的谈判并尝试以提交ICC仲裁以外的方式解决争议。
+仲裁小组只能由一名仲裁员组成，除非国际商会仲裁法院认定争议是对三名仲裁员的担保。
+如果法院确定一名仲裁员是足够的，则该仲裁员应为瑞士居民。
+如果法院确定需要三名仲裁员，那么每一方应有30天的时间提名一名自己选择的仲裁员 - 对于申请人来说，从收到国际商会法院裁定拥有三名仲裁员的通知来衡量;,在被投诉人的情况下，从收到提出索赔人提名的通知来衡量。
+所有提名必须是瑞士居民。
+如果当事人不提名仲裁员，法院会这样做。
+法院还应任命主席。
+所有仲裁员应当保持“独立于”仲裁所涉及的各方。
+仲裁地点为瑞士楚格。
+仲裁语言应为英文。
+在决定争议的实质时，仲裁庭应适用瑞士的法律，任何探索都是有限的，不得涉及正式听证以外的任何证言或任何其他考试。
+仲裁庭不得承担和蔼可亲的合伙人的权力，或者无条件地判决该案件。
+在最终裁决中，仲裁庭应确定仲裁费用，并决定哪一方应按比例承担这种费用。
+每个裁决对双方都具有约束力。
+各方承诺毫不拖延地执行裁决，并放弃其对裁决的任何形式的追索权，只要这种放弃可以有效地进行即可。
 
 #### 不可抗力
 

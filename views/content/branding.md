@@ -1,10 +1,9 @@
 # 使用以太坊商标的第三方准则
 
-We are revising those guidelines in order to have a more open approach towards the use of the Ethereum logo that is more community-friendly and supports the greater Ethereum and crypto innovation ecosystem. The current branding guidelines will be updated to reflect a policy that all current Ethereum logos are under Creative Commons attribution 3.0.
+我们正在修订这些指导方针，以便采用更加开放的方式来使用更加方便社区的以太坊标识，并支持更大的以太坊和加密创新生态系统。,目前的品牌指导方针将进行更新，以反映所有当前以太坊徽标都在Creative Commons Attribution 3.0下的政策。
 
-The Ethereum Foundation may be releasing a special seal for use by approved people or entities for foundation specific advocacy, fundraising, and mission-related efforts; more details will be announced.
+以太坊基金会可能会发布一个特殊印章，供经批准的人员或实体用于基金会特定的倡导，筹款和与任务相关的工作;,更多细节将会公布。
 
 ## 联系信息
 
-If you have any questions or clarifications pertaining to these guidelines, please email us at
-[brand@ethereum.org](mailto:brand@ethereum.org).
+如果您有任何关于这些准则的问题或澄清，请发送电子邮件至[brand@ethereum.org](mailto：brand@ethereum.org)。

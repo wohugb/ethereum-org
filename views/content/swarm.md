@@ -1,26 +1,31 @@
 # 什么是群？
 
-Swarm is a distributed storage platform and content distribution service, a native base layer service of the ethereum web 3 stack. The primary objective of Swarm is to provide a sufficiently decentralized and redundant store of Ethereum's public record, in particular to store and distribute Đapp code and data as well as block chain data. From an economic point of view, it allows participants to efficiently pool their storage and bandwidth resources in order to provide the aforementioned services to all participants.
+Swarm是一个分布式存储平台和内容分发服务，这是一个以太坊web 3堆栈的本地基础层服务。
+Swarm的主要目标是提供一个足够分散和冗余的以太坊公共记录库，特别是存储和分发Đapp代码和数据以及块链数据。
+从经济角度来看，它允许参与者高效地共享他们的存储和带宽资源，以向所有参与者提供上述服务。
 
-From the end user's perspective, Swarm is not that different from WWW, except that uploads are not to a specific server. The objective is to peer-to-peer storage and serving solution that is DDOS-resistant, zero-downtime, fault-tolerant and censorship-resistant as well as self-sustaining due to a built-in incentive system which uses peer to peer accounting and allows trading resources for payment. Swarm is designed to deeply integrate with the devp2p multiprotocol network layer of Ethereum as well as with the Ethereum blockchain for domain name resolution, service payments and content availability insurance.
+从最终用户的角度来看，Swarm与WWW没有什么不同，除了上传不是指向特定的服务器。
+其目标是通过使用对等会计的内置激励系统，实现对DDOS耐受，零停机时间，容错和审查抵制以及自我维持的点对点存储和服务解决方案,并允许交易资源进行支付。
+Swarm旨在与以太坊的devp2p多协议网络层以及用于域名解析，服务支付和内容可用性保险的以太坊区块链深度集成。
 
-## Resources
+## 资源
 
-### The ΞTHΞЯSPHΞЯΞ orange paper series
+### ΞTHΞЯSPHΞЯΞ橙色纸系列
 
-Swarm incentive system research papers. Call for peer review, proposals for improvement, criticism, encouragement and generic feedback.
+群体奖励制度研究论文。
+呼吁同行评议，改进建议，批评，鼓励和一般反馈。
 
-* Viktor Trón, Aron Fischer, Daniel Nagy A: smash-proof: auditable storage for swarm secured by masked audit secret hash. (coming soon)
-* [Viktor Trón, Aron Fischer, Daniel Nagy A and Zsolt Felföldi: swap, swear and swindle: incentive system for swarm.](https://www.dropbox.com/s/g2agw6hakcwjceq/swap_swear_and_swindle.pdf)
+* ViktorTrón，Aron Fischer，Daniel Nagy A：防粉碎：通过屏蔽审计秘密散列来保护群体的审计存储。
+* [ViktorTrón，Aron Fischer，Daniel Nagy A和ZsoltFelföldi：交换，发誓和诈骗：群体奖励制度。](https://www.dropbox.com/s/g2agw6hakcwjceq/swap_swear_and_swindle.pdf)
 
-### ÐΞVcon talks on swarm
+### ÐΞVcon在群组会谈
 
-* [Viktor Trón, Daniel A. Nagy: Swarm - Ethereum ÐΞVcon-1 talk on youtube](https://www.youtube.com/watch?v=VOC45AgZG5Q)
-* [Daniel A. Nagy: Keeping the Public Record Safe and Accessible - Ethereum ÐΞVcon-0 talk on youtube](https://www.youtube.com/watch?v=QzYZQ03ON2o&list=PLJqWcTqh_zKEjpSej3ddtDOKPRGl_7MhS)
+* [ViktorTrón，Daniel A. Great：Swarm  -  EthereumÐΞVcon-1在youtube上发言](https://www.youtube.com/watch?v=VOC45AgZG5Q)
+* [丹尼尔A.纳吉：保持公共记录安全无障碍 - 以太坊ÐΞVcon-0在youtube上发言](https://www.youtube.com/watch?v=QzYZQ03ON2o&list=PLJqWcTqh_zKEjpSej3ddtDOKPRGl_7MhS)
 
-### code and status
+### 代码和状态
 
-* [source](https://github.com/ethereum/go-ethereum/tree/swarm)
-* [issues on github](https://github.com/ethereum/go-ethereum/labels/swarm)
-* [development roadmap](development_roadmap)
-* [Swarm Gitter Romm](https://gitter.im/ethereum/swarm)
+* [资源](https://github.com/ethereum/go-ethereum/tree/swarm)
+* [github上的问题](https://github.com/ethereum/go-ethereum/labels/swarm)
+* [发展路线图](development_roadmap)
+* [群网格罗姆](https://gitter.im/ethereum/swarm)

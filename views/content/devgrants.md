@@ -4,118 +4,130 @@ DEVGRANTS是以太坊基金会努力资助“公共工程<#publicworks>”项目
 
 ## 公共工程
 
-### (why Devgrants?)
+### (为什么Devgrants？)
 
-> **"What vast additions to the conveniences and comforts of living might mankind have acquired, if the money spent in wars had been employed in works of public utility; what an extension of agriculture even to the tops of our mountains; what rivers rendered navigable, or joined by canals; what bridges, aqueducts, new roads, and other public works, edifices, and improvements might not have been obtained by spending those millions in doing good..."**
+> **"如果在战争中花费的钱用于公共事业的作品，人类可能获得的便利和舒适生活有多大的增加;,什么是农业的延伸，甚至是我们山顶的延伸;,什么河流通航，或通过运河加入;,通过花费数百万美元做好事，可能不会获得什么桥梁，渡槽，新道路和其他公共工程，建筑物和改进工程......"**
 >
-> Benjamin Franklin
+> 本杰明·富兰克林
 
-By implemented definition, Ethereum is a part of the global commons, a resource to be shared by billions of potential entities for an inconceivable variety of purposes. In order for potential at this scale to be realized and maintained, we believe that its true nature as commons must be kept foremost in mind, and frequently nurtured. We additionally believe that regular contributions to public works, by definition created openly and without a short-term profit motive, are the key to this balance.
+通过实施的定义，以太坊是全球公域的一部分，这是几十亿潜在实体共享的资源，用于不可思议的各种用途。
+为了实现和维持这种规模的潜力，我们相信它的真正本质必须铭记在心，并经常培育。
+我们还认为，公共工程定期捐款是公开的，没有短期利润动机，这是实现这种平衡的关键。
 
-In the case of Ethereum and DEVGRANTS, “public works” may imply any the following:
+在以太坊和DEVGRANTS的情况下，“公共工程”可能意味着以下任何一种情况：
 
-- Improvements to Ethereum's existing open source libraries
-- New projects with source licensing friendly to builders
-- Documentation critical to improving the on-boarding of new developers in the ecosystem
-- Any other open projects that serve a utility for all entities working on/within Ethereum – as both a platform and a community – and which do not have restrictive or paid licensing requirements.
+- 以太坊现有开源库的改进
+- 对建设者友好的源项目许可的新项目
+- 文档对于改善生态系统中新开发人员的入职至关重要
+- 任何其他开放项目，为在以太坊工作的所有实体提供服务 - 作为平台和社区 - 并且不具有限制性或付费许可要求。
 
-The future of Ethereum is just getting started. By providing talented developers with a frictionless path towards their public works projects, the commons is enriched. And by participating in this public service, donor organizations receive the opportunity to meet experienced developers to discuss potential further collaboration.
+以太坊的未来刚刚起步。
+通过提供有才能的开发人员通往公共工程项目的无摩擦路径，公用事业得到丰富。
+通过参与这项公共服务，捐助组织有机会与经验丰富的开发人员会面，讨论潜在的进一步合作。
 
-### What Devgrants Is Not
+### 什么样的人不是
 
-**It is NOT a venture capital program.**
-We will not “invest” or “grant” funding for projects which do not have on-going development.
+**这不是一项风险投资计划。**
+对于没有持续发展的项目，我们不会“投资”或“授予”资金。
 
-**It is NOT a bounty program.**
-We do not seek to describe specific goals in advance nor do we wish to attribute value to them. However, if a project is begun on the basis of an external bounty, it may seek a DEVGRANT.
+**这不是一个赏金计划。**
+我们不会提前描述具体的目标，也不希望为它们赋予价值。
+但是，如果一个项目是基于外部赏金开始的，它可能会寻求DEVGRANT。
 
-**It is NOT a DApp seed-funding program.**
-More appropriate options for funding your DApp are available at this time. That said, if you need assistance in finding funding for your project that is a commercial endeavor or otherwise does not meet our general grant-writing criteria, we make no promises, but email us and we will see if we can point you in the right direction.
+**这不是一个DApp种子资金计划。**
+更适合您的DApp资金的选项目前可用。
+也就是说，如果您需要帮助为您的项目寻找资金，这是一项商业努力，或者不符合我们的一般资助标准，我们不作任何承诺，但发送电子邮件给我们，我们会看到我们是否可以指出您的权利,方向。
 
-### Devgrants History
+### 虔诚的历史
 
-**Casper**
-Proof-of-Stake (PoS) research & development critical for a scalable Ethereum 2.0
+**卡斯帕**
+关于可扩展以太坊2.0的关键证明（PoS）研究和开发
 
 **MetaMask**
-DApp support in standard browsers, a bridge to Ethereum access for mainstream Internet users.
+DApp支持标准浏览器，为主流互联网用户提供以太坊访问的桥梁。
 
 **Snappy Ubuntu Core**
-A toolset integration facilitating development within the world's largest Linux community
+工具集成促进了全球最大的Linux社区的发展
 
 **Syng**
-Ethereum for mobile device; the first mobile Ethereum client
+以太坊移动设备;,第一个移动以太坊客户端
 
 **EthEmbedded**
-Ethereum for embedded devices, paving the way for smart contract-controlled IoT.
+以太坊嵌入式设备为智能合同控制物联网铺平了道路。
 
-## Process
+## 处理
 
 ### Eligibiltiy
 
-To be eligible, you must:
+要符合条件，您必须：
 
-- be already working on a project;
-- reasonably be delivering value to critical components of the Ethereum core software, its development process or key parts of the ecosystem (common services, APIs, ABIs).
+- 已经在进行一个项目;
+- 合理地为以太坊核心软件的关键组件，其开发过程或生态系统的关键部分（通用服务，API，ABI）提供价值。
 
-Grant funding may be used to help deliver or maximize value of personal contributions, e.g.:
+拨款可用于帮助提供或最大化个人捐款的价值，例如：
 
-- payment of professional services or equipment;
-- payment of expenses incurred as part of collaborative workflow;
-- payment to help with subsistence costs of project members (generally when taking time from employment).
+- 支付专业服务或设备;
+- 支付作为协作工作流程的一部分而发生的费用;
+- 支付以帮助项目成员的生活成本（通常在从工作中抽出时间时）。
 
-## How To Apply
+## 如何申请
 
-### The application process
+### 申请过程
 
-Parties interested in receiving funding should get in touch with the DEVGRANTS administrator at grants@ethereum.org, submitting three items:
+有兴趣获得资助的各方应联系DEVGRANTS管理员，电子邮件地址为grants@ethereum.org，提交三项内容：
 
-- a proposal that outlines the intended work
-- a project plan that details timelines and estimated working hours
-- a proposed methodology for reporting on the progress and outcomes of the project.
+- 一份概述预期工作的提案
+- 详细列出时间表和估计工作时间的项目计划
+- 提出了一个报告项目进展和结果的方法。
 
-We additionally ask that you include one or more means of realtime contact – XMPP/Telegram/Skype ID, IRC nick, phone number, etc – and your time zone.
+我们还要求您提供一种或多种实时联系方式 -  XMPP /电报/ Skype ID，IRC昵称，
 
-The Ethereum Foundation will make a best effort to evaluate new proposals within 2 weeks of receipt. Approved applicants will be requested to sign a contract with The Ethereum Foundation, and to accelerate development as soon as possible. The contract is a legal contract between the successful applicant and The Ethereum Foundation, and we recommend that all applicants review the terms carefully, prior to submitting their application.
+以太坊基金会将尽最大努力在收到后2周内评估新提案。
+已获批准的申请人将被要求与以太坊基金会签署合同，并尽快加快发展。
+该合同是成功申请人和以太坊基金会之间的合法合同，我们建议所有申请人在提交申请前仔细审查这些条款。
 
-### Evaluation
+### 评估
 
-How will evaluation work?
+评估如何工作？
 
-#### Step 1: Initial evaluation
+#### 第1步：初步评估
 
-The initial evaluation will be conducted by the DEVGRANTS administrator, consisting of a review of the application, a high-level investigation into the state of the project, and an online interview with one or more of the project developers. This evaluation will concern itself with the social and technical merits of the project, including its broader applicability and benefit to the Ethereum ecosystem, the general character of its developers, and the progress made so far.
+初始评估将由DEVGRANTS管理员进行，包括对应用程序的审查，对项目状态的高级调查，以及对一个或多个项目开发人员的在线访问。
+这项评估将关注项目的社会和技术优势，包括其对以太坊生态系统的更广泛的适用性和益处，其开发商的一般特性以及进展情况
 
-#### Step 2: Final evaluation
+#### 第2步：最终评估
 
-Final evaluations will be conducted by the DEVGRANTS board, a team consisting of founding members of Ethereum, plus the DEVGRANTS administrator. This evaluation will review the summarized results of the initial evaluations of the previous two weeks. Applicants may or may not be invited to parts of this discussion for the purposes of further review and examination.
+最终评估将由DEVGRANTS董事会进行，该团队由以太坊创始成员和DEVGRANTS管理员组成。
+本评估将回顾前两周初步评估的总结结果。
+为了进一步审查和审查，申请人可能会也可能不会被邀请参加讨论的部分内容。
 
-#### What should a proposal describe
+#### 提案应该描述什么
 
-While we understand that each project will have unique properties to underline and stress, all applications will benefit from addressing the following unambiguously:
+虽然我们知道每个项目都有独特的属性来强调和强调，但所有应用程序都将从明确地解决以下问题中受益：
 
-- The project’s goal and scope.
-- The targeted deliverables for the work period.
-- Timelines and estimated working hours.
-- The amount of funding requested, In USD.
-- How the project benefits the Ethereum ecosystem.
-- The methodology for reporting on progress and achievement.
-- How much funding can be requested, and how does payment work?
+- 该项目的目标和范围。
+- 工作期间的目标可交付成果。
+- 时间表和估计的工作时间。
+- 请求的资金数量，单位：美元。
+- 项目如何使以太坊生态系统受益。
+- 报告进度和成就的方法。
+- 可以申请多少资金，以及付款如何工作？
 
-While exceptions can be made in certain cases, DEVGRANTS is targeting needs ranging from USD $1,000 to $25,000 per project, or just enough to cover a few months of living expenses for one or more developers.
+虽然在某些情况下可以例外，但DEVGRANTS针对每个项目的需求范围为1,000美元至25,000美元，或者足以支付一个或多个开发人员几个月的生活费用。
 
-### Disbursement
+### 支出
 
-The Ethereum Foundation can offer disbursement in two different ways, depending on the amount requested, the length of the project’s proposed development period, and the work done upfront:
+以太坊基金会可以通过两种不同的方式提供支付，具体取决于所需金额，项目拟议开发期的长短以及预先完成的工作：
 
-**Option one:**
-Half of the total amount approved at the start of the project, and half upon completion.
+***选项一：**
+在项目开始时批准总数的一半，完成后一半。
 
-**Option two:**
-Multiple payments, based on milestone achievements.
+**选项二：**
+根据里程碑成就进行多次付款。
 
-The desired method can and should be requested in the application, but The Ethereum Foundation ultimately reserves the right to choose.
+在应用程序中可以并且应该要求所需的方法，但以太坊基金会最终保留选择权。
 
-**What about transparency?**
+**透明度怎么样？**
 
-All projects approved by DEVGRANTS may be made public in both name and application, here on the DEVGRANTS Web site, and also on the @DEVGRANTS Twitter account. In most cases, any project funded will already have a publicly-accessible repository, and in all cases must adhere to one or more specified open source licenses.
+DEVGRANTS批准的所有项目都可以在DEVGRANTS网站上以及@DEVGRANTS Twitter帐户上公开名称和应用程序。
+在大多数情况下，任何资助的项目都将拥有可公开访问的存储库，并且在任何情况下都必须遵守一个或多个指定的开源许可证。

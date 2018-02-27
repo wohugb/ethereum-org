@@ -1,144 +1,193 @@
+## 分散的自治组织
 
+> **"分散的自治组织"**
+> - 理查德布朗
 
+到目前为止，我们列出的所有合约都由其他可能由人类持有的账户拥有并执行。
+但是，在以太坊生态系统中不存在对机器人或人类的歧视，合同可以创建任何其他帐户所能够执行的任意行为。
+但是，在以太坊生态系统中不存在对机器人或人类的歧视，合同可以创建任何其他帐户所能够执行的任意行为。
 
+在本节中，我们将建立一个分散和民主的组织，仅存在于区块链中，但它可以做任何简单账户都能做到的事情。
+该组织有一个中央经理，负责决定谁是成员和投票规则，但正如我们将看到的，这也可以改变。
 
-## Decentralized Autonomous Organization
+这个特定的民主的工作方式是它有一个**所有者**，其行为像一个管理者，首席执行官或总统。
+*所有者*可以添加（或删除）有表决权的成员到组织中。
+任何成员都可以提出一个提案，以Ethereum交易的形式发送以太或执行某个合同，其他成员可以投票支持或反对该提案。
+一旦预定的时间和一定数量的成员投了票，建议就可以执行：
 
-> **"On the Blockchain, no one knows you're a fridge"**
-> - Richard Brown
+### 区块链大会
 
-So far, all contracts we listed were owned and executed by other accounts probably held by humans. But there is no discrimination against robots or humans in the Ethereum ecosystem and contracts can create arbitrary actions like any other account would. Contracts can own tokens, participate in crowdsales, and even be voting members of other contracts.
+#### 代码
 
-In this section we are going to build a decentralized and democratic organization that exists solely on the blockchain, but that can do anything that a simple account would be able to. The organization has a central manager that decides who are the members and the voting rules, but as we'll see, this can also be changed.
-
-The way this particular democracy works is that it has an **Owner** which works like an administrator, CEO or a President. The *Owner* can add (or remove) voting members to the organization. Any member can make a proposal, which is in the form of an ethereum transaction to either send ether or execute some contract, and other members can vote in support or against the proposal. Once a predetermined amount of time and a certain number of members has voted, the proposal can be executed: the contract counts the votes and if there are enough votes it will execute the given transaction.
-
-
-### The Blockchain Congress
-
-#### The code
-
-```
+```js
 !!!include(solidity/dao-congress.sol)!!!
+{!../../solidity/dao-congress.sol!}
 ```
 
-#### How to deploy
+#### 如何部署
 
-Open the wallet (if you are only testing, go to the menu develop > network > testnet), go to the **Contracts** tab and then press **deploy contract**, and on the **solidity code** box, paste the code above. On the contract picker, choose **Congress** and you'll see the setup variables.
+打开钱包（如果你只是测试，进入菜单开发>网络> testnet），进入**合同**选项卡，然后按**部署合同**，并在**固体代码**框,，粘贴上面的代码。
+在合同选择器上，选择** Congress **，您将看到设置变量。
 
-* **Minimum quorum for proposals** is the minimum amount of votes a proposal needs to have before it can be executed.
-* **Minutes for debate** is the minimum amount of time (in minutes) that needs to pass before it can be executed
-* **Margin of votes for majority** A proposal passes if there are more than 50% of the votes plus the margin. Leave at 0 for simple majority, put it at the *number of members - 1* to require an absolute consensus.
+* **提案的最低法定人数**是提案在执行之前需要拥有的最低投票数。
+* **辩论分钟**是在执行之前需要通过的最短时间（以分钟为单位）
+* **多数投票的保证金**如果有超过50％的选票加上保证金，则提案通过。简单多数为0，将其放在*号会员 -  1 *之间，以求达成绝对的一致意见。
 
-![DAO Setup](/images/tutorial/dao-setup.png)
+![DAO Setup](./images/tutorial/dao-setup.png)
 
+您可以稍后更改这些参数。
+作为开始，您可以选择5分钟的辩论时间，并将其余参数保留为0。
+在页面上稍低一点，你会看到以乙醚部署你的合同的成本估计。
+如果要保存，可以尝试降低价格，但这可能意味着必须等待更长的时间才能创建合同。
+点击**部署**，输入您的密码并等待。
 
-You can change these parameters later. As a start, you can choose 5 minutes for debate time and leave the remaining parameters at 0. A little lower on the page, you'll see an estimate of the cost for deploying your contract in ether. You can try lowering the price if you want to save, but that might mean having to wait longer for your contract to be created. Click **Deploy**, type your password and wait.
+几秒钟后，您将被带到仪表板，向下滚动，您将可以看到正在创建的交易。
+在不到一分钟的时间内，您将看到交易成功，并且创建了一个新的独特图标。
+点击合同名称即可查看（您可以随时在*合同*选项卡上查看）。
 
-In a few seconds you'll be taken to the dashboard, scroll down and you'll be able to see your transaction being created. In under a minute you'll see the transaction successful and a new unique icon will have been created. Click the contract's name to see it (you can get to it at any time on the *Contracts* tab).
+![DAO Just created](./images/tutorial/dao-just-created.png)
 
-![DAO Just created](/images/tutorial/dao-just-created.png)
+#### 与他人分享
 
+如果您想与其他人分享您的DAO，那么他们需要合同地址和接口文件，这是一个小文本字符串，可以作为合同的指导手册。
+点击**复制地址**获取前者和**显示界面**以显示后者。
 
-#### Sharing with others
+在另一台计算机上，进入*合同*选项卡，然后单击**手表合同**。
+添加正确的地址和界面，然后按** OK **。
 
-If you want to share your DAO with others, then they need both the contract address and the interface file, a small text string that works as an instruction manual of the contract. Click **copy address** to get the former and **show interface** to reveal the latter.
+![添加合同](./images/tutorial/add-contract.png)
 
-On the other computer, go into the *Contracts* tab and then click on **watch contract**. Add the correct address and interface and press **OK**.
+#### 与合同交互
 
-![Add Contract](/images/tutorial/add-contract.png)
+在**“从合同中读取”**上，您可以看到您可以在合同上免费执行的所有功能，因为他们只是从区块链中读取信息。
+在这里你可以看到，例如，合同的当前“所有者”（应该是上传的账户）
 
+在**“写入合同”**中，您将列出所有将尝试执行一些将数据保存到区块链的计算的功能，因此将花费以太网费用。
+选择“新建议”，它将显示该功能的所有选项。
 
-#### Interacting with the contract
+选择“新建议”，它将显示该功能的所有选项。
+在**“选择功能”**选取器上，选择**“添加成员”**。
+添加你想成为会员的人的地址（删除一个会员，选择**“删除会员”**）。
+在**“执行”**中，确保您拥有与所有者相同的帐户，因为这是只有主管理员才能执行的操作。
+按**执行**并等待几秒钟，以便下一个块进行更改。
 
+没有成员列表，但您可以通过将地址放在* Read from contract *列中的** Members **功能上来检查是否有成员。
 
-On the **"Read from contract"** you can see all the functions you can execute for free on the contract, as they are just reading information from the blockchain. Here you can see, for instance, the current "owner" of the contract (that should be the account that uploaded the contract).
+另外，如果你希望合同有自己的任何资金，你需要存入一些以太（或其他标记），否则你会有一个非常无牙的组织。
+在右上角按**转移以太网和令牌**。
 
-On the **"Write to contract"** you have a list of all the functions that will attempt to do some computation that saves data to the blockchain, and therefore will cost ether. Select "New Proposal" and it will show all the options for that function.
+#### 添加一个简单的建议：发送ether
 
-Before interacting with the contract, you'll need to add new members so they can vote. On the **"Select function"** picker, choose **"Add Member"**. Add the address of the person you want to make a member(to remove a member, pick the function **"Remove Member"**). On **"execute from"** make sure that you have the same account that is set as the owner as this is an action only the main administrator can execute. Press **execute** and wait a few seconds for the next block to go through with your change.
+现在让我们将第一个提案添加到合同中。
+在功能选取器上，选择** New Proposal **。
 
-There's no list of members, but you can check if anyone is a member by putting their address on the **Members** function on the *Read from contract* column.
+对于“受益人”，添加您想要发送以太的人的地址，并在标有“Wei Amount”的框中输入您想要发送的金额。,魏是乙醚的最小单位，等于10 ^ -18乙醚，必须始终以整数形式给出。
+例如，如果要发送1个以太网，请输入1000000000000000000（即18个零）。
+最后，添加一些描述你想要这样做的原因的文本。
+现在将“交易字节码”留空。
+点击执行并输入您的密码。
+几秒钟后，numProposals将增加到1，并且第一个提议（编号为0）将出现在左侧列。
+随着您添加更多提案，只需将提案编号放在“提案”字段中即可看到其中的任何提案，并且您可以阅读所有提案。
 
-Also, if you want the contract to have any money of its own, you need to deposit some ether (or other token) into it, otherwise you'll have a pretty toothless organization. Press **Transfer Ether & Tokens** on the top right corner.
+对提案进行投票也很简单。
+在功能选择器上选择“投票”。
+在第一个框中输入提案编号，如果您同意，请选中“是”框（或留空以投票反对）。
+点击“**执行**”发送您的投票。
 
-#### Add a simple proposal: send ether
+![添加新提案](./images/tutorial/dao-add-proposal.png)
 
-Now let's add the first proposal to the contract. On the function picker, select **New Proposal**.
+当投票时间结束后，您可以选择**“executeProposal”**。
+如果提案仅仅是发送ether，那么您也可以将“** transactionBytecode **”字段留空。
+按下“执行”之后，但在输入密码之前，请注意出现的屏幕。
 
-For "beneficiary" add the address of someone you want to send ether to, and put how much you want to send in the box marked "Wei Amount." Wei is the smallest unit of ether, equal to 10^-18 ether, and must always be given as an integer. For example, if you want to send 1 ether, enter 1000000000000000000 (that's 18 zeroes). Finally, add some text describing the reason you want to do this. Leave "Transaction bytecode" blank for now. Click execute and type your password. After a few seconds the numProposals will increase to 1 and the first proposal, number 0, will appear on the left column. As you add more proposals, you can see any of them by simply putting the proposal number on the "proposals" field and you can read all about it.
+**
+如果在“估计费用消耗”字段中出现警告，则意味着由于某种原因，被调用的函数将不会执行并将突然终止。
+这可能意味着很多事情，但在本合同的上下文中，无论何时您尝试在截止日期过去之前执行合同，或者用户尝试发送与原始提案不同的字节码数据，都会显示此警告。
+出于安全原因，如果发生这些事情之一，合同执行将突然终止，试图进行非法交易的用户将失去所有为支付交易费而发送的乙醚。
+**
 
-Voting on a proposal is also very simple. Choose "Vote" on the function picker. Type the proposal Number in the first box and check the "Yes" box if you agree with it (or leave it blank to vote against it). Click "**execute**" to send your vote.
+如果交易被执行，那么在几秒钟之后，您应该能够看到结果：**已执行**将变为真，并且应从合约的余额中减去正确金额的乙醚并将其记入收件人地址。
 
-![Add new proposal](/images/tutorial/dao-add-proposal.png)
+#### 添加复杂的提案：拥有另一个令牌
 
+您可以使用这个民主在以太坊执行任何事务，只要您可以找出该事务生成的字节码即可。
+幸运的是，我们可以使用钱包来做到这一点！
 
-When the voting time has passed, you can select **"executeProposal"**. If the proposal was simply sending ether, then you can also leave the "**transactionBytecode**" field blank. After pressing "execute" but before typing your password, pay attention to the screen that appears.
+在这个例子中，我们将使用一个令牌来表明这个合约可以持有多于以太，并且可以在任何其他以太坊资产中进行交易。
+首先，[创建一个令牌] [1]属于您的一个普通账户。
+在合同页面上，点击**转账以太网和代币**将其中的一些转移到新的会议合同中（为了简单起见，不要将超过一半的硬币发送给您的DAO）。
+之后，我们将模拟您想要执行的操作。
+因此，如果您想要建议DAO向某人发送500毫克金币作为付款，请按照您要执行的步骤从您拥有的帐户执行该交易，然后按“发送”，但当确认屏幕,弹出，**不输入您的密码**。
 
-**If there is a warning on the "estimated fee consumption" field, then this means that for some reason the function called will not execute and will be abruptly terminated. It can mean many things, but in the context of this contract this warning will show up whenever you try to execute a contract before its deadline has passed, or if the user is trying to send a different bytecode data than the original proposal had. For security reasons if any of these things happens, the contract execution is abruptly terminated and the user that attempted the illegal transaction will lose all the ethers he sent to pay transaction fees.**
+![选择字节码](./images/tutorial/select-code.png)
 
-If the transaction was executed, then after a few seconds you should be able to see the result: **executed** will turn to true and the correct amount of ether should be subtracted from this contract's balance and into the recipient address.
+相反，点击“显示RAW数据”链接，并复制显示在“RAW数据”字段中的代码，并将其保存到文本文件或记事本中。
+取消交易。
+您还需要您要为该操作调用的合同地址，在这种情况下为令牌合同。
+你可以在* Contracts *选项卡上找到它：保存在某个地方。
 
-#### Add a complex proposal: own another token
+现在回到会议合同并使用这些参数创建一个新提案：
 
-You can use this democracy to execute any transaction on ethereum, as long as you can figure out the bytecode that that transaction generates. Luckily for us, you can use the wallet to do precisely that!
+* 作为**受益人**，请放置令牌的地址（请注意，如果它是相同的图标）
+* 离开**以太量**空白
+* 在**工作描述**上，只写一个你想完成的小说明
+* 在** Transaction Bytecode **上，粘贴上一步中从数据字段中保存的字节码
 
-In this example, we'll use a token to show that this contract can hold more than ether and can do transactions in any other ethereum-based asset. First, [create a token](./token) that belongs to one of your normal accounts. On the contract page, click **Transfer Ether & Tokens** to transfer some of them to your new congress contract (for simplicity, don't send more than half your coins to your DAO). After that, we are going to simulate the action you want to execute. So if you want to propose that the DAO send 500mg of a gold token to a person as a payment, then follow the steps that you'd do to execute that transaction from an account you own and press "send" but when the confirmation screens pops up, **don't type your password**.
+![新建议](./images/tutorial/new-proposal-token.png)
 
+在几秒钟内，您应该能够看到提案的详细信息。
+你会注意到事务字节码不会显示在那里，而只有一个“事务散列”。
+与其他字段不同，字节码可能非常冗长，因此存储在区块链中的代价很高，因此，不是将其存档，而是稍后执行调用的人员将提供字节码。
 
-![Select the bytecode](/images/tutorial/select-code.png)
+但是，这当然会造成一个安全漏洞：在没有实际代码的情况下如何投票提案？,在提案被投票后，什么阻止了用户执行不同的代码？,这就是事务散列进来的地方。
+在“从合同中读取”功能列表上滚动一下，你会看到一个提案检查功能，任何人都可以放置所有的功能参数，并检查它们是否与正在投票的人相匹配。
+这也保证提议不会被执行，除非字节码的散列与提供的代码完全匹配。
 
-Instead, click "SHOW RAW DATA" link and copy the code displayed on the "RAW DATA" field and save it to a text file or notepad. Cancel the transaction. You'll also need the address of the contract you'll be calling for that operation, in this case the token contract. You can find it on the *Contracts* tab: save that somewhere too.
+![这是一个较旧的代码，但它会检查出来](./images/tutorial/check-code.png)
 
-Now go back to the congress contract and create a new proposal with these parameters:
+任何人都可以非常容易地通过遵循相同的步骤来获取正确的字节码，然后将提案编号和其他参数添加到** Read from contract **底部的** Check proposal code **函数中，从而非常容易地检查提案。
 
-*   As the **beneficiary**, put the address of your token (pay attention if it's the same icon)
-*   Leave **Ether amount** blank
-*   On the **Job description** just write a small description on what you want to accomplish
-*   On the **Transaction Bytecode**, paste the bytecode you saved from the data field on the previous step
+剩下的投票过程保持不变：所有成员都可以投票，在截止日期之后，有人可以执行提案。
+唯一的区别是，这次你必须提供你之前提交的相同的字节码。
+请注意确认窗口中的任何警告：如果它表示不会执行您的代码，请检查截止日期是否已经过去，是否有足够票数，以及您的事务字节码是否已检出。
 
-![New proposal](/images/tutorial/new-proposal-token.png)
+#### 让它变得更好
 
-In a few seconds you should be able to see the details on the proposal. You'll notice that the transaction bytecode won't be shown there and instead there's only a "transaction hash". Unlike the other fields, Bytecode can be extremely lengthy and therefore expensive to store on the blockchain, so instead of archiving it, the person executing the call later will provide the bytecode.
+以下是目前DAO的一些缺点，我们将其作为练习留给读者：
 
-But that, of course, creates a security hole: how can a proposal be voted without the actual code being there? And what prevents a user from executing a different code after the proposal has been voted on? That's where transaction hash comes in. Scroll a bit on the "read from contract" function list and you'll see a proposal checker function, where anyone can put all the function parameters and check if they match the one being voted on. This also guarantees that proposals don't get executed unless the hash of the bytecode matches exactly the one on the provided code.
+* 你能否将会员列表公开并编入索引？
+* 你可以允许成员改变他们的投票（投票结束后，但在投票结束前）吗？
+* 目前的投票信息只能在日志中看到，你可以制作一个显示所有投票的功能吗？
 
-![It's an older code, but it checks out](/images/tutorial/check-code.png)
+### 股东协会
 
-Anyone can actually check the proposal very easily by following the same steps to get the correct bytecode and then adding the proposal number and other parameters to the function called **Check proposal code** on the bottom of **Read from contract**.
+在上一节中，我们创建了一个合同，这个合同的作用类似于仅限邀请的俱乐部，其成员受到总统的突发事件邀请或禁止。
+但是这有一些缺点：如果有人想改变他的主要地址呢？,如果一些成员比其他成员拥有更多权重呢？,如果您真的想要在公开市场上交易或出售会员资格或股票，该怎么办？,如果你想要你的组织作为一个持续的股东决策机构来工作呢？
 
-The rest of the voting process remains the same: all members can vote and after the deadline, someone can execute the proposal. The only difference is that this time you'll have to provide the same bytecode you've submitted before. Pay attention to any warnings on the confirmation window: if it says it won't execute your code, check to see if the deadline has already passed, if there are enough votes and if your transaction bytecode checks out.
+我们将修改一下我们的合同，将它连接到一个特定的令牌，它将作为合同的持有份额。
+首先，我们需要创建此令牌：转至[令牌教程] [1]，并创建一个简单的令牌，其中**初始提供**为100，**小数**为0，百分比符号（％）为* ,*符号**。
+如果您希望能够以百分之几的百分比进行交易，那么将供应量增加100倍或1000倍，然后将相应数量的零作为**小数**添加。
+部署此合同并将其地址保存在文本文件中。
 
-#### Make it better
+现在给股东代码：
 
-Here are some drawbacks of this current DAO that we leave as an exercise to the reader:
-
-* Can you make the member list public and indexed?
-* Can you allow members to change their votes (after votes are cast but before the votes are tallied up)?
-* Currently the vote message is only visible on logs, can you make a function that will display all votes?
-
-
-### The Shareholder Association
-
-In the previous section we created a contract that works like an invitation-only club, where members are invited or banned by the whim of the president. But this has a few drawbacks: what if someone wants to change his main address? What if some members have more weight than others? What if you actually want to trade or sell memberships or shares on an open market? What if you wanted your organization to have work as a constant decision machine by shareholders?
-
-We are going to modify a bit our contract to connect it to a specific token, which will work as the holding shares of the contract. First we need to create this token: go to the [token tutorial](./token) and create a simple token with **initial supply** of 100, **decimals** of 0 and a percentage sign (%) as a **symbol**. If you want to be able to trade in fractions of a percent, then increase the supply by 100x or 1000x and then add the corresponding amount of zeros as the **decimals**. Deploy this contract and save its address on a text file.
-
-Now to the shareholder code:
-
-```
+```js
 !!!include(solidity/dao-association.sol)!!!
+{!../../solidity/dao-association.sol!}
 ```
 
-#### Deployment and usage
+#### 部署和使用
 
-The code is deployed almost exactly like the previous code, but you need to also put a **shares token address** which is the address of the token that will work as a share with voting rights.
+代码部署与前面的代码几乎完全一样，但您还需要放置一个**共享令牌地址**，该地址是可用作具有投票权份额的令牌地址。
 
-Notice these lines of codes: first we describe the token contract to our new contract. Since it only uses the **balanceOf** function, we only need to add that single line.
+注意这些代码行：首先我们描述令牌合同到我们的新合同。
+由于它只使用** balanceOf **函数，因此我们只需添加该单行。
 
     contract Token { mapping (address => uint256) public balanceOf; }
 
-Then we define a variable of the *type* token, meaning that it will inherit all the functions we described earlier. Finally we point the token variable to an address on the blockchain, so it can use that and request live information. This is the simplest way to make one contract understand the other in ethereum.
+然后我们定义一个* type *标记的变量，这意味着它将继承我们之前描述的所有函数。
+最后，我们将令牌变量指向区块链上的地址，以便它可以使用该地址并请求实时信息。
+这是让一个合约在ethereum中理解另一个的最简单方法。
 
     contract Association {
         token public sharesTokenAddress;
@@ -146,7 +195,8 @@ Then we define a variable of the *type* token, meaning that it will inherit all 
     function Association(token sharesAddress, uint minimumSharesForVoting, uint minutesForDebate) {
             sharesTokenAddress = token(sharesAddress);
 
-This association presents a challenge that the previous congress didn't have: since anyone with tokens can vote and the balances can change very quickly, the actual score of the proposal can't be counted when the shareholder votes, otherwise someone would be able to vote multiple times by simply sending his share to different addresses. So in this contract only the vote position is recorded and then the real score is tallied up on the **execute proposal** phase.
+这个协会提出了前一届大会没有的挑战：因为任何有代币的人都可以投票，余额可以很快改变，所以当股东投票时，提案的实际得分不能被计算在内，否则有人能够,只需将他的份额发送到不同的地址，多次投票。
+所以在这份合同中只记录了投票的位置，然后在**执行提案**阶段中计算真实得分。
 
     uint quorum = 0;
     uint yea = 0;
@@ -163,61 +213,79 @@ This association presents a challenge that the previous congress didn't have: si
         }
     }
 
-Another way to count the weighted votes would be to create a single signed integer to keep score of the votes and check if it was positive or negative at the end, but you'd have to convert the *unsigned integer* voteWeight into a *signed integer* using **int score = int(voteWeight);**
+计算加权投票的另一种方法是创建一个单独的有符号整数来保留投票分数，并在最后检查它是正面还是负面，但是您必须将*无符号整数* voteWeight转换为* signed,整数*使用** int score = int（voteWeight）; **
 
-Using this DAO is exactly like before: members create new proposals, vote on them, wait until the deadline passes and then anyone can count the votes and execute it.
+使用这个DAO就像以前一样：成员创建新的提案，对他们投票，等到截止日期过去，然后任何人都可以计票并执行它。
 
-![Association example](/images/tutorial/association-dao.png)
+![协会的例子](./images/tutorial/association-dao.png)
 
+#### 但是，我怎样才能限制业主的权力呢？
 
-#### But how can I limit the owner's power?
+在这个合同中，作为**所有者**的地址具有一些特殊权力：他们可以随意添加或禁止成员，更改获胜所需的保证金，更改辩论所需的时间以及投票通过所需的法定人数。
+但是，这可以通过使用拥有者的另一种力量来解决：改变所有权。
 
-On this contract the address set as **owner** has some special powers: they can add or ban members at will, change the margin needed for a win, alter the time required for debate and the quorum necessary for the vote to pass. But this can be solved by using yet another power the owner has: to change ownership.
+所有者可以通过将新所有者指定为* 0x00000 ... *来将所有权更改为任何人。
+这将保证规则永远不会改变，但这是一个不可逆转的行动。
+所有者也可以将所有权更改为合同本身：只需点击“复制地址”并将其添加到“新建”
+这将使所有者的所有权力可以通过创建提案来执行。
 
-The owner could change the ownership to no one by pointing the new owner as *0x00000...*. This would guarantee that the rules will never change, but it's an irreversible action. The owner can also change the ownership to the contract itself: just click on "copy address" and add it on the "new owner" field. This would make that all the powers of the owner could be executed by creating proposals.
+如果你愿意，你也可以设定一个合同作为另一个合同的所有者：假设你想要一个公司结构，你希望总统有权委任董事会成员，然后可以发行更多的股票，最后这些股票投票,如何花费预算。
+您可以创建一个** Association **合同，该合同使用由**会议拥有的** [mintable token] [1] **，最终由一个帐户拥有
 
-If you want, you can also set one contract as the owner of the other: suppose you wanted a corporate structure where you wanted a President for life that had the power to appoint board members, which could then issue more shares and finally these shares voted on how to spend a budget. You could create an **Association** contract, that used a **[mintable token](./token)** owned by a **congress** finally owned by a single account.
+但是如果你想要不同的投票规则呢？,也许要改变投票规则，你需要80％的共识，或者成员可能不同。
+在这种情况下，您可以创建另一个相同的DAO或使用其他一些源代码，并将其作为第一个DAO的所有者
 
-But what if you wanted different rules for voting? Maybe to change voting rules you'd need a 80% consensus, or maybe the members are different. In that case, you can create another identical DAO or use some other source code and plug that one as the owner of the first.
+### 液体民主
 
+对合同的所有费用和行动进行投票需要时间，并且要求用户不断地积极，知情和专注。
+另一个有趣的方法是选择一个指定的账户来控制合同，然后能够迅速做出决定。
 
-### Liquid democracy
+我们将实施一个通常称为** Liquid Democracy **的版本，这是一个更灵活的代表民主。
+在这种民主制度下，任何选民都可以成为潜在的代表：不要投票给你想要的候选人，你只需说出你信任哪个选民为你处理这个决定。
+你的投票权重被委托给他们，他们又可以将其委托给他们信任的另一位选民等等。
+最终的结果应该是，投票数最多的账户是最有信任的账户
 
-Voting on all expenses and actions of a contract takes time and requires users to be constantly active, informed and attentive. Another interesting approach is to elect an appointed account that will have control over a contract and then be able to take swift decisions over it.
+#### 代码
 
-We are going to implement a version of what's usually called **Liquid Democracy**, which is a more flexible delegative democracy. In this kind of democracy, any voter can be a potential delegate: instead of voting the candidate you want, you just say which voter you trust to handle this decision for you. Your voting weight is delegated to them and they can in turn delegate it to another voter they trust and so on. The end result should be that the most voted account is one that has trust connections to the largest amount of voters.
-
-
-#### The code
-
-```
+```js
 !!!include(solidity/dao-liquid-democracy.sol)!!!
+{!../../solidity/dao-liquid-democracy.sol!}
 ```
 
-#### Deployment
+#### 部署
 
-First, you need a token. If you have followed the **Shareholder association** tutorial above, you can use the same token as you had previously, otherwise just [deploy a new token](./token/) and distribute it among some accounts. Copy the token address.
+首先，你需要一个令牌。
+如果您遵循上述**股东协会**教程，您可以使用与以前相同的标记，否则只需[部署新标记] [2]并在一些帐户之间分发。
+复制令牌地址。
 
-Deploy the democracy contract, and put the token address on the **Voting weight token**, put **75** as the **Percent loss in each round** and **transferOwnership(address)** (without any spaces or extra characters!) as the **forbidden function**.
+部署民主契约，并将标记地址放在**投票权重标记**上，将** 75 **作为**每轮丢失百分比**和** transferOwnership（地址）**（没有任何空格,或多余的字符！）作为**禁止功能**。
 
-#### Selecting a delegate
+#### 选择一个委托
 
-Now deploy the Liquid democracy and go to its page. First have any of the shareholders **vote** on who they would trust to make decisions on behalf of this contract. You can vote on yourself if you want to be the final decision maker, or on the zero address, if you'd rather have no one representing you on that role.
+现在部署Liquid民主并进入其页面。
+首先让任何股东投票选出他们将代表本合同作出决定的人。
+如果您想成为最终决策者，您可以对自己投票，如果您不想代表您担任这个角色，您可以在零地址投票。
 
-After enough people have cast their votes, you can execute the function **Calculate Votes** so it will calculate everyone's voting weight. This function needs to be run multiple times, so the first run it will just set everyone's weight as their balance in the selected token, in the next round that voting weight will go to the person you voted appointed, in the next it will go to the person voted by the person you chose and so on. To prevent infinite loops of vote delegations, each time a vote is forwarded it loses a bit of power, set by at contract launch at **percentLossInEachRound**. So if the loss is set at 75%, it means that the person you vote gets 100% of your weight, but if they delegate the vote to someone else only 75% of their weight is forwarded. That person can delegate to someone else but they'll get only 56% of your voting weight and so on. If the ratio is anything lower than 100% there will be a finite moment where recalculating voting delegation won't change the result anymore, but if it's a 100% it means that voting weights will simply circulate around any potential loops.
+在有足够的人投票后，您可以执行功能**计算投票**，以便计算每个人的投票权重。
+这个功能需要多次运行，所以第一次运行它会将每个人的体重设置为他们在所选令牌中的平衡，在下一轮中投票权重将发送给您所投票委任的人，接下来将转到,由您选择的人投票的人等等。
+为了防止投票代表团的无限循环，每当投票转发时，它就会失去一点权力，在** percentLossInEachRound **的合同启动时设置。
+因此，如果损失设置为75％，这意味着您投票的人获得了100％的体重，但如果他们将投票委托给其他人，则只有75％的体重被转发。
+该人可以委托给其他人，但他们只会得到56％的投票权，等等。
+如果比率低于100％，则重新计算投票代表团不会再改变结果的时间会有限，但如果它是100％，则意味着投票权重将围绕任何可能的循环流通。
 
-If there has been more than one hour and a half since this round of calling **Calculate votes** has started, all weights will reset and will be recalculated based on the original token balance, so if you have recently received more tokens you should execute this function again.
+如果自本轮呼叫**以来已超过一个半小时半**计算投票**已经开始，所有权重将重置并将根据原始令牌余额重新计算，因此如果您最近收到了更多令牌，则应该,再次执行此功能。
 
-#### House of representatives
+#### 众议院
 
-What is all that vote delegation good for? For one, you can use it instead of the token weight on an **Association**. First of all, get the code for a [shareholder association](#the-shareholder-association) but replace the first lines where it describes the token:
+这个表决代表团有什么用处？,例如，你可以使用它来代替** Association **上的标记权重。
+首先，获取[股东协会]的代码[3]，但替换它描述令牌的第一行：
 
     contract Token {
         mapping (address => uint256) public balanceOf;
         function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
     }
 
-Into this:
+进入这个：
 
     contract Token {
         mapping (address => uint256) public voteWeight;
@@ -229,102 +297,138 @@ Into this:
             else
                 return this.voteWeight(member);
         }
-        
+
         function transferFrom(address _from, address _to, uint256 _value) returns (bool success);
     }
 
-When you are writing your contract you can describe multiple other contracts used by your main contract. Some might be functions and variables that are already defined on the target contract, like **voteWeight** and **numberOfDelegationRounds**. But notice that **balanceOf** is a new function, that doesn't exist neither on the Liquid Democracy or the Association contract, we are defining it now, as a function that will return the **voteWeight** if at least three rounds of delegations have been calculated.
+当你写合同时，你可以描述主合同使用的多个其他合同。
+有些可能是已经在目标合同上定义的函数和变量，如** voteWeight **和** numberOfDelegationRounds **。
+但请注意，** balanceOf **是一项新功能，既不存在于Liquid Democracy或Association合同中，现在我们正在定义它，作为将返回** voteWeight **的函数，如果至少有三个,已经计算了几轮代表团。
 
-Use the **Liquid democracy** as the **Token Address** instead of the original token and proceed to deploy the shareholder association as usual. Just like before, users can create new proposals on what to do or cast votes on these issues, but now, **instead of using the token balance as the voting power we are using a delegative process**. So if you are a token holder, instead of having to keep yourself constantly informed by all the issues, you can just select someone you trust and appoint them, and then they can choose someone they trust: the result is that your representative, instead of being limited to a given arbitrary **geographical proximity**, will be someone in your **social proximity**.
+使用**液体民主**作为**令牌地址**而不是原始令牌，并像往常一样继续部署股东协会。
+就像以前一样，用户可以针对这些问题创建新的提案或投票，但现在**，而不是使用令牌余额作为我们使用委托流程**的投票权。
+所以，如果你是一个令牌持有者，而不是不断地告诉你所有的问题，你可以选择你信任的人并指定他们，然后他们可以选择他们信任的人：结果是你的代表，而不是,被限制在一个给定的任意**地理位置**，将会是你的**社交接近**中的某个人。
 
-Also it means that you can switch your vote at any moment: if your representative has voted against your interests in some issue you can, before the proposal votes are tallied up, switch your appointee, or just choose to represent yourself on the issue and cast the vote yourself.
+此外，它意味着您可以随时切换您的投票：如果您的代表在某些问题上投票反对您的兴趣，则可以在提案投票结束前更换您的受托人，或者选择代表您自己解决问题并投射,你自己的投票。
 
+#### 行政部门
 
-#### The Executive Branch
+代表民主国家是选择代表的一种很好的方式，但对于一些重要或较简单的决定，对个别提案的投票可能太慢。这就是为什么大多数民主政府都有一个行政部门，被委任人有权代表国家。
 
-Delegative democracies are a great way to choose representatives, but voting on individual proposals might be too slow for some important or simpler decisions: that's why most democratic governments have an executive branch, where an appointed person has the right to represent the state.
+经过四轮代表团之后，更重的地址将被定为**被任命人**。
+如果有很多代表投票，那么可能需要再进行几轮**计算投票**才能在最终指定的地址进行结算。
 
-After four rounds of delegations, the address with more weight will be set as the **Appointee**. If there are many delegated votes, then a few more rounds of **Calculate Votes** might be necessary to settle in the final appointed address.
+被任命者是可以调用** Execute **函数的唯一地址，它将能够执行（几乎）任何代表民主的函数。
+如果液体民主合同中存有任何以太或令牌，被任命者将被允许在任何地方移动。
 
-The Appointee is the only address that can call the **Execute** function, which will be able to execute (almost) any function representing the democracy as a whole. If there is any ether or token stored in the Liquid democracy contract, the Appointee will be allowed to move it anywhere.
+如果您已经按照我们的示例创建了**股东协会**，并以此流动民主为标志，那么您应该能够以有趣的方式使用行政部门：转到主协会地址并执行**转账,所有权**对液体民主起作用。
 
-If you have followed our example and created a **Shareholder association** using this liquid democracy as a token, then you should be able to use the executive branch in an interesting manner: go to the main Association address and execute a **Transfer Ownership** function to the liquid democracy.
+一旦该传输完成，将该功能切换到**更改投票规则**。
+这允许您更改一些基本投票规则，例如投票通过所需的最低法定人数或新提案需要留在场内的时间。
+尝试更改这些设置，然后单击**执行**：当确认窗口弹出时，它会告诉您事务*无法执行*。
+这当然会发生，因为只有设置为** Owner **的地址才能更改这些设置，合同将拒绝此交易尝试。
+所以**而不是输入密码**将代码复制到** data **字段并将其保存到文本文件中。
+点击取消，滚动到顶部并点击**复制地址**，并将其保存到文本文件中。
 
-Once that transfer is complete, switch the function to **Change Voting Rules**. This allows you to change some essential voting rules, like the minimum quorum needed for a vote to pass or the time a new proposal needs to stay on the floor. Try changing these settings and click **execute**: when the confirmation window pops up it will tell you that the transaction *Can't be executed*. This happens, of course, because only the address set as **Owner** can change these settings and the contract will reject this transaction attempt. So **instead of typing your password** copy the code on the **data** field and save it to a text file. Click cancel, scroll to the top and click **copy address** and also save that to a text file.
+现在进入液体民主页面并选择**执行**。
+在**目标**上放置关联合同的地址，将**数量**保留为0并将之前复制的代码粘贴到**字节代码数据**字段中。
+请确保您从作为**任命人**的帐户中执行它并单击**执行**。
 
-Now go to the Liquid democracy page and choose **execute**. On **target** put the address of the association contract, leave **ether amount** at 0 and paste the code you copied previously into the **bytecode data** field. Make sure you are executing it from the account set as the **appointee** and click **execute**.
+一旦交易完成后，Liquid民主会将命令传递给协会，新的投票规则可能适用。
+被任命人有绝对的权力去做** Liquid民主**合同可以执行的任何事情。
+您可以使用相同的技术来创建代表民主所拥有的[Mintable Token] [1]，然后允许被任命人创建令牌或冻结帐户。
 
-Once the transaction has been picked up, the Liquid democracy will pass the order to the association and the new voting rules might apply. The appointee has the absolute power to do anything that the **Liquid democracy** contract can execute. You can use the same technique to create a [Mintable Token](./token) owned by the delegative democracy, and then allow the appointee to mint tokens or freeze accounts.
+为了防止权力滥用，您可以设置一个被禁止者无法做到的**禁止功能**。
+如果你遵循我们的例子，禁止功能是** transferOwnership（地址）**，以防止被任命者将协会的所有权转让给他们自己（在政治上，当总统使用他的行政权力向他们自己转让某些使用过的东西,属于总统，这是一场政变或盗用）。
 
-To prevent abuses of powers, you can set one **Forbidden function** that the Appointee cannot ever do. If you followed our example the forbidden function is the **transferOwnership(address)**, to prevent the appointee from transferring the ownership of the association to themselves (in politics, when a president uses his executive power to transfer to themselves something that used to belongs to the presidency, it's a coup or embezzling).
+### 时间锁定Multisig
 
-### Time-Locked Multisig
+有时候，时间也可以被用作一个很好的安全机制。
+以下代码基于DAO大会，但有不同的转折。
+而不是每个需要X个成员批准的行动，相反，任何交易都可以由单个成员发起，但他们都需要最小的延迟时间才能被执行，这取决于交易的支持,。
+提案越多，越早执行。
+会员可以对交易进行投票，这意味着它将取消其他批准的签名之一。
 
+这意味着如果您没有紧急情况，可能只需一个或两个签名即可执行任何交易。
+但是，如果单个密钥泄露，其他密钥可能会延迟该交易数月或数年，甚至阻止其执行。
 
-Sometimes time can also be used as a great security mechanism. The following code is based on the congress DAO but with a different twist. Instead of every action requiring the approval of an X number of members, instead any transactions can be initiated by a single member, but they all will require a minimum amount of delay before they can be executed, which varies according to the support that transaction has. The more approvals a proposal has, the sooner it can be executed. A member can vote against a transaction, which will mean that it will cancel one of the other approved signatures.
+#### 怎么运行的
 
-This means that if you don't have urgency, one or two signatures might be all you need to execute any transaction. But if a single key is compromised, other keys can delay that transaction for months or year or even stop it from being executed.
+一个已经被所有密钥批准的交易可以在十分钟后被执行（这个数额是可配置的），并且每5％的成员没有投票时它所需要的时间增加一倍（如果他们积极投票，则每增加一倍,反对）。
+如果这是一个简单的以太事务处理，只要支持表决将它放在所需的时间内，就会立即执行事务处理，但是更复杂的事务处理需要用正确的字节码手动执行。
+这些是默认值，但创建合同时可以设置不同的值：
 
+| 批准交易的成员数量 | 大致的时间延迟|
+|-|-|
+|100% approval: | 10 minutes (minimum default) |
+|90% approval:  | 40 minutes|
+|80%:           | 2hr 40min|
+|50%:           | about a week|
+|40%:           | 1 month|
+|30%:           | 4 months|
+|20%:           | Over a year|
+|10% or less:   | 5 years or never |
 
-#### How it works
+一旦最少时间过去了，任何人都可以执行交易[（参见“国会”以获得更完整的步行）] [4]。
+这是故意的，因为它允许某人[安排交易] [5]或聘请其他人执行它。
 
-A transaction that has been approved by all keys can be executed after ten minutes (this amount is configurable), and the amount of time it requires doubles every time for every 5% of members who don't vote (and quadruples if they actively vote against). If it's a simple ether transaction, the transaction is executed as soon as a vote of support puts it under the required time, but a more complex transaction will require it to be manually executed with the correct bytecode. These are the default values, but this can be set differently when creating the contract:
+#### 代码
 
-**Number of members approving transaction: Approximate time delay**
-
-* 100% approval:                                10 minutes (minimum default)
-* 90% approval:                                 40 minutes
-* 80%:                                          2hr 40min
-* 50%:                                          about a week
-* 40%:                                          1 month
-* 30%:                                          4 months
-* 20%:                                          Over a year
-* 10% or less:                                  5 years or never
-
-
-Once the minimum amount of time has passed, anyone can execute the transaction [(See "Congress" for a more complete walktrough)](dao#add-a-simple-proposal-send-ether). This is intentional, as it allows someone to [schedule a transaction](crowdsale#scheduling-a-call) or hire someone else to execute it.
-
-#### The code
-
-```
+```js
 !!!include(solidity/dao-time-lock-multisig.sol)!!!
+{!../../solidity/dao-time-lock-multisig.sol!}
 ```
 
-#### Deployment and usage
+#### 部署和使用
 
-Deploy that code as you have done before on these tutorials. On the deployment parameters, leaving the minimum time blank will default to 30 minutes, if you want faster lock times, then put 1 minute. After uploading, execute the functions "Add Members" to add new members of your group, they can be either other people you know or accounts on different computers or stored offline.
+像这些教程中所做的那样部署该代码。
+在部署参数上，如果希望更快的锁定时间，则将最小时间留空将默认为30分钟，然后放置1分钟。
+上传后，执行“添加成员”功能添加新组成员，他们可以是其他成员
 
-The account set as "owner" is very powerful as it can add or remove members at will. Therefore, after you added the main members, we recommend that you set the "owner" to another account, by executing the function **Transfer Membership**. Set that to the multisig itself if you want to have all additions or removals of members to be voted, just like any other transaction. Another alternative is to set that to another trusted multisig wallet, or maybe to *0x000* if you want the number of members to be fixed forever. Remember, the funds on this contract are only as safe as the the "owner" account.
+设置为“所有者”的帐户非常强大，因为它可以随意添加或删除成员。
+因此，在添加主要成员之后，我们建议您通过执行** Transfer Membership **功能将“所有者”设置为另一个帐户。
+如果您希望将所有成员的增加或删除投票，就像其他任何交易一样，将其设置为多重投票。
+另一种方法是将其设置为另一个可信的多重金额钱包，或者如果您希望永久修复成员数量，则可以设置为* 0x000 *。
+请记住，这份合同的资金只与“所有者”账户一样安全。
 
-As with any of the above DAO's, this contract can hold ether, any ethereum based tokens and execute any contract. To do that, check how to [execute complex proposals](dao#add-a-complex-proposal-own-another-token) on the congress DAO.
+与上述任何DAO一样，该合同可以持有醚，任何以太坊代币并执行任何合约。
+为此，请在DAO会议上检查如何[执行复杂的提议] [6]。
 
-#### Caveats and improvements
+#### 注意事项和改进
 
-For simplicity's sake, a vote against a proposal simply counts as one less vote of support. If you want, you can play around with the idea that negative votes have more weight, but this means that a minority of members could have an effective veto power on any proposed transaction!
+为了简单起见，反对提案的投票仅仅被视为少一票支持。
+如果你愿意的话，你可以玩弄负面票数有更多权重的想法，但这意味着少数成员可以对任何拟议交易拥有有效的否决权。
 
-How else could you improve this contract?
+你还能改善这份合同吗？
 
+### 我们去探索吧！
 
-### Let's go exploring!
+你已经到了本教程的最后，但这只是一次伟大冒险的开始。
+回顾一下，看看你有多成就：你创造了一个活着的，说话的机器人，你自己的加密货币，通过无信任的众筹筹集资金，并用它来启动你自己的私人民主组织。
 
-You have reached the end of this tutorial, but it's just the beginning of a great adventure. Look back and see how much you accomplished: you created a living, talking robot, your own cryptocurrency, raised funds through a trustless crowdfunding and used it to kickstart your own personal democratic organization.
+#### 接下来会发生什么？
 
+* 您仍然控制的代币可以在分散的交易所上出售，或者交易商品和服务，为第一份合同的进一步发展提供资金并发展组织。
 
-#### What could happen next?
+* 您的DAO可以在名称注册商处拥有自己的名称，然后更改其重定向的位置，以便在令牌持有者批准后自行更新。
 
-* The tokens you still control could be sold on a decentralized exchange or traded for goods and services to fund further development of the first contract and grow the organization.
+* 该组织不仅可以持有醚，也可以持有以太坊创建的任何其他类型的硬币，包括价值与比特币或美元挂钩的资产。
 
-* Your DAO could own its own name on the name registrar, and then change where it's redirecting in order to update itself if the token holders approved.
+* DAO可以被编程为允许多个交易的提案，一些计划在未来。它也可以拥有其他DAO的份额，这意味着它可以投票给更大的组织或成为DAO联盟的一部分。
 
-* The organization could hold not only ethers, but any other kind of coin created on ethereum, including assets whose values are tied to the bitcoin or dollar.
+* 令牌合同可以重新编程以保持以太币或持有其他代币并将其分发给代币持有者。这将把令牌的价值与其他资产的价值联系起来，因此只需将资金转移到令牌地址即可完成支付股息。
 
-* The DAO could be programmed to allow a proposal with multiple transactions, some scheduled to the future.
-It could also own shares of other DAOs, meaning it could vote on larger organization or be a part of a federation of DAOs.
+这一切都意味着你创建的这个小社会可以发展壮大，从第三方获得资金，支付经常性工资，拥有任何类型的加密资产，甚至使用众包为其活动提供资金。
+所有这些都具有完全的透明度，完整的问责制和完全免于任何人为干扰。
+虽然网络生活的合同将执行完全创建的代码执行，没有任何例外，永远。
 
-* The Token Contract could be reprogrammed to hold ether or to hold other tokens and distribute it to the token holders. This would link the value of the token to the value of other assets, so paying dividends could be accomplished by simply moving funds to the token address.
+那么你的合同会是什么？,它会成为一个国家，一个公司还是一个非营利组织？,你的代码会做什么？
 
-This all means that this tiny society you created could grow, get funding from third parties, pay recurrent salaries, own any kind of crypto-assets and even use crowdsales to fund its activities. All with full transparency, complete accountability and complete immunity from any human interference. While the network lives the contracts will execute exactly the code they were created to execute, without any exception, forever.
+这取决于你。
 
-So what will your contract be? Will it be a country, a company, a non-profit group? What will your code do?
-
-That's up to you.
+[1]: ./token
+[2]: ./token/
+[3]: #the-shareholder-association
+[4]: dao#add-a-simple-proposal-send-ether
+[5]: crowdsale#scheduling-a-call
+[6]: dao#add-a-complex-proposal-own-another-token

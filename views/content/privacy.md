@@ -2,15 +2,17 @@
 
 瑞士基金会Stiftung Ethereum位于瑞士楚格6300 Zeughausgasse 7a，Switzerland(“公司”，“我们”或“我们”)致力于保护和尊重您的隐私。
 
-This policy (together with our terms of use and any other documents referred to it) sets out the basis on which any personal data we collect from you, or that you provide to us, will be processed by us. Please read the following carefully to understand our views and practices regarding your personal data and how we will treat it. By visiting <https://ethereumfoundation.org/devcon3>, you are accepting and consenting to the practices described in this policy.
+本政策（连同我们的使用条款以及任何其他提及的文件）规定了我们从您那里收集的或您提供给我们的任何个人数据将由我们处理的依据。
+请仔细阅读以下内容，以了解我们对您个人数据的看法和做法，以及我们将如何处理这些数据。
+通过访问<https://ethereumfoundation.org/devcon3>，您接受并同意本政策中描述的做法。
 
-The data controller is Stiftung Ethereum, a Swiss Stiftung, located at Zeughausgasse 7a, 6300 Zug, Switzerland.
+调节器
 
 ## 我们从您收集的信息
 
 我们将收集并处理关于您的以下数据：
 
-+ **你给我们的信息。**  This is information about you that you give us by filling in forms on our sites ethereum.org, ethereumfoundation.org and blog.ethereum.org (each a “site” and together, our “sites”) or by corresponding with us by phone, e-mail or otherwise. It includes information you provide when you register to use our sites, add products or services to a shopping cart on our sites, place an order on our sites, participate in discussion boards or other social media functions on our sites, and when you contact us on our sites and when you report a problem with our sites. The information you give us may include your name, address, e-mail address, phone number, web site Uniform Resource Locator (URL), financial and credit card information, personal description, and free-form text.
++ **你给我们的信息。**  这是您通过在我们的网站ethereum.org，ethereumfoundation.org和blog.ethereum.org（每个“网站”和在一起，我们的“网站”）填写表格或通过与我们通话,，电子邮件或其他。这是您通过在我们的网站ethereum.org，ethereumfoundation.org和blog.ethereum.org（每个“网站”和在一起，我们的“网站”）填写表格或通过与我们通话,，电子邮件或其他。这是您通过在我们的网站ethereum.org，ethereumfoundation.org和blog.ethereum.org（每个“网站”和在一起，我们的“网站”）填写表格或通过与我们通话,，电子邮件或其他。
 
 + **我们收集的关于您的信息。**  关于您对我们网站的每次访问，我们都会自动收集以下信息:
   + 技术信息，包括用于将您的计算机连接到Internet的Internet协议（IP）地址，浏览器类型和版本，时区设置，浏览器插件类型和版本，操作系统和平台。
@@ -18,63 +20,81 @@ The data controller is Stiftung Ethereum, a Swiss Stiftung, located at Zeughausg
 
 ## COOKIES
 
-Our websites use cookies to distinguish you from other users of our websites. This helps us to provide you with a good experience when you browse our websites and also allows us to improve our sites. For detailed information on the cookies we use and the purposes for which we use them, see our [Cookie Policy](./cookie-policy "Cookie Policy").
+我们的网站使用cookies来区分您与我们网站的其他用户。
+这有助于我们在浏览我们的网站时为您提供良好的体验，同时也使我们能够改进我们的网站。
+有关我们使用的Cookie的详细信息以及我们使用它们的目的，请参阅我们的[Cookie政策] [1]。
 
 ## 使用这些信息
 
-We use information held about you in the following ways:
+我们通过以下方式使用关于您的信息：
 
-+ **您提供给我们的信息。** We will use this information:
-  + to carry out our obligations arising from any contracts entered into between you and us, and to provide you  with the information, products and services that you request from us;
-  + to notify you about changes to our service;
-  + to ensure that content from our sites is presented in the most effective manner for you and for your computer.
++ **您提供给我们的信息。** 我们将使用这些信息：
+  + 履行我们与您签订的任何合同所产生的义务，并向您提供您向我们索取的信息，产品和服务;
+  + 通知您有关我们服务的更改;
+  + 确保我们网站的内容以最有效的方式呈现给您和您的计算机。
 
-+ **我们收集的关于您的信息。** We will use this information:
-  + to administer our sites and for internal operations, including troubleshooting, data analysis, testing,  research, statistical and survey purposes;
-  + to improve our site to ensure that content is presented in the most effective manner for you and for your  computer;
-  + to allow you to participate in interactive features of our service, when you choose to do so;
-  + as part of our efforts to keep our site safe and secure;
++ **我们收集的关于您的信息。** 我们将使用这些信息：
+  + 管理我们的网站和内部运营，包括故障排除，数据分析，测试，研究，统计和调查;
+  + 改进我们的网站以确保内容以最有效的方式呈现给您和您的计算机;
+  + 让您在选择时参与我们服务的互动功能;
+  + 作为我们努力保持我们的网站安全和可靠的一部分;
 
-+ **我们从其他来源收到的信息。** We will combine this information with information you give to us and information we collect about you. We will use this information and the combined information for the purposes set out above (depending on the types of information we receive).
++ **我们从其他来源收到的信息。** 我们会将这些信息与您提供给我们的信息以及我们收集的关于您的信息结合起来。,我们会将这些信息和综合信息用于上述目的（取决于我们收到的信息类型）。
 
 ## 披露您的信息
 
 您同意我们有权与您分享您的个人信息：
 
 + 包括选定的第三方:
-  + Analytics and search engine providers that assist us in the improvement and optimisation of our site;
-  + E-commerce providers such as payment solution providers to assist us in the processing of your online purchases, donations and other payments.
+  + 分析和搜索引擎提供商协助我们改进和优化我们的网站;
+  + 电子商务提供商（如支付解决方案提供商）协助我们处理您的在线购物，捐赠和其他付款。
 
 我们会将您的个人信息透露给第三方:
 
-+ In the event that we sell or buy any business or assets, in which case we will disclose your personal data to the prospective seller or buyer of such business or assets.
-+ If the Company or substantially all of its assets are acquired by a third party, in which case personal data held by it about its customers will be one of the transferred assets.
-+ If we are under a duty to disclose or share your personal data in order to comply with any legal obligation, or in order to enforce or apply our [terms of use](./terms-of-use "Terms of Use") or terms and conditions for Devcon events and other agreements; or to protect the rights, property, or safety of the Company or others. This includes exchanging information with other companies and organisations for the purposes of fraud protection and credit risk reduction.
++ 如果我们出售或购买任何业务或资产，在这种情况下，我们会将您的个人数据披露给该业务或资产的潜在卖家或买家。
++ 如果本公司或其实质性全部资产被第三方收购，在这种情况下，其持有的关于其客户的个人数据将成为所转让的资产之一。
++ 如果我们有责任披露或分享您的个人数据以遵守任何法律义务，或为了执行或应用我们的[使用条款] [2]或Devcon事件和其他协议的条款和条件;,或保护公司或他人的权利，财产或安全。这包括与其他公司和组织交换信息，以防欺诈和降低信用风险。
 
 ## 我们在哪里存储您的个人数据
 
-The data that we collect from you will be transferred to, and stored at, a destination inside the European Economic Area (”EEA”). It will be processed by staff operating outside the EEA who work for us or for one of our suppliers. This includes staff engaged in, among other things, the fulfillment of your order, the processing of your payment details and the provision of support services. By submitting your personal data, you agree to this transfer, storing or processing. We will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this privacy policy.
+我们从您那里收集的数据将被转移并存储在欧洲经济区（“EEA”）内的目的地。
+它将由欧洲经济区以外为我们或我们的供应商工作的员工处理。
+这包括从事（其中包括）履行订单，处理付款细节和提供支持服务的工作人员。
+通过提交您的个人资料，您同意此转让，存储或处理。
+我们将采取一切合理必要的措施，确保您的数据得到安全处理并符合本隐私政策。
 
-All information you provide to us is stored on our secure servers. Any web-based payment transactions will be encrypted using SSL technology.
+您提供给我们的所有信息都存储在我们的安全服务器上。
+任何基于网络的支付交易都将使用SSL技术进行加密。
 
-Unfortunately, the transmission of information via the internet is not completely secure. Although we will do our best to protect your personal data, we cannot guarantee the security of your data transmitted to our sites; any transmission is at your own risk. Once we have received your information, we will use strict procedures and security features to try to prevent unauthorised access.
+不幸的是，通过互联网传输信息并不完全安全。
+虽然我们会尽全力保护您的个人资料，但我们无法保证您传送到我们网站的数据安全。
+一旦我们收到您的信息，我们将使用严格的程序和安全功能来防止未经授权的访问。
 
 ## 您的权利
 
-You have the right to ask us not to process your personal data for marketing purposes. We will usually inform you (before collecting your data) if we intend to use your data for such purposes or if we intend to disclose your information to any third party for such purposes. You can exercise your right to prevent such processing by checking certain boxes on the forms we use to collect your data. You can also exercise the right at any time by contacting us at notices@ethereum.org.
+您有权要求我们不要出于营销目的处理您的个人数据。
+如果我们打算将这些数据用于此目的，或者我们打算将此信息透露给任何第三方用于此目的，我们通常会在收集您的数据前通知您。
+您可以通过检查我们用于收集数据的表单上的特定框来行使您的权利，以阻止此类处理。
+您也可以随时通过电子邮件notices@ethereum.org联系我们行使权利。
 
-Our sites may, from time to time, contain links to and from the websites of our partner networks, sponsors and affiliates. If you follow a link to any of these websites, please note that these websites have their own privacy policies and that we do not accept any responsibility or liability for these policies. Please check these policies before you submit any personal data to these websites.
+我们的网站可能会不时包含来自我们的合作伙伴网络，赞助商和分支机构网站的链接。
+如果您点击这些网站的链接，请注意这些网站有其自己的隐私政策，我们不对这些政策承担任何责任或义务。
+在向这些网站提交任何个人数据之前，请检查这些政策。
 
 ## 更改我们的隐私政策
 
-Any changes we make to our privacy policy in the future will be posted on this page and, where appropriate and available, may be notified to you by e-mail. Please check back frequently to see any updates or changes to our privacy policy.
+我们今后对隐私政策所做的任何更改都将张贴在此页面上，并在适当和可用的情况下通过电子邮件通知您。
+请经常查看以查看我们隐私政策的任何更新或更改。
 
 ## 联系
 
-Questions, comments and requests regarding this privacy policy should be addressed to notices@ethereum.org.
+有关本隐私政策的问题，意见和要求应发送至notices@ethereum.org。
 
-Last modified: May 2017
+最后修改日期：2017年5月
 
 ## 使命和愿景声明
 
-The Ethereum Foundation’s mission is to promote and support research, development and education to bring decentralized protocols and tools to the world that empower developers to produce next generation decentralized applications (dapps), and together build a more globally accessible, more free and more trustworthy Internet.
+以太坊基金会的使命是促进和支持研究，开发和教育，将分散的协议和工具引入世界，使开发人员能够开发下一代分散式应用程序（dapps），并共同构建更全球化，更自由和更可靠的互联网,。
+
+[1]: ./cookie-policy "Cookie Policy"
+[2]: ./terms-of-use "Terms of Use"

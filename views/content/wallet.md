@@ -1,9 +1,9 @@
 # 以太坊钱包
 
-The Ethereum Wallet is an app that allows you to interact with the Ethereum blockchain on your own computer easily.
+以太坊钱包是一款应用程序，可让您轻松地在自己的计算机上与以太坊区块链进行互动。
 
-![Ethereum Wallet](/images/wallet-screenshot.png)
+![以太坊钱包](./images/wallet-screenshot.png)
 
-Ethereum Wallet allows you to receive and transfer ether or any ethereum compatible token, as well as allowing you to deploy a contract or interact with any smart contract deployed on the network. The Wallet supports the Main ethereum chain, test chains and even private networks.
+以太坊钱包允许您接收和转移以太网或任何以太坊兼容令牌，并允许您部署合同或与网络上部署的任何智能合同进行交互。该钱包支持主要的以太坊链，测试链甚至专用网络。
 
-Running the wallet app and thereby having the whole blockchain on your computer is called running a "full node". This is crucial to the success of blockchains because your are participating in the network that ensures that there is a single truth.
+运行钱包应用程序，从而让您的计算机上的整个区块链被称为运行“完整节点”。 这对区块链的成功至关重要，因为您参与的网络确保存在单一事实。

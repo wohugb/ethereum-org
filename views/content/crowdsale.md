@@ -1,105 +1,133 @@
-# 人群销售
+# 众筹
 
-## 人群基金你的想法
+## 众筹你的想法
 
-Sometimes a good idea takes a lot of funds and collective effort. You could ask for donations, but donors prefer to give to projects they are more certain will get traction and proper funding. This is an example where a crowdfunding would be ideal: you set up a goal and a deadline for reaching it. If you miss your goal, the donations are returned, therefore reducing the risk for donors. Since the code is open and auditable, there is no need for a centralized, trusted platform and therefore the only fees everyone will pay are just the gas fees.
+有时候一个好主意需要花费大量的资金和集体努力。
+你可以要求捐款，但捐助者更愿意捐赠给他们更确定的项目，将获得牵引力和适当的资金。
+众筹是理想的例子：你设定了一个目标并达成目标的最后期限。
+如果你错过了你的目标，那么捐款将被退回，从而降低捐献者的风险。
+由于代码是开放和可审计的，因此不需要集中的可信平台，因此每个人只需支付的费用仅仅是天然气费用。
 
 ### 令牌和DAOs
 
-In this example we will make a better crowdfunding by solving two important problems: how rewards are managed and kept, and how the money is spent after the funds are raised.
+在这个例子中，我们将通过解决两个重要问题来进行更好的众筹：如何管理和维护奖励以及在筹集资金之后如何花费金钱。
 
-Rewards in crowdfundings are usually handled by a central unchangeable database that keeps track of all donors: anyone who missed the deadline for the campaign cannot get in anymore and any donor who changed their mind can't get out. Instead we are going to do this the decentralized way and just create a [token](./token) to keep track of rewards, anyone who contributes gets a token that they can trade, sell or keep for later. When the time comes to give the physical reward the producer only needs to exchange the tokens for real products. Donors get to keep their tokens, even if the project doesn't achieve its goals, as a souvenir.
+奖励活动中的奖励通常由中央不可更改的数据库处理，该数据库跟踪所有捐助者：错过活动截止日期的任何人都无法再进入，任何改变主意的捐助者都无法离开。
+相反，我们将以分散化的方式完成此任务，并创建一个[token] [1]来跟踪奖励，任何贡献的人都会获得一个令牌，以便他们可以交易，出售或稍后保留。
+当需要给予物质奖励的时候，生产者只需要交换实际产品的代币。
+作为纪念品，捐助者可以保留自己的代币，即使项目没有实现其目标。
 
-Also, generally those who are funding can't have any say on how the money is spent after the funds are raised and mismanagement often causes projects never to deliver anything at all. In this project we will use a [Democratic Organization](./dao) that will have to approve any money coming out of the system. This is often called a **crowdsale** or **crowd equity** and is so fundamental that in some cases the token can be the reward itself, especially in projects where a group of people gather together to build a common public good.
+另外，一般来说，资金支持者在资金筹集后如何花费金钱方面无法发言，而管理不善常常导致项目永远无法提供任何东西。
+在这个项目中，我们将使用一个[民主组织] [2]，它必须批准从系统中出来的任何资金。
+这通常被称为** crowdsale **或**众筹**，并且非常基本，在某些情况下，令牌可以成为奖励本身，特别是在一群人聚集在一起以建立共同公共物品的项目中。
 
-![Get the necessary contracts](/images/tutorial/token-crowdsale.png)
+![获得必要的合同](./images/tutorial/token-crowdsale.png)
 
-* If you are just testing, switch the wallet to the testnet and start mining.
+* 如果你只是测试，将钱包切换到测试网并开始挖掘。
 
-* First of all, create a [fixed supply token](./token#the-code). For this example, we are going to create a supply of **100**, use the name **gadgets**, the box emoji (📦) as a symbol and **0** decimal places. Deploy it and save the address.
+* 首先，创建一个[固定供应令牌] [3]。对于这个例子，我们将创建** 100 **的供应，使用名称** gadgets **，框表情符号（📦）作为符号和** 0 **小数位。部署它并保存地址。
 
-* Now create a [shareholder association](./dao#the-shareholder-association). In this example we are going to use the address of the token we just created as the **Shares Address**, a minimum quorum of **10**, and **1500** minutes (25 hours) as the voting time. Deploy this contract and save the address.
+* 现在创建一个[股东协会] [4]。在这个例子中，我们将使用我们刚刚创建的令牌地址作为**股份地址**，** 10 **的最低法定人数，以及** 1500 **分钟（25小时）作为投票时间,。部署此合同并保存地址。
 
 ### 代码
 
-Now copy this code and let's create the crowdsale:
+现在复制这段代码，让我们创建crowdsale：
 
 ```js
 !!!include(solidity/crowdsale.sol)!!!
+{!../../solidity/crowdsale.sol!}
 ```
 
 ### 代码亮点
 
-Notice that in the **Crowdsale** function (the one that is called upon contract creation), how the variables **deadline** and **fundingGoal** are set:
+请注意，在** Crowdsale **函数（即创建合同时调用的函数）中，如何设置变量**截止日期**和** fundingGoal **：
 
     fundingGoal = fundingGoalInEthers * 1 ether;
     deadline = now + durationInMinutes * 1 minutes;
     price = etherCostOfEachToken * 1 ether;
 
-Those are some of the [special keywords](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html) in solidity that help you code, allowing you to evaluate some things like **1 ether == 1000 finney** or **2 days == 48 hours**. Inside the system all ether amounts are kept track in **wei**, the smallest divisible unit of ether. The code above converts the funding goal into wei by multiplying it by 1,000,000,000,000,000,000 (which is what the special keyword **ether** converts into). The next line creates a timestamp that is exactly X minutes away from today by also using a combination of the special keywords **now** and **minutes**. For more global keywords, check the [solidity documentation on Globally available variables](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html).
+这些是一些[特殊关键词] [5]，可帮助你编码，让你评估一些事情，如** 1 ether == 1000 finney **或** 2 days == 48 hours **。
+在系统内部，所有以太量都保持在** wei **中，这是乙醚的最小可分解单位。
+上面的代码将资金目标乘以1,000,000,000,000,000,000（这是特殊关键字** ether **转换成的值）将其转化为wei。
+下一行创建一个时间戳，与今天完全相距X分钟，同时使用特殊关键字** now **和** minutes **的组合。
+对于更多全局关键字，请查看[关于全局可用变量的可靠性文档] [5]。
 
-The following line will instantiate a contract at a given address:
+以下行将在给定地址实例化合同：
 
     tokenReward = token(addressOfTokenUsedAsReward);
 
-Notice that the contract understands what a *token* is because we defined it earlier by starting the code with:
+注意合同理解* token *是什么，因为我们之前通过以下方式启动代码来定义它：
 
     interface token { function transfer(address receiver, uint amount){  } }
 
-This doesn't fully describe how the contract works or all the functions it has, but describes only the ones this contract needs: a token is a contract with a *transfer* function, and we have one at this address.
+这并没有完全描述契约是如何工作的或者它具有的所有功能，而只描述了这个契约需要的契约：一个契约是一个具有* transfer *功能的契约，我们在这个地址有一个契约。
 
 ### 我们如何
 
-Go to **contracts** and then **deploy contract**:
+转到**合同**然后**部署合同**：
 
-![Crowdsale deployment](/images/tutorial/crowdsale-deploy.png)
+![Crowdsale deployment](./images/tutorial/crowdsale-deploy.png)
 
-* Put the address of the organization you just created in the field **if successful, send to**.
+* 把刚刚创建的组织的地址放在字段**中，如果成功，发送给**。
 
-* Put **250** ethers as the funding goal
+* 把** 250 **醚作为资金目标
 
-* If you are just doing it for a test or demonstration, put the crowdsale duration as 3-10 minutes, but if you are really raising funds you can put a larger amount, like **45,000** (31 days).
+* 如果你只是做一个测试或示范，那么把众包期限设为3-10分钟，但如果你真的在筹集资金，你可以投入更多的钱，比如** 45,000 **（31天）。
 
-* The **ether cost of each token** should be calculated based on how many tokens you are putting up for sale (a maximum of how many you added as "initial supply" of your token on the previous step). In this example, put 5 ethers.
+* 如果你只是做一个测试或示范，那么把众包期限设为3-10分钟，但如果你真的在筹集资金，你可以投入更多的钱，比如** 45,000 **（31天）。在这个例子中，放5个醚。
 
-* The address of the token you created should be added to the **token reward address**
+* 您创建的令牌地址应添加到**令牌奖励地址**
 
-Put a gas price, click deploy and wait for your crowdsale to be created. Once the crowdsale page is created, you now need to deposit enough rewards so it can pay the rewards back. Click the address of the crowdsale, then deposit and send **50 gadgets** to the crowdsale.
+输入天然气价格，点击部署，然后等待你的Crowdsale被创建。
+一旦创建了众包页面，您现在需要存入足够的奖励，以便支付奖励。
+点击众包的地址，然后存入并发送** 50个小配件**到众包。
 
-**I have 100 gadgets. Why not sell them all?**
+**我有100个小工具。为什么不全部卖掉？**
 
-This is a very important point. The crowdsale we are building will be completely controlled by the token holders. This creates the danger that someone controlling 50%+1 of all the tokens will be able to send all the funds to themselves. You can try to create special code on the association contract to prevent these hostile takeovers, or you can instead have all the funds sent to a simple address. To simplify we are simply selling off half of all the gadgets: if you want to further decentralize this, split the remaining half between trusted organizations.
+这是非常重要的一点。
+我们正在建设的众包将由代币持有者完全控制。
+这会造成控制所有代币的50％+ 1的人将能够将所有资金发送给自己的危险。
+您可以尝试在关联合同上创建特殊代码以防止这些恶意收购，或者您可以将所有资金都发送到简单地址。
+为了简化，我们只是简单地出售所有小工具中的一半：如果您想进一步分散这一部分，请将可信组织的剩余部分分开。
 
 ### 筹集资金
 
-Once the crowdsale has all the necessary tokens, contributing to it is easy and you can do it from any ethereum wallet: just send funds to it. You can see the relevant code bit here:
+一旦众包拥有所有必要的令牌，为此做出贡献很简单，您可以从任何以太坊钱包中完成：只需向它发送资金即可。
+你可以在这里看到相关的代码：
 
     function () {
         require(!crowdsaleClosed);
         uint amount = msg.value;
         // ...
 
-The [unnamed function](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function) is the default function executed whenever a contract receives ether. This function will automatically check if the crowdsale is active, calculate how many tokens the caller bought and send the equivalent. If the crowdsale has ended or if the contract is out of tokens the contract will **throw** meaning the execution will be stopped and the ether sent will be returned (but all the gas will be spent).
+[unnamed function] [6]是合同收到乙醚时执行的默认功能。
+此功能将自动检查众包是否处于活动状态，计算主叫方购买多少令牌并发送相应的令牌。
+如果众包已经结束或者合约没有标记，合约将会抛出**意味着执行将被停止，并且以太传送将被返回（但是所有的气体将被消耗）。
 
-![Crowdsale error](/images/tutorial/crowdsale-error.png)
+![Crowdsale错误](./images/tutorial/crowdsale-error.png)
 
-This has the advantage that the contract prevents falling into a situation that someone will be left without their ether or tokens. In a previous version of this contract we would also [**self destruct**](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#contract-related) the contract after the crowdsale ended: this would mean that any transaction sent after that moment would lose their funds. By creating a fallback function that throws when the sale is over, we prevent anyone losing money.
+这有一个优点，即合同可以防止陷入某个人没有乙醚或代币的情况下。
+在此合同的前一版本中，我们也会在众包结束之后[**自毁**] [7]合同：这意味着在此之后发送的任何交易都将失去其资金。
+通过在销售结束时创建一个后备功能，我们可以防止任何人赔钱。
 
-The contract has a safeWithdrawl() function, without any parameters, that can be executed by the beneficiary to access the amount raised or by the funders to get back their funds in the case of a failed fundraise.
+该合同具有safeWithdrawl（）函数，没有任何参数，受益人可以执行该函数以访问募集的金额或资助者在筹款失败的情况下获取资金。
 
-![Crowdsale execution](/images/tutorial/crowdsale-execute.png)
+![Crowdsale执行](./images/tutorial/crowdsale-execute.png)
 
 ## 扩大众包
 
 ### 如果众包超过它的目标呢？
 
-In our code, only two things can happen: either the crowdsale reaches its target or it doesn't. Since the token amount is limited, it means that once the goal has been reached no one else can contribute. But the history of crowdfunding is full of projects that overshoot their goals in much less time than predicted or that raised many times over the required amount.
+在我们的代码中，只有两件事情可能发生：无论是众包达到目标还是没有。
+由于令牌数量有限，这意味着一旦达到目标，其他人无法做出贡献。
+但是众筹的历史充满了超出预期的超出目标时间的项目，或者超过了预期数量的许多倍。
 
 ### 无限的众包
 
-So we are going to modify our project slightly so that instead of sending a limited set of tokens, the project actually creates a new token out of thin air whenever someone sends them ether. First of all, we need to create a [Mintable token](./token#central-mint).
+因此，我们稍微修改我们的项目，以便在有人发送一些令牌时，项目实际上会创建一个新的令牌。
+首先，我们需要创建一个[Mintable token] [8]。
 
-Then modify the crowdsale to rename all mentions of **transfer** to **mintToken**:
+然后修改crowdsale以将所有提及的**转移重新命名为** mintToken **：
 
     contract token { function mintToken(address receiver, uint amount){  } }
     // ...
@@ -109,10 +137,20 @@ Then modify the crowdsale to rename all mentions of **transfer** to **mintToken*
             // ...
         }
 
-Once you published the crowdsale contract, get its address and go into your **Token Contract** to execute a **Change Ownership** function. This will allow your crowdsale to call the **Mint Token** function as much as it wants.
+一旦您发布了众包协议，获取其地址并进入您的**令牌合同**执行**更改所有权**功能。
+这将允许您的众包尽可能多地调用** Mint Token **功能。
 
-**Warning:**  This opens you to the danger of hostile takeover. At any point during the crowdsale anyone who donates more than the amount already raised will be able to control the whole pie and steal it. There are many strategies to prevent that, but implementing will be left as an exercise to the reader:
+**警告:**  这会让你面临敌意收购的危险。在众包期间的任何时候，任何捐赠超过已募集的金额的人都将能够控制整个馅饼并偷取它。有许多策略可以防止这种情况发生，但实施将作为练习留给读者：
 
-* Modify the crowdsale such that when a token is bought, also send the same quantity of tokens to the founder's account so that they always control 50% of the project
-* Modify the Organization to create a veto power to some trusted third party that could stop any hostile proposal
-* Modify the token to allow a central trusted party to freeze token accounts, so as to require a verification that there isn't any single entity controlling a majority of them
+* 修改众包，这样当一个令牌被购买时，也将相同数量的令牌发送给创始人的账户，以便他们始终控制50％的项目
+* 修改组织，以便为可能阻止任何敌意提案的可信第三方制定否决权
+* 修改令牌以允许中央信任方冻结令牌帐户，以便要求验证没有任何单个实体控制它们中的大多数
+
+[1]: ./token
+[2]: ./dao
+[3]: ./token#the-code
+[4]: ./dao#the-shareholder-association
+[5]: https://solidity.readthedocs.io/en/latest/units-and-global-variables.html
+[6]: https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function
+[7]: https://solidity.readthedocs.io/en/latest/units-and-global-variables.html#contract-related
+[8]: ./token#central-mint

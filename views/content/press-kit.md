@@ -1,3 +1,3 @@
-# press-kid
+# 按小子
 
-We have a more open approach towards the use of the Ethereum logo that is more community-friendly and supports the greater Ethereum and crypto innovation ecosystem.
+我们采用更加开放的方式来使用更加适合社区的以太坊标识，并支持更大的以太坊和加密创新生态系统。

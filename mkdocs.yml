@@ -1,0 +1,62 @@
+site_name: 以太坊官方网站
+site_description: 以太坊官方网站
+site_author: Nosy
+copyright: '&copy; 2018 -  wohugb.github.io'
+
+repo_name: wohugb/ethereum-org
+repo_url: https://github.com/wohugb/ethereum-org
+edit_uri: ""
+
+docs_dir: views/content
+
+theme:
+  name: material
+
+  include_search_page: false
+  search_index_only: true
+
+  language: zh
+  feature:
+    tabs: true
+  palette:
+    primary: indigo
+    accent: indigo
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/images/favicon.png
+  logo:
+    icon: "\uE80C"
+  extra_css: [assets/stylesheets/extra.css]
+extra:
+  social:
+    - type: globe
+      link: http://wohugb.github.io
+    - type: github-alt
+      link: https://github.com/wohugb
+    - type: twitter
+      link: https://twitter.com/wohugb
+    - type: linkedin
+      link: https://linkedin.com/in/wohugb
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      linenums: false
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - markdown_include.include:
+      base_path: views/content
+
+pages:
+  - 前言: index.md
+  - 令牌: token.md
+  - 众筹: crowdsale.md
+  - DAO: dao.md
+  - 以太: ether.md
+  - cli: cli.md
+

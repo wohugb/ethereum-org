@@ -1,10 +1,15 @@
 # 有关我们使用COOKIES的信息
 
-Our websites use cookies to distinguish you from other users of our websites. This helps us to provide you with a good experience when you browse our websites and also allows us to improve our sites. By continuing to browse the sites, you are agreeing to our use of cookies. A cookie is a small file of letters and numbers that we store on your browser or the hard drive of your computer if you agree. Cookies contain information that is transferred to your computer’s hard drive. We use the following cookies:
+我们的网站使用cookies来区分您与我们网站的其他用户。
+这有助于我们在浏览我们的网站时为您提供良好的体验，同时也使我们能够改进我们的网站。
+继续浏览网站，即表示您同意我们使用cookies。
+如果您同意，Cookie是一个小型的字母和数字文件，我们将其存储在您的浏览器或计算机的硬盘上。
+Cookies包含传输到计算机硬盘的信息。
+我们使用以下cookie：
 
-* **Strictly necessary cookies.** These are cookies that are required for the operation of our websites. They include, for example, cookies that enable you to log into secure areas of our websites, use a shopping cart or make use of e-commerce payment processing services.
-* **Analytical/performance cookies.** They allow us to recognise and count the number of visitors and to see how visitors move around our websites when they are using it. This helps us to improve the way our websites work, for example, by ensuring that users are finding what they are looking for easily.
-* **Functionality cookies.** These cookies are used to recognise you when you return to our websites. They enable us to personalise our content for you, greet you by name and remember your preferences (for example, your choice of language or region).
-* **Targeting cookies.** These cookies record your visit to our websites, the pages you have visited and the links you have followed.
+* **严格必要的cookies** 这些是我们网站运营所需的cookies。例如，它们包括使您能够登录到我们网站的安全区域，使用购物车或利用电子商务支付处理服务的Cookie。
+* ***分析/性能cookies。** 它们允许我们识别和统计访问者的数量，并了解访问者在使用它们时如何在我们的网站上移动。这有助于我们改进我们网站的工作方式，例如确保用户能够轻松找到他们正在寻找的内容。
+* **功能性cookies。** 这些cookies用于在您返回我们的网站时识别您。它们使我们能够为您个性化我们的内容，以名字迎接您，并记住您的偏好（例如，您选择的语言或地区）。
+* **定位Cookie。** 这些cookies会记录您对我们网站的访问，您访问过的页面以及您遵循的链接。
 
-You can find more information about the individual cookies we use and the purposes for which we use them in the table below:
+您可以在下表中找到有关我们使用的各个Cookie的更多信息以及我们使用它们的目的：

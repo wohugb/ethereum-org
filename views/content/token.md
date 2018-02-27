@@ -13,6 +13,7 @@
 
 ```js
 !!!include(solidity/token-minimal.sol)!!!
+{!../../solidity/token-minimal.sol!}
 ```
 
 ### 代码
@@ -21,11 +22,12 @@
 
 ```js
 !!!include(solidity/token-erc20.sol)!!!
+{!../../solidity/token-erc20.sol!}
 ```
 
 ### 了解代码
 
-![Deploy New Contract](/images/tutorial/deploy-new-contract.png)
+![部署新合约](./images/tutorial/deploy-new-contract.png)
 
 所以让我们从基础开始
 打开电子钱包应用程序，转到合约选项卡，然后部署新合约。
@@ -43,7 +45,7 @@
 如果你不知道quutuorvigintillion是多少，它比许多你打算使用你的代币更令人兴奋。
 public*关键字, 意味着这个变量将被区块链上的任何人访问， 意味着所有的余额都是公开的(因为他们需要，为了让客户展示他们).
 
-![Edit New Contract](/images/tutorial/edit-contract.png)
+![编辑号](./images/tutorial/edit-contract.png)
 
 如果您立即发布您的合约， 它会起作用但不会非常有用： 这将是一个合约，可以查询您的硬币余额的任何地址 - 但因为你从来没有创建一个硬币， 他们中的每一个都会返回0。
 所以我们将在启动时创建一些令牌。
@@ -71,7 +73,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 选择`MyToken`合约，你会看到现在它显示了一个名为* Constructor parameters *的部分。
 这些是令牌的可变参数，因此您可以重复使用相同的代码，并且将来只能更改这些变量。
 
-![Edit New Contract](/images/tutorial/function-picker.png)
+![Edit New Contract](./images/tutorial/function-picker.png)
 
 现在你有一个创建令牌余额的功能合约，但由于没有任何功能来移动它，它所做的只是保留在同一个帐户上。
 所以我们现在要实施。
@@ -161,19 +163,19 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 你可以随意调整它们， 但为了本教程的目的，我们建议您选择这些参数: 10,000为供应品，任何你想要的名称，`％`为符号和2位小数位。
 你的应用应该看起来像这样:
 
-[![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 10](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)
+[![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 10](./images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)](./images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-10.png)
 
 滚动到页面的末尾，您会看到该合约计算成本的估计值，您可以选择一个费用来确定您愿意为此支付多少乙醚。
 **任何你不会花费的多余的醚将被退还给你**所以你可以保留默认设置，如果你愿意.
 按`deploy`, 输入您的账户密码并等待几秒钟，以便您的交易被提取.
 
-[![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 11](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)](/images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)
+[![Ethereum Wallet Screenshot 2015-12-03 at 3.50.36 PM 11](./images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)](./images/tutorial/Ethereum-Wallet-Screenshot-2015-12-03-at-3.50.36-PM-11.png)
 
 您将被重定向到首页，在那里您可以看到您的交易正在等待确认.
 点击名为`Etherbase`（您的主要帐户）的帐户，不超过一分钟后，您应该看到您的帐户将显示您拥有100％的刚创建的股份。
 发送一些给几个朋友： 选择 `send`, 然后选择您想要发送的货币 (醚或你新创建的份额), 将你的朋友的地址粘贴到`to`字段并按`send`。
 
-![Screen Shot 2015-12-03 at 9.48.15 AM](/images/tutorial/Screen-Shot-2015-12-03-at-9.48.15-AM.png)
+![Screen Shot 2015-12-03 at 9.48.15 AM](./images/tutorial/Screen-Shot-2015-12-03-at-9.48.15-AM.png)
 
 如果你将它发送给朋友，他们将不会在他们的钱包中看到任何东西。
 这是因为钱包只追踪它知道的令牌，并且您必须手动添加这些令牌。
@@ -186,7 +188,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 令牌名称，符号和十进制数字应自动填充，但如果不是，您可以放入任何您想要的东西（它只会影响它在钱包上的显示方式）。
 一旦你这样做了，你就会自动显示你拥有该令牌的任何平衡，并且你可以发送给它
 
-[![Ethereum Wallet Beta 4 Screen Shot 2015-12-03 at 9.44.42 AM](/images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)](/images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)
+[![Ethereum Wallet Beta 4 Screen Shot 2015-12-03 at 9.44.42 AM](./images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)](./images/tutorial/Screen-Shot-2015-12-03-at-9.44.42-AM.png)
 
 现在你有你自己的加密标记！,令牌本身可以用作当地社区的[价值交换](https://en.wikipedia.org/wiki/Local_currency), 跟踪[工作时间的方法](https://en.wikipedia.org/wiki/Time-based_currency)或其他忠诚计划.
 但是，通过使货币具有实用价值，我们能否让货币具有内在价值？
@@ -520,10 +522,11 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 
 如果你添加所有的高级选项，这就是最终代码的样子:
 
-![Advanced Token](/images/tutorial/advanced-token-deploy.png)
+![Advanced Token](./images/tutorial/advanced-token-deploy.png)
 
 ```js
 !!!include(solidity/token-advanced.sol)!!!
+{!../../solidity/token-advanced.sol!}
 ```
 
 ### 部署
@@ -535,7 +538,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 等待几秒钟让某人选择你的交易，然后你会看到一个缓慢的蓝色矩形，表示有多少其他节点已经看到你的交易并确认了它们。
 您拥有的确认越多，您的代码已部署的可信度就越高。
 
-![Created Token](/images/tutorial/created-token.png)
+![Created Token](./images/tutorial/created-token.png)
 
 点击*Admin page*链接，您将成为世界上最简单的中央银行仪表板，您可以用新创建的货币进行任何操作。
 
@@ -548,7 +551,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 如果您创建了允许您铸造新硬币的合约，则应该有一个名为`Mint Token`的功能。
 选择它。
 
-![Manage central dollar](/images/tutorial/manage-central-dollar.png)
+![Manage central dollar](./images/tutorial/manage-central-dollar.png)
 
 选择创建新货币的地址，然后选择金额（如果您将小数点设置为2，则在金额后添加2个零，以创建正确数量）。
 开**Execute from**执行**选择设置为所有者的账户，将Ether金额保留为零，然后按执行。
@@ -560,7 +563,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 最终用户可以自定义显示的名称，符号和小数量，特别是如果他们有其他类似（或相同）名称的令牌。
 主图标不可更改，用户在发送和接收令牌时应该注意它们，以确保它们处理的是实际交易，而不是一些模仿令牌。
 
-![add token](/images/tutorial/add-token.png)
+![add token](./images/tutorial/add-token.png)
 
 ### 使用你的硬币
 
@@ -573,7 +576,7 @@ public*关键字, 意味着这个变量将被区块链上的任何人访问， �
 例如，要将**Unicorn（🦄）**标记添加到您的监视列表中，只需添加地址**0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7**，其余信息将自动加载。
 点击*确定*您的令牌将被添加。
 
-![Invisible Unicorns](/images/tutorial/unicorn-token.png)
+![Invisible Unicorns](./images/tutorial/unicorn-token.png)
 
 独角兽代币是专为那些捐赠给由以太坊基金会控制的地址**0xfB6916095ca1df60bB79Ce92cE3Ea74c37c5d359**而创建的纪念品。
 有关它们的更多信息[请阅读此处]（./ donate）

@@ -1,14 +1,14 @@
 extends layout
 
 block vars
-  - var title='Swarm'
+  - var title='一群'
   - var url='swarm'
 
 block content
   include mixins/recipes.pug
 
   .breadcrumb.animateme(data-when="enter", data-from="1", data-to="0.8", data-opacity="0", data-translatey="-20")
-    a(href="/").index Swarm
+    a(href="/").index 一群
     strong » 数据层为以太坊
 
   div#tutorial-start.main-tutorial.swarm-page.inner-header.inner-page
@@ -19,7 +19,7 @@ block content
 
         .col-md-6.tutorial.scrollme
           .header-title
-            h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") Swarm
+            h2.animateme(data-when="exit", data-from="0", data-to="1", data-translatey="400", data-easing="linear") 一群
             h3.animateme(data-when="exit", data-from="0", data-to="0.5", data-translatey="200", data-opacity="0", data-easing="linear")  数据层和对以太坊的激励
 
   .main-tutorial.inner-page.inner-tutorial
